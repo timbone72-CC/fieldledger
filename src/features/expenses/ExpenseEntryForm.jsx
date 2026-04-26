@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { loadActivePayPeriod, saveActivePayPeriod } from "../pay-periods/activePayPeriodStorage.js";
 import { EXPENSE_CATEGORIES } from "../../shared/constants/fieldLedgerDefaults.js";
+import { loadPhotoBlob, savePhotoBlob } from "../../shared/storage/photoBlobStorage.js";
 
 export default function ExpenseEntryForm() {
   const [editingExpenseId, setEditingExpenseId] = useState("");
@@ -9,6 +10,9 @@ export default function ExpenseEntryForm() {
   const [category, setCategory] = useState(EXPENSE_CATEGORIES[0]);
   const [amount, setAmount] = useState("");
   const [notes, setNotes] = useState("");
+  const [receiptPhotoId, setReceiptPhotoId] = useState("");
+  const [receiptPhotoFile, setReceiptPhotoFile] = useState(null);
+  const [receiptPhotoPreviewUrl, setReceiptPhotoPreviewUrl] = useState("");
   const [saveMessage, setSaveMessage] = useState("");
 
   useEffect(() => {
@@ -25,6 +29,8 @@ export default function ExpenseEntryForm() {
       setCategory(expense.category || EXPENSE_CATEGORIES[0]);
       setAmount(String(expense.amount || ""));
       setNotes(expense.notes || "");
+      setReceiptPhotoId(expense.receiptPhotoId || "");
+      setReceiptPhotoFile(null);
       setSaveMessage("Editing saved expense. Make changes, then save.");
     }
 
@@ -35,6 +41,39 @@ export default function ExpenseEntryForm() {
     };
   }, []);
 
+  useEffect(() => {
+    let previewUrl = "";
+
+    async function loadReceiptPhotoPreview() {
+      if (!receiptPhotoId || receiptPhotoFile) {
+        setReceiptPhotoPreviewUrl("");
+        return;
+      }
+
+      try {
+        const photoRecord = await loadPhotoBlob(receiptPhotoId);
+
+        if (!photoRecord?.blob) {
+          setReceiptPhotoPreviewUrl("");
+          return;
+        }
+
+        previewUrl = URL.createObjectURL(photoRecord.blob);
+        setReceiptPhotoPreviewUrl(previewUrl);
+      } catch {
+        setReceiptPhotoPreviewUrl("");
+      }
+    }
+
+    loadReceiptPhotoPreview();
+
+    return () => {
+      if (previewUrl) {
+        URL.revokeObjectURL(previewUrl);
+      }
+    };
+  }, [receiptPhotoId, receiptPhotoFile]);
+
   function resetForm(message) {
     setEditingExpenseId("");
     setDate("");
@@ -42,10 +81,13 @@ export default function ExpenseEntryForm() {
     setCategory(EXPENSE_CATEGORIES[0]);
     setAmount("");
     setNotes("");
+    setReceiptPhotoId("");
+    setReceiptPhotoFile(null);
+    setReceiptPhotoPreviewUrl("");
     setSaveMessage(message);
   }
 
-  function saveExpense() {
+  async function saveExpense() {
     const payPeriod = loadActivePayPeriod();
     const existingExpenses = Array.isArray(payPeriod.expenses) ? payPeriod.expenses : [];
     const amountValue = Number(amount || 0);
@@ -55,10 +97,21 @@ export default function ExpenseEntryForm() {
       return;
     }
 
+    let nextReceiptPhotoId = receiptPhotoId;
+
+    if (receiptPhotoFile) {
+      try {
+        nextReceiptPhotoId = await savePhotoBlob(receiptPhotoFile);
+      } catch {
+        setSaveMessage("Receipt photo could not be saved. Expense was not saved.");
+        return;
+      }
+    }
+
     const expense = {
       id: editingExpenseId || crypto.randomUUID(),
       payPeriodId: payPeriod.id,
-      receiptPhotoId: "",
+      receiptPhotoId: nextReceiptPhotoId,
       date,
       vendor,
       category,
@@ -149,6 +202,40 @@ export default function ExpenseEntryForm() {
           placeholder="0.00"
         />
       </label>
+
+      <label className="field">
+        Receipt Photo
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(event) => {
+            setReceiptPhotoFile(event.target.files?.[0] || null);
+          }}
+        />
+      </label>
+
+      {receiptPhotoId && !receiptPhotoFile && (
+        <p className="helper">Receipt photo already attached.</p>
+      )}
+
+      {receiptPhotoPreviewUrl && (
+        <img
+          src={receiptPhotoPreviewUrl}
+          alt="Attached receipt preview"
+          style={{
+            display: "block",
+            maxWidth: "240px",
+            maxHeight: "240px",
+            marginTop: "0.75rem",
+            borderRadius: "0.75rem",
+            border: "1px solid #d8d4ef",
+          }}
+        />
+      )}
+
+      {receiptPhotoFile && (
+        <p className="helper">Selected receipt photo: {receiptPhotoFile.name}</p>
+      )}
 
       <label className="field">
         Notes
