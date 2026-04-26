@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { loadActivePayPeriod, saveActivePayPeriod } from "../pay-periods/activePayPeriodStorage.js";
 import { EXPENSE_CATEGORIES } from "../../shared/constants/fieldLedgerDefaults.js";
 
 export default function ExpenseEntryForm() {
+  const [editingExpenseId, setEditingExpenseId] = useState("");
   const [date, setDate] = useState("");
   const [vendor, setVendor] = useState("");
   const [category, setCategory] = useState(EXPENSE_CATEGORIES[0]);
@@ -10,36 +11,91 @@ export default function ExpenseEntryForm() {
   const [notes, setNotes] = useState("");
   const [saveMessage, setSaveMessage] = useState("");
 
-  function saveExpense() {
-    const payPeriod = loadActivePayPeriod();
+  useEffect(() => {
+    function loadExpenseForEditing(event) {
+      const expense = event.detail?.expense;
 
-    const expense = {
-      id: crypto.randomUUID(),
-      date,
-      vendor,
-      category,
-      amount: Number(amount || 0),
-      notes,
-      createdAt: new Date().toISOString(),
+      if (!expense) {
+        return;
+      }
+
+      setEditingExpenseId(expense.id);
+      setDate(expense.date || "");
+      setVendor(expense.vendor || "");
+      setCategory(expense.category || EXPENSE_CATEGORIES[0]);
+      setAmount(String(expense.amount || ""));
+      setNotes(expense.notes || "");
+      setSaveMessage("Editing saved expense. Make changes, then save.");
+    }
+
+    window.addEventListener("fieldledger:edit-expense", loadExpenseForEditing);
+
+    return () => {
+      window.removeEventListener("fieldledger:edit-expense", loadExpenseForEditing);
     };
+  }, []);
 
-    saveActivePayPeriod({
-      ...payPeriod,
-      expenses: [...payPeriod.expenses, expense],
-      updatedAt: new Date().toISOString(),
-    });
-
+  function resetForm(message) {
+    setEditingExpenseId("");
     setDate("");
     setVendor("");
     setCategory(EXPENSE_CATEGORIES[0]);
     setAmount("");
     setNotes("");
-    setSaveMessage("Expense saved. Refresh to update the summary.");
+    setSaveMessage(message);
+  }
+
+  function saveExpense() {
+    const payPeriod = loadActivePayPeriod();
+    const existingExpenses = Array.isArray(payPeriod.expenses) ? payPeriod.expenses : [];
+
+    const expense = {
+      id: editingExpenseId || crypto.randomUUID(),
+      date,
+      vendor,
+      category,
+      amount: Number(amount || 0),
+      notes,
+      createdAt: editingExpenseId ? undefined : new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+
+    const nextExpenses = editingExpenseId
+      ? existingExpenses.map((existingExpense) => {
+          if (existingExpense.id !== editingExpenseId) {
+            return existingExpense;
+          }
+
+          return {
+            ...existingExpense,
+            ...expense,
+            createdAt: existingExpense.createdAt,
+          };
+        })
+      : [...existingExpenses, expense];
+
+    saveActivePayPeriod({
+      ...payPeriod,
+      expenses: nextExpenses,
+      updatedAt: new Date().toISOString(),
+    });
+
+    resetForm(
+      editingExpenseId
+        ? "Expense updated. Refresh to update the summary."
+        : "Expense saved. Refresh to update the summary.",
+    );
+
+    window.location.reload();
+  }
+
+  function cancelEdit() {
+    resetForm("");
   }
 
   return (
     <section className="panel">
-      <h2>Add Receipt / Expense</h2>
+      <h2>{editingExpenseId ? "Edit Receipt / Expense" : "Add Receipt / Expense"}</h2>
 
       <label className="field">
         Date
@@ -97,8 +153,14 @@ export default function ExpenseEntryForm() {
       </label>
 
       <button type="button" onClick={saveExpense}>
-        Save Expense
+        {editingExpenseId ? "Save Expense Changes" : "Save Expense"}
       </button>
+
+      {editingExpenseId && (
+        <button type="button" onClick={cancelEdit}>
+          Cancel Edit
+        </button>
+      )}
 
       {saveMessage && <p className="helper">{saveMessage}</p>}
     </section>

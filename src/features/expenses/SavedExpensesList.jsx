@@ -6,6 +6,21 @@ export default function SavedExpensesList() {
   const expenses = Array.isArray(payPeriod.expenses) ? payPeriod.expenses : [];
   const [selectedExpenseIds, setSelectedExpenseIds] = useState([]);
 
+  function editSelectedExpense() {
+    const selectedExpenseId = selectedExpenseIds[0];
+    const selectedExpense = expenses.find((expense) => expense.id === selectedExpenseId);
+
+    if (!selectedExpense || selectedExpenseIds.length !== 1) {
+      return;
+    }
+
+    window.dispatchEvent(
+      new CustomEvent("fieldledger:edit-expense", {
+        detail: { expense: selectedExpense },
+      }),
+    );
+  }
+
   function toggleExpenseSelection(expenseId) {
     setSelectedExpenseIds((currentIds) => {
       if (currentIds.includes(expenseId)) {
@@ -46,13 +61,23 @@ export default function SavedExpensesList() {
         <p className="helper">No expenses saved yet.</p>
       ) : (
         <>
-          <button
-            type="button"
-            onClick={deleteSelectedExpenses}
-            disabled={selectedExpenseIds.length === 0}
-          >
-            Delete Selected Expenses
-          </button>
+          <div className="section-actions">
+            <button
+              type="button"
+              onClick={editSelectedExpense}
+              disabled={selectedExpenseIds.length !== 1}
+            >
+              Edit Selected Expense
+            </button>
+
+            <button
+              type="button"
+              onClick={deleteSelectedExpenses}
+              disabled={selectedExpenseIds.length === 0}
+            >
+              Delete Selected Expenses
+            </button>
+          </div>
 
           <div className="list">
             {expenses.map((expense) => (
