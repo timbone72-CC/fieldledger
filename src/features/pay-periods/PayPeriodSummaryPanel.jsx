@@ -5,33 +5,11 @@ import {
   DEFAULT_SELF_EMPLOYMENT_TAX_RATE,
   TAX_DISCLAIMER,
 } from "../../shared/constants/fieldLedgerDefaults.js";
-
-const demoPayPeriod = {
-  jobs: [
-    {
-      jobType: "bucking",
-      hoursWorked: 6,
-      hourlyRateSnapshot: 28,
-    },
-    {
-      jobType: "torque_turn",
-      baseJobPay: 1400,
-      totalJobHours: 31,
-      hourlyRateSnapshot: 28,
-    },
-  ],
-  expenses: [
-    {
-      amount: 50,
-    },
-    {
-      amount: 25,
-    },
-  ],
-};
+import { loadActivePayPeriod } from "./activePayPeriodStorage.js";
 
 export default function PayPeriodSummaryPanel() {
-  const summary = calculatePayPeriodSummary(demoPayPeriod);
+  const payPeriod = loadActivePayPeriod();
+  const summary = calculatePayPeriodSummary(payPeriod);
   const taxEstimate = calculateTaxEstimate(summary, {
     selfEmploymentTaxRate: DEFAULT_SELF_EMPLOYMENT_TAX_RATE,
     federalTaxRate: DEFAULT_FEDERAL_TAX_RATE,
