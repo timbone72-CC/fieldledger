@@ -1,5 +1,6 @@
 import DownloadPayPeriodCsvButton from "./DownloadPayPeriodCsvButton.jsx";
 import DownloadPayPeriodJsonButton from "./DownloadPayPeriodJsonButton.jsx";
+import ImportPayPeriodJsonButton from "./ImportPayPeriodJsonButton.jsx";
 import ClearPayPeriodButton from "../pay-periods/ClearPayPeriodButton.jsx";
 
 export default function ExportActionsDropdown() {
@@ -9,6 +10,7 @@ export default function ExportActionsDropdown() {
       <div className="export-actions-menu">
         <DownloadPayPeriodJsonButton />
         <DownloadPayPeriodCsvButton />
+        <ImportPayPeriodJsonButton />
         <ClearPayPeriodButton />
       </div>
     </details>
