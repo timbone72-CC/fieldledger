@@ -48,6 +48,12 @@ export default function ExpenseEntryForm() {
   function saveExpense() {
     const payPeriod = loadActivePayPeriod();
     const existingExpenses = Array.isArray(payPeriod.expenses) ? payPeriod.expenses : [];
+    const amountValue = Number(amount || 0);
+
+    if (amountValue < 0) {
+      setSaveMessage("Negative expense amounts are not allowed.");
+      return;
+    }
 
     const expense = {
       id: editingExpenseId || crypto.randomUUID(),
@@ -55,7 +61,7 @@ export default function ExpenseEntryForm() {
       date,
       vendor,
       category,
-      amount: Number(amount || 0),
+      amount: amountValue,
       notes,
       createdAt: editingExpenseId ? undefined : new Date().toISOString(),
       updatedAt: new Date().toISOString(),

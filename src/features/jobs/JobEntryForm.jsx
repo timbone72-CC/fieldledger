@@ -58,14 +58,29 @@ export default function JobEntryForm() {
   function saveJob() {
     const payPeriod = loadActivePayPeriod();
 
+    const hoursWorkedValue = jobType === JOB_TYPES.BUCKING ? Number(hoursWorked || 0) : 0;
+    const baseJobPayValue = jobType === JOB_TYPES.TORQUE_TURN ? Number(baseJobPay || 0) : 0;
+    const totalJobHoursValue = jobType === JOB_TYPES.TORQUE_TURN ? Number(totalJobHours || 0) : 0;
+    const hourlyRateSnapshotValue = Number(hourlyRateSnapshot || 0);
+
+    if (
+      hoursWorkedValue < 0 ||
+      baseJobPayValue < 0 ||
+      totalJobHoursValue < 0 ||
+      hourlyRateSnapshotValue < 0
+    ) {
+      setSaveMessage("Negative hours or pay values are not allowed.");
+      return;
+    }
+
     const job = {
       id: editingJobId || crypto.randomUUID(),
       payPeriodId: payPeriod.id,
       jobType,
-      hoursWorked: jobType === JOB_TYPES.BUCKING ? Number(hoursWorked || 0) : 0,
-      baseJobPay: jobType === JOB_TYPES.TORQUE_TURN ? Number(baseJobPay || 0) : 0,
-      totalJobHours: jobType === JOB_TYPES.TORQUE_TURN ? Number(totalJobHours || 0) : 0,
-      hourlyRateSnapshot: Number(hourlyRateSnapshot || 0),
+      hoursWorked: hoursWorkedValue,
+      baseJobPay: baseJobPayValue,
+      totalJobHours: totalJobHoursValue,
+      hourlyRateSnapshot: hourlyRateSnapshotValue,
       totalPay: calculatedPay,
       createdAt: editingJobId ? undefined : new Date().toISOString(),
       updatedAt: new Date().toISOString(),
