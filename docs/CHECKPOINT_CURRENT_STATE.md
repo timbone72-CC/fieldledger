@@ -30,9 +30,12 @@
 
 ## Recent Commits
 
+- bd2e872 Add ticket photo preview to job form
+- 5722c2e Update checkpoint after receipt photo storage
 - 2f3f2c9 Add receipt photo preview to expense form
 - 2801e64 Add IndexedDB photo blob storage helper
-- 2f3f2c9 Add receipt photo preview to expense form
+- f018777 Update checkpoint after photo placeholders
+- a1d3384 Add photo id placeholders to saved records
 - 05f53c0 Add save time validation
 - 222bf37 Add pay period ids to saved records
 - 718bdb8 Clean core contract docs
@@ -67,19 +70,19 @@ main
 
 Current head:
 
-2f3f2c9 Add receipt photo preview to expense form
+bd2e872 Add ticket photo preview to job form
 
 ## Known MVP Gaps
 
 - Receipt photo attachment/storage is built for expenses using IndexedDB blob storage and receiptPhotoId references.
-- Real ticket photo upload/storage is not built yet.
+- Ticket photo attachment/storage is built for jobs using IndexedDB blob storage and ticketPhotoId references.
 - JSON backup exists, but PDF/spreadsheet exports are not built yet.
 - Receipt photo preview works from IndexedDB when editing saved expenses.
 
 ## Recommended Next Feature
 
-Add ticket photo attachment/storage for job records, or improve receipt photo delete/replace behavior.
+Improve photo replace/delete behavior, or start spreadsheet export.
 
 Best next contract-safe move:
 
-Next likely step: add ticket photo attachment/storage for job records, or improve receipt photo delete/replace behavior.
+Next likely step: improve photo replace/delete behavior, or start spreadsheet export.
