@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { loadActivePayPeriod, saveActivePayPeriod } from "../pay-periods/activePayPeriodStorage.js";
 import { calculateJobPay } from "../../shared/utils/calculateJobPay.js";
 import { DEFAULT_HOURLY_RATE, JOB_TYPES } from "../../shared/constants/fieldLedgerDefaults.js";
 
@@ -8,6 +9,7 @@ export default function JobEntryForm() {
   const [baseJobPay, setBaseJobPay] = useState("");
   const [totalJobHours, setTotalJobHours] = useState("");
   const [hourlyRateSnapshot, setHourlyRateSnapshot] = useState(DEFAULT_HOURLY_RATE);
+  const [saveMessage, setSaveMessage] = useState("");
 
   const calculatedPay = useMemo(() => {
     return calculateJobPay({
@@ -18,6 +20,32 @@ export default function JobEntryForm() {
       hourlyRateSnapshot,
     });
   }, [baseJobPay, hourlyRateSnapshot, hoursWorked, jobType, totalJobHours]);
+
+  function saveJob() {
+    const payPeriod = loadActivePayPeriod();
+
+    const job = {
+      id: crypto.randomUUID(),
+      jobType,
+      hoursWorked: jobType === JOB_TYPES.BUCKING ? Number(hoursWorked || 0) : 0,
+      baseJobPay: jobType === JOB_TYPES.TORQUE_TURN ? Number(baseJobPay || 0) : 0,
+      totalJobHours: jobType === JOB_TYPES.TORQUE_TURN ? Number(totalJobHours || 0) : 0,
+      hourlyRateSnapshot: Number(hourlyRateSnapshot || 0),
+      totalPay: calculatedPay,
+      createdAt: new Date().toISOString(),
+    };
+
+    saveActivePayPeriod({
+      ...payPeriod,
+      jobs: [...payPeriod.jobs, job],
+      updatedAt: new Date().toISOString(),
+    });
+
+    setHoursWorked("");
+    setBaseJobPay("");
+    setTotalJobHours("");
+    setSaveMessage("Job saved. Refresh to update the summary.");
+  }
 
   return (
     <section className="panel">
@@ -85,6 +113,12 @@ export default function JobEntryForm() {
         <span>Calculated Pay</span>
         <strong>${calculatedPay.toFixed(2)}</strong>
       </div>
+
+      <button type="button" onClick={saveJob}>
+        Save Job
+      </button>
+
+      {saveMessage && <p className="helper">{saveMessage}</p>}
     </section>
   );
 }
