@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { loadActivePayPeriod, saveActivePayPeriod } from "../pay-periods/activePayPeriodStorage.js";
 import { calculateJobPay } from "../../shared/utils/calculateJobPay.js";
 import { DEFAULT_HOURLY_RATE, JOB_TYPES } from "../../shared/constants/fieldLedgerDefaults.js";
+import { loadPhotoBlob, savePhotoBlob } from "../../shared/storage/photoBlobStorage.js";
 import { loadSettings } from "../settings/settingsStorage.js";
 
 export default function JobEntryForm() {
@@ -11,6 +12,9 @@ export default function JobEntryForm() {
   const [baseJobPay, setBaseJobPay] = useState("");
   const [totalJobHours, setTotalJobHours] = useState("");
   const [hourlyRateSnapshot, setHourlyRateSnapshot] = useState(loadSettings().hourlyRate);
+  const [ticketPhotoId, setTicketPhotoId] = useState("");
+  const [ticketPhotoFile, setTicketPhotoFile] = useState(null);
+  const [ticketPhotoPreviewUrl, setTicketPhotoPreviewUrl] = useState("");
   const [saveMessage, setSaveMessage] = useState("");
 
   useEffect(() => {
@@ -27,6 +31,8 @@ export default function JobEntryForm() {
       setBaseJobPay(job.jobType === JOB_TYPES.TORQUE_TURN ? String(job.baseJobPay || "") : "");
       setTotalJobHours(job.jobType === JOB_TYPES.TORQUE_TURN ? String(job.totalJobHours || "") : "");
       setHourlyRateSnapshot(job.hourlyRateSnapshot ?? loadSettings().hourlyRate ?? DEFAULT_HOURLY_RATE);
+      setTicketPhotoId(job.ticketPhotoId || "");
+      setTicketPhotoFile(null);
       setSaveMessage("Editing saved job. Make changes, then save.");
     }
 
@@ -47,15 +53,51 @@ export default function JobEntryForm() {
     });
   }, [baseJobPay, hourlyRateSnapshot, hoursWorked, jobType, totalJobHours]);
 
+  useEffect(() => {
+    let previewUrl = "";
+
+    async function loadTicketPhotoPreview() {
+      if (!ticketPhotoId || ticketPhotoFile) {
+        setTicketPhotoPreviewUrl("");
+        return;
+      }
+
+      try {
+        const photoRecord = await loadPhotoBlob(ticketPhotoId);
+
+        if (!photoRecord?.blob) {
+          setTicketPhotoPreviewUrl("");
+          return;
+        }
+
+        previewUrl = URL.createObjectURL(photoRecord.blob);
+        setTicketPhotoPreviewUrl(previewUrl);
+      } catch {
+        setTicketPhotoPreviewUrl("");
+      }
+    }
+
+    loadTicketPhotoPreview();
+
+    return () => {
+      if (previewUrl) {
+        URL.revokeObjectURL(previewUrl);
+      }
+    };
+  }, [ticketPhotoId, ticketPhotoFile]);
+
   function resetForm(message) {
     setEditingJobId("");
     setHoursWorked("");
     setBaseJobPay("");
     setTotalJobHours("");
+    setTicketPhotoId("");
+    setTicketPhotoFile(null);
+    setTicketPhotoPreviewUrl("");
     setSaveMessage(message);
   }
 
-  function saveJob() {
+  async function saveJob() {
     const payPeriod = loadActivePayPeriod();
 
     const hoursWorkedValue = jobType === JOB_TYPES.BUCKING ? Number(hoursWorked || 0) : 0;
@@ -73,10 +115,21 @@ export default function JobEntryForm() {
       return;
     }
 
+    let nextTicketPhotoId = ticketPhotoId;
+
+    if (ticketPhotoFile) {
+      try {
+        nextTicketPhotoId = await savePhotoBlob(ticketPhotoFile);
+      } catch {
+        setSaveMessage("Ticket photo could not be saved. Job was not saved.");
+        return;
+      }
+    }
+
     const job = {
       id: editingJobId || crypto.randomUUID(),
       payPeriodId: payPeriod.id,
-      ticketPhotoId: "",
+      ticketPhotoId: nextTicketPhotoId,
       jobType,
       hoursWorked: hoursWorkedValue,
       baseJobPay: baseJobPayValue,
@@ -177,6 +230,40 @@ export default function JobEntryForm() {
             />
           </label>
         </>
+      )}
+
+      <label className="field">
+        Ticket Photo
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(event) => {
+            setTicketPhotoFile(event.target.files?.[0] || null);
+          }}
+        />
+      </label>
+
+      {ticketPhotoId && !ticketPhotoFile && (
+        <p className="helper">Ticket photo already attached.</p>
+      )}
+
+      {ticketPhotoPreviewUrl && (
+        <img
+          src={ticketPhotoPreviewUrl}
+          alt="Attached ticket preview"
+          style={{
+            display: "block",
+            maxWidth: "240px",
+            maxHeight: "240px",
+            marginTop: "0.75rem",
+            borderRadius: "0.75rem",
+            border: "1px solid #d8d4ef",
+          }}
+        />
+      )}
+
+      {ticketPhotoFile && (
+        <p className="helper">Selected ticket photo: {ticketPhotoFile.name}</p>
       )}
 
       <div className="result-card">
