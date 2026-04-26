@@ -1,18 +1,16 @@
 import { calculatePayPeriodSummary } from "../../shared/utils/calculatePayPeriodSummary.js";
 import { calculateTaxEstimate } from "../../shared/utils/calculateTaxEstimate.js";
-import {
-  DEFAULT_FEDERAL_TAX_RATE,
-  DEFAULT_SELF_EMPLOYMENT_TAX_RATE,
-  TAX_DISCLAIMER,
-} from "../../shared/constants/fieldLedgerDefaults.js";
+import { TAX_DISCLAIMER } from "../../shared/constants/fieldLedgerDefaults.js";
+import { loadSettings } from "../settings/settingsStorage.js";
 import { loadActivePayPeriod } from "./activePayPeriodStorage.js";
 
 export default function PayPeriodSummaryPanel() {
   const payPeriod = loadActivePayPeriod();
   const summary = calculatePayPeriodSummary(payPeriod);
+  const settings = loadSettings();
   const taxEstimate = calculateTaxEstimate(summary, {
-    selfEmploymentTaxRate: DEFAULT_SELF_EMPLOYMENT_TAX_RATE,
-    federalTaxRate: DEFAULT_FEDERAL_TAX_RATE,
+    selfEmploymentTaxRate: settings.selfEmploymentTaxRate,
+    federalTaxRate: settings.federalTaxRate,
   });
 
   return (
