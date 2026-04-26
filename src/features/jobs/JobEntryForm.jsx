@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { loadActivePayPeriod, saveActivePayPeriod } from "../pay-periods/activePayPeriodStorage.js";
 import { calculateJobPay } from "../../shared/utils/calculateJobPay.js";
 import { DEFAULT_HOURLY_RATE, JOB_TYPES } from "../../shared/constants/fieldLedgerDefaults.js";
+import { loadSettings } from "../settings/settingsStorage.js";
 
 export default function JobEntryForm() {
   const [editingJobId, setEditingJobId] = useState("");
@@ -9,7 +10,7 @@ export default function JobEntryForm() {
   const [hoursWorked, setHoursWorked] = useState("");
   const [baseJobPay, setBaseJobPay] = useState("");
   const [totalJobHours, setTotalJobHours] = useState("");
-  const [hourlyRateSnapshot, setHourlyRateSnapshot] = useState(DEFAULT_HOURLY_RATE);
+  const [hourlyRateSnapshot, setHourlyRateSnapshot] = useState(loadSettings().hourlyRate);
   const [saveMessage, setSaveMessage] = useState("");
 
   useEffect(() => {
@@ -25,7 +26,7 @@ export default function JobEntryForm() {
       setHoursWorked(job.jobType === JOB_TYPES.BUCKING ? String(job.hoursWorked || "") : "");
       setBaseJobPay(job.jobType === JOB_TYPES.TORQUE_TURN ? String(job.baseJobPay || "") : "");
       setTotalJobHours(job.jobType === JOB_TYPES.TORQUE_TURN ? String(job.totalJobHours || "") : "");
-      setHourlyRateSnapshot(job.hourlyRateSnapshot ?? DEFAULT_HOURLY_RATE);
+      setHourlyRateSnapshot(job.hourlyRateSnapshot ?? loadSettings().hourlyRate ?? DEFAULT_HOURLY_RATE);
       setSaveMessage("Editing saved job. Make changes, then save.");
     }
 
