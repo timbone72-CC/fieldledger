@@ -1,5 +1,5 @@
 import { STORAGE_KEYS } from "../../shared/constants/storageKeys.js";
-import { loadJson, saveJson } from "../../shared/storage/localJsonStorage.js";
+import { loadJson, removeJson, saveJson } from "../../shared/storage/localJsonStorage.js";
 
 export function loadActivePayPeriod() {
   return loadJson(STORAGE_KEYS.ACTIVE_PAY_PERIOD, createEmptyPayPeriod());
@@ -7,6 +7,10 @@ export function loadActivePayPeriod() {
 
 export function saveActivePayPeriod(payPeriod) {
   saveJson(STORAGE_KEYS.ACTIVE_PAY_PERIOD, payPeriod);
+}
+
+export function clearActivePayPeriod() {
+  removeJson(STORAGE_KEYS.ACTIVE_PAY_PERIOD);
 }
 
 export function createEmptyPayPeriod() {

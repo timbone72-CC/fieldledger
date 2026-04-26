@@ -1,6 +1,7 @@
 import "./App.css";
 import ExpenseEntryForm from "./features/expenses/ExpenseEntryForm.jsx";
 import JobEntryForm from "./features/jobs/JobEntryForm.jsx";
+import ClearPayPeriodButton from "./features/pay-periods/ClearPayPeriodButton.jsx";
 import PayPeriodSummaryPanel from "./features/pay-periods/PayPeriodSummaryPanel.jsx";
 
 export default function App() {
@@ -16,6 +17,7 @@ export default function App() {
       </section>
 
       <PayPeriodSummaryPanel />
+      <ClearPayPeriodButton />
       <JobEntryForm />
       <ExpenseEntryForm />
     </main>
