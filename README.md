@@ -1,17 +1,16 @@
-# FieldLedger
+# React + Vite
 
-FieldLedger is a 1099 field-work tracking app for job tickets, timesheets, receipts, expenses, and rough tax estimates.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## MVP Goal
+Currently, two official plugins are available:
 
-Take photos of handwritten job tickets and receipts, extract needed information, let the user review/edit it, calculate pay-period earnings and expenses, and export the results as PDF and spreadsheet files.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-## Locked Rules
+## React Compiler
 
-- Manual pay periods
-- Mixed job types in one pay period
-- Bucking pay = hours × hourly rate
-- Torque Turn pay = base job pay + hours beyond 24 × hourly rate
-- Receipts are saved inside each pay period
-- Expenses subtract from earnings
-- Rough tax estimate includes self-employment and rough federal estimate
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+
+## Expanding the ESLint configuration
+
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
