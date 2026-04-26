@@ -26,12 +26,15 @@
 - Settings save default hourly rate and tax rates.
 - Clear pay period resets saved local data.
 - JSON backup download exports the active pay period.
+- JSON backup import restores a valid FieldLedger pay period after confirmation.
 - Spreadsheet CSV download exports saved pay-period jobs and expenses.
 - Export / Backup dropdown appears near the top of the dashboard.
 - Core contract docs have been cleaned.
 
 ## Recent Commits
 
+- 673e5c0 Add JSON backup restore
+- fbd68fa Update checkpoint after spreadsheet CSV export
 - b764c45 Add spreadsheet CSV export dropdown
 - 42b164b Update checkpoint after ticket photo storage
 - bd2e872 Add ticket photo preview to job form
@@ -40,13 +43,11 @@
 - 2801e64 Add IndexedDB photo blob storage helper
 - f018777 Update checkpoint after photo placeholders
 - a1d3384 Add photo id placeholders to saved records
+- 5773f46 Update checkpoint after contract cleanup
 - 05f53c0 Add save time validation
 - 222bf37 Add pay period ids to saved records
 - 718bdb8 Clean core contract docs
 - 877b916 Use saved tax rates in summary
-- ded182b Use saved hourly rate for new jobs
-- e0e0a0e Add settings tab
-- 36db8c1 Add settings storage
 
 ## Storage
 
@@ -74,7 +75,7 @@ main
 
 Current head:
 
-b764c45 Add spreadsheet CSV export dropdown
+673e5c0 Add JSON backup restore
 
 ## Known MVP Gaps
 
