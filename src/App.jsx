@@ -2,10 +2,9 @@ import { useState } from "react";
 import "./App.css";
 import ExpenseEntryForm from "./features/expenses/ExpenseEntryForm.jsx";
 import SavedExpensesList from "./features/expenses/SavedExpensesList.jsx";
-import DownloadPayPeriodJsonButton from "./features/exports/DownloadPayPeriodJsonButton.jsx";
+import ExportActionsDropdown from "./features/exports/ExportActionsDropdown.jsx";
 import JobEntryForm from "./features/jobs/JobEntryForm.jsx";
 import SavedJobsList from "./features/jobs/SavedJobsList.jsx";
-import ClearPayPeriodButton from "./features/pay-periods/ClearPayPeriodButton.jsx";
 import PayPeriodInfoForm from "./features/pay-periods/PayPeriodInfoForm.jsx";
 import PayPeriodSummaryPanel from "./features/pay-periods/PayPeriodSummaryPanel.jsx";
 import SettingsPanel from "./features/settings/SettingsPanel.jsx";
@@ -65,9 +64,8 @@ export default function App() {
       {activeTab === TABS.DASHBOARD && (
         <>
           <PayPeriodInfoForm />
+          <ExportActionsDropdown />
           <PayPeriodSummaryPanel />
-          <DownloadPayPeriodJsonButton />
-          <ClearPayPeriodButton />
         </>
       )}
 
