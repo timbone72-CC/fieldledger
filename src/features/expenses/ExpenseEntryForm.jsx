@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { loadActivePayPeriod, saveActivePayPeriod } from "../pay-periods/activePayPeriodStorage.js";
 import { EXPENSE_CATEGORIES } from "../../shared/constants/fieldLedgerDefaults.js";
 
 export default function ExpenseEntryForm() {
@@ -7,6 +8,34 @@ export default function ExpenseEntryForm() {
   const [category, setCategory] = useState(EXPENSE_CATEGORIES[0]);
   const [amount, setAmount] = useState("");
   const [notes, setNotes] = useState("");
+  const [saveMessage, setSaveMessage] = useState("");
+
+  function saveExpense() {
+    const payPeriod = loadActivePayPeriod();
+
+    const expense = {
+      id: crypto.randomUUID(),
+      date,
+      vendor,
+      category,
+      amount: Number(amount || 0),
+      notes,
+      createdAt: new Date().toISOString(),
+    };
+
+    saveActivePayPeriod({
+      ...payPeriod,
+      expenses: [...payPeriod.expenses, expense],
+      updatedAt: new Date().toISOString(),
+    });
+
+    setDate("");
+    setVendor("");
+    setCategory(EXPENSE_CATEGORIES[0]);
+    setAmount("");
+    setNotes("");
+    setSaveMessage("Expense saved. Refresh to update the summary.");
+  }
 
   return (
     <section className="panel">
@@ -66,6 +95,12 @@ export default function ExpenseEntryForm() {
           rows="3"
         />
       </label>
+
+      <button type="button" onClick={saveExpense}>
+        Save Expense
+      </button>
+
+      {saveMessage && <p className="helper">{saveMessage}</p>}
     </section>
   );
 }
