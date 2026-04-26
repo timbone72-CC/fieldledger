@@ -26,10 +26,14 @@
 - Settings save default hourly rate and tax rates.
 - Clear pay period resets saved local data.
 - JSON backup download exports the active pay period.
+- Spreadsheet CSV download exports saved pay-period jobs and expenses.
+- Export / Backup dropdown appears near the top of the dashboard.
 - Core contract docs have been cleaned.
 
 ## Recent Commits
 
+- b764c45 Add spreadsheet CSV export dropdown
+- 42b164b Update checkpoint after ticket photo storage
 - bd2e872 Add ticket photo preview to job form
 - 5722c2e Update checkpoint after receipt photo storage
 - 2f3f2c9 Add receipt photo preview to expense form
@@ -70,19 +74,19 @@ main
 
 Current head:
 
-bd2e872 Add ticket photo preview to job form
+b764c45 Add spreadsheet CSV export dropdown
 
 ## Known MVP Gaps
 
 - Receipt photo attachment/storage is built for expenses using IndexedDB blob storage and receiptPhotoId references.
 - Ticket photo attachment/storage is built for jobs using IndexedDB blob storage and ticketPhotoId references.
-- JSON backup exists, but PDF/spreadsheet exports are not built yet.
+- JSON backup and spreadsheet CSV export exist, but PDF export is not built yet.
 - Receipt photo preview works from IndexedDB when editing saved expenses.
 
 ## Recommended Next Feature
 
-Improve photo replace/delete behavior, or start spreadsheet export.
+Improve photo replace/delete behavior, or start PDF/printable report export.
 
 Best next contract-safe move:
 
-Next likely step: improve photo replace/delete behavior, or start spreadsheet export.
+Next likely step: improve photo replace/delete behavior, or start PDF/printable report export.
