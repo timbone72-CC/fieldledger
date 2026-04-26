@@ -1,6 +1,7 @@
 import "./App.css";
 import ExpenseEntryForm from "./features/expenses/ExpenseEntryForm.jsx";
 import JobEntryForm from "./features/jobs/JobEntryForm.jsx";
+import PayPeriodSummaryPanel from "./features/pay-periods/PayPeriodSummaryPanel.jsx";
 
 export default function App() {
   return (
@@ -14,6 +15,7 @@ export default function App() {
         </p>
       </section>
 
+      <PayPeriodSummaryPanel />
       <JobEntryForm />
       <ExpenseEntryForm />
     </main>
