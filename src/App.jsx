@@ -4,6 +4,7 @@ import SavedExpensesList from "./features/expenses/SavedExpensesList.jsx";
 import JobEntryForm from "./features/jobs/JobEntryForm.jsx";
 import SavedJobsList from "./features/jobs/SavedJobsList.jsx";
 import ClearPayPeriodButton from "./features/pay-periods/ClearPayPeriodButton.jsx";
+import PayPeriodInfoForm from "./features/pay-periods/PayPeriodInfoForm.jsx";
 import PayPeriodSummaryPanel from "./features/pay-periods/PayPeriodSummaryPanel.jsx";
 
 export default function App() {
@@ -18,6 +19,7 @@ export default function App() {
         </p>
       </section>
 
+      <PayPeriodInfoForm />
       <PayPeriodSummaryPanel />
       <ClearPayPeriodButton />
       <SavedJobsList />
