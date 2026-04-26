@@ -33,6 +33,10 @@
 
 ## Recent Commits
 
+- ef5d982 Add ticket photo remove button
+- 0e20985 Add receipt photo remove button
+- c8043fe Add printable pay period report button
+- d47e08d Update checkpoint after JSON backup restore
 - 673e5c0 Add JSON backup restore
 - fbd68fa Update checkpoint after spreadsheet CSV export
 - b764c45 Add spreadsheet CSV export dropdown
@@ -44,10 +48,6 @@
 - f018777 Update checkpoint after photo placeholders
 - a1d3384 Add photo id placeholders to saved records
 - 5773f46 Update checkpoint after contract cleanup
-- 05f53c0 Add save time validation
-- 222bf37 Add pay period ids to saved records
-- 718bdb8 Clean core contract docs
-- 877b916 Use saved tax rates in summary
 
 ## Storage
 
@@ -75,7 +75,7 @@ main
 
 Current head:
 
-673e5c0 Add JSON backup restore
+ef5d982 Add ticket photo remove button
 
 ## Known MVP Gaps
 
@@ -83,11 +83,13 @@ Current head:
 - Ticket photo attachment/storage is built for jobs using IndexedDB blob storage and ticketPhotoId references.
 - JSON backup and spreadsheet CSV export exist, but PDF export is not built yet.
 - Receipt photo preview works from IndexedDB when editing saved expenses.
+- Receipt photos can be removed from saved expenses.
+- Ticket photos can be removed from saved jobs.
 
 ## Recommended Next Feature
 
-Improve photo replace/delete behavior, or start PDF/printable report export.
+Run final contract audit before more feature work.
 
 Best next contract-safe move:
 
-Next likely step: improve photo replace/delete behavior, or start PDF/printable report export.
+Next likely step: run final contract audit before more feature work.
