@@ -8,10 +8,12 @@
 - Bucking job entries save locally.
 - Torque Turn job entries save locally.
 - New saved jobs include payPeriodId.
+- New saved jobs include ticketPhotoId placeholder.
 - Saved jobs can be deleted.
 - Saved jobs can be edited.
 - Expense entries save locally.
 - New saved expenses include payPeriodId.
+- New saved expenses include receiptPhotoId placeholder.
 - Saved expenses can be selected with checkboxes.
 - Selected expenses can be deleted.
 - Saved expenses can be edited.
@@ -28,6 +30,7 @@
 
 ## Recent Commits
 
+- a1d3384 Add photo id placeholders to saved records
 - 05f53c0 Add save time validation
 - 222bf37 Add pay period ids to saved records
 - 718bdb8 Clean core contract docs
@@ -62,12 +65,12 @@ main
 
 Current head:
 
-05f53c0 Add save time validation
+a1d3384 Add photo id placeholders to saved records
 
 ## Known MVP Gaps
 
-- Receipt photo references are not built yet.
-- Ticket photo references are not built yet.
+- Real receipt photo upload/storage is not built yet.
+- Real ticket photo upload/storage is not built yet.
 - JSON backup exists, but PDF/spreadsheet exports are not built yet.
 - Large photo/blob IndexedDB storage is not built yet.
 
