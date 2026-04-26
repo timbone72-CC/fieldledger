@@ -8,11 +8,13 @@ import SavedJobsList from "./features/jobs/SavedJobsList.jsx";
 import ClearPayPeriodButton from "./features/pay-periods/ClearPayPeriodButton.jsx";
 import PayPeriodInfoForm from "./features/pay-periods/PayPeriodInfoForm.jsx";
 import PayPeriodSummaryPanel from "./features/pay-periods/PayPeriodSummaryPanel.jsx";
+import SettingsPanel from "./features/settings/SettingsPanel.jsx";
 
 const TABS = {
   DASHBOARD: "dashboard",
   JOBS: "jobs",
   EXPENSES: "expenses",
+  SETTINGS: "settings",
 };
 
 export default function App() {
@@ -51,6 +53,13 @@ export default function App() {
         >
           Expenses
         </button>
+        <button
+          type="button"
+          className={activeTab === TABS.SETTINGS ? "active" : ""}
+          onClick={() => setActiveTab(TABS.SETTINGS)}
+        >
+          Settings
+        </button>
       </nav>
 
       {activeTab === TABS.DASHBOARD && (
@@ -75,6 +84,8 @@ export default function App() {
           <ExpenseEntryForm />
         </>
       )}
+
+      {activeTab === TABS.SETTINGS && <SettingsPanel />}
     </main>
   );
 }
