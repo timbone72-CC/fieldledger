@@ -1,4 +1,5 @@
 import "./App.css";
+import ExpenseEntryForm from "./features/expenses/ExpenseEntryForm.jsx";
 import JobEntryForm from "./features/jobs/JobEntryForm.jsx";
 
 export default function App() {
@@ -14,6 +15,7 @@ export default function App() {
       </section>
 
       <JobEntryForm />
+      <ExpenseEntryForm />
     </main>
   );
 }
