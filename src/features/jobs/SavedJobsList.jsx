@@ -1,8 +1,27 @@
-import { loadActivePayPeriod } from "../pay-periods/activePayPeriodStorage.js";
+import { loadActivePayPeriod, saveActivePayPeriod } from "../pay-periods/activePayPeriodStorage.js";
 
 export default function SavedJobsList() {
   const payPeriod = loadActivePayPeriod();
   const jobs = Array.isArray(payPeriod.jobs) ? payPeriod.jobs : [];
+
+  function deleteJob(jobId) {
+    const confirmed = window.confirm("Delete this saved job?");
+
+    if (!confirmed) {
+      return;
+    }
+
+    const latestPayPeriod = loadActivePayPeriod();
+    const latestJobs = Array.isArray(latestPayPeriod.jobs) ? latestPayPeriod.jobs : [];
+
+    saveActivePayPeriod({
+      ...latestPayPeriod,
+      jobs: latestJobs.filter((job) => job.id !== jobId),
+      updatedAt: new Date().toISOString(),
+    });
+
+    window.location.reload();
+  }
 
   return (
     <section className="panel">
@@ -16,6 +35,9 @@ export default function SavedJobsList() {
             <div className="result-card" key={job.id}>
               <span>{formatJobLabel(job)}</span>
               <strong>${Number(job.totalPay || 0).toFixed(2)}</strong>
+              <button type="button" onClick={() => deleteJob(job.id)}>
+                Delete
+              </button>
             </div>
           ))}
         </div>
