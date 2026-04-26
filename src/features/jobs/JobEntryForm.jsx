@@ -60,6 +60,7 @@ export default function JobEntryForm() {
 
     const job = {
       id: editingJobId || crypto.randomUUID(),
+      payPeriodId: payPeriod.id,
       jobType,
       hoursWorked: jobType === JOB_TYPES.BUCKING ? Number(hoursWorked || 0) : 0,
       baseJobPay: jobType === JOB_TYPES.TORQUE_TURN ? Number(baseJobPay || 0) : 0,
