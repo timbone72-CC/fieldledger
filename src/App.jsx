@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "./App.css";
 import ExpenseEntryForm from "./features/expenses/ExpenseEntryForm.jsx";
 import SavedExpensesList from "./features/expenses/SavedExpensesList.jsx";
@@ -8,7 +9,15 @@ import ClearPayPeriodButton from "./features/pay-periods/ClearPayPeriodButton.js
 import PayPeriodInfoForm from "./features/pay-periods/PayPeriodInfoForm.jsx";
 import PayPeriodSummaryPanel from "./features/pay-periods/PayPeriodSummaryPanel.jsx";
 
+const TABS = {
+  DASHBOARD: "dashboard",
+  JOBS: "jobs",
+  EXPENSES: "expenses",
+};
+
 export default function App() {
+  const [activeTab, setActiveTab] = useState(TABS.DASHBOARD);
+
   return (
     <main className="app-shell">
       <section className="hero-card">
@@ -20,14 +29,52 @@ export default function App() {
         </p>
       </section>
 
-      <PayPeriodInfoForm />
-      <PayPeriodSummaryPanel />
-      <DownloadPayPeriodJsonButton />
-      <ClearPayPeriodButton />
-      <SavedJobsList />
-      <SavedExpensesList />
-      <JobEntryForm />
-      <ExpenseEntryForm />
+      <nav className="tab-bar" aria-label="FieldLedger sections">
+        <button
+          type="button"
+          className={activeTab === TABS.DASHBOARD ? "active" : ""}
+          onClick={() => setActiveTab(TABS.DASHBOARD)}
+        >
+          Dashboard
+        </button>
+        <button
+          type="button"
+          className={activeTab === TABS.JOBS ? "active" : ""}
+          onClick={() => setActiveTab(TABS.JOBS)}
+        >
+          Jobs
+        </button>
+        <button
+          type="button"
+          className={activeTab === TABS.EXPENSES ? "active" : ""}
+          onClick={() => setActiveTab(TABS.EXPENSES)}
+        >
+          Expenses
+        </button>
+      </nav>
+
+      {activeTab === TABS.DASHBOARD && (
+        <>
+          <PayPeriodInfoForm />
+          <PayPeriodSummaryPanel />
+          <DownloadPayPeriodJsonButton />
+          <ClearPayPeriodButton />
+        </>
+      )}
+
+      {activeTab === TABS.JOBS && (
+        <>
+          <SavedJobsList />
+          <JobEntryForm />
+        </>
+      )}
+
+      {activeTab === TABS.EXPENSES && (
+        <>
+          <SavedExpensesList />
+          <ExpenseEntryForm />
+        </>
+      )}
     </main>
   );
 }
