@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { loadActivePayPeriod, saveActivePayPeriod } from "../pay-periods/activePayPeriodStorage.js";
 import { calculateJobPay } from "../../shared/utils/calculateJobPay.js";
 import { DEFAULT_HOURLY_RATE, JOB_TYPES } from "../../shared/constants/fieldLedgerDefaults.js";
-import { loadPhotoBlob, savePhotoBlob } from "../../shared/storage/photoBlobStorage.js";
+import { deletePhotoBlob, loadPhotoBlob, savePhotoBlob } from "../../shared/storage/photoBlobStorage.js";
 import { loadSettings } from "../settings/settingsStorage.js";
 
 export default function JobEntryForm() {
@@ -166,6 +166,31 @@ export default function JobEntryForm() {
     window.location.reload();
   }
 
+  async function removeTicketPhoto() {
+    if (!ticketPhotoId) {
+      setTicketPhotoFile(null);
+      setTicketPhotoPreviewUrl("");
+      return;
+    }
+
+    const confirmed = window.confirm("Remove this ticket photo from the saved job?");
+
+    if (!confirmed) {
+      return;
+    }
+
+    try {
+      await deletePhotoBlob(ticketPhotoId);
+    } catch {
+      setSaveMessage("Ticket photo reference was removed, but the stored photo could not be deleted.");
+    }
+
+    setTicketPhotoId("");
+    setTicketPhotoFile(null);
+    setTicketPhotoPreviewUrl("");
+    setSaveMessage("Ticket photo removed. Save job changes to keep this update.");
+  }
+
   function cancelEdit() {
     resetForm("");
   }
@@ -260,6 +285,12 @@ export default function JobEntryForm() {
             border: "1px solid #d8d4ef",
           }}
         />
+      )}
+
+      {(ticketPhotoId || ticketPhotoFile) && (
+        <button type="button" onClick={removeTicketPhoto}>
+          Remove Ticket Photo
+        </button>
       )}
 
       {ticketPhotoFile && (
