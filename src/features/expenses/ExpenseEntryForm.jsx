@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { loadActivePayPeriod, saveActivePayPeriod } from "../pay-periods/activePayPeriodStorage.js";
 import { EXPENSE_CATEGORIES } from "../../shared/constants/fieldLedgerDefaults.js";
-import { loadPhotoBlob, savePhotoBlob } from "../../shared/storage/photoBlobStorage.js";
+import { deletePhotoBlob, loadPhotoBlob, savePhotoBlob } from "../../shared/storage/photoBlobStorage.js";
 
 export default function ExpenseEntryForm() {
   const [editingExpenseId, setEditingExpenseId] = useState("");
@@ -150,6 +150,31 @@ export default function ExpenseEntryForm() {
     window.location.reload();
   }
 
+  async function removeReceiptPhoto() {
+    if (!receiptPhotoId) {
+      setReceiptPhotoFile(null);
+      setReceiptPhotoPreviewUrl("");
+      return;
+    }
+
+    const confirmed = window.confirm("Remove this receipt photo from the saved expense?");
+
+    if (!confirmed) {
+      return;
+    }
+
+    try {
+      await deletePhotoBlob(receiptPhotoId);
+    } catch {
+      setSaveMessage("Receipt photo reference was removed, but the stored photo could not be deleted.");
+    }
+
+    setReceiptPhotoId("");
+    setReceiptPhotoFile(null);
+    setReceiptPhotoPreviewUrl("");
+    setSaveMessage("Receipt photo removed. Save expense changes to keep this update.");
+  }
+
   function cancelEdit() {
     resetForm("");
   }
@@ -231,6 +256,12 @@ export default function ExpenseEntryForm() {
             border: "1px solid #d8d4ef",
           }}
         />
+      )}
+
+      {(receiptPhotoId || receiptPhotoFile) && (
+        <button type="button" onClick={removeReceiptPhoto}>
+          Remove Receipt Photo
+        </button>
       )}
 
       {receiptPhotoFile && (
