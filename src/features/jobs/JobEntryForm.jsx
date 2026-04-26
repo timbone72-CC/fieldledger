@@ -76,6 +76,7 @@ export default function JobEntryForm() {
     const job = {
       id: editingJobId || crypto.randomUUID(),
       payPeriodId: payPeriod.id,
+      ticketPhotoId: "",
       jobType,
       hoursWorked: hoursWorkedValue,
       baseJobPay: baseJobPayValue,

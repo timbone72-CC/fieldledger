@@ -58,6 +58,7 @@ export default function ExpenseEntryForm() {
     const expense = {
       id: editingExpenseId || crypto.randomUUID(),
       payPeriodId: payPeriod.id,
+      receiptPhotoId: "",
       date,
       vendor,
       category,
