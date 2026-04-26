@@ -19,6 +19,13 @@ export default function PayPeriodSummaryPanel() {
     <section className="panel">
       <h2>Pay Period Summary</h2>
 
+      <p className="helper">
+        {payPeriod.label || "Current Pay Period"}
+        {payPeriod.startDate || payPeriod.endDate
+          ? ` — ${payPeriod.startDate || "No start date"} to ${payPeriod.endDate || "No end date"}`
+          : ""}
+      </p>
+
       <div className="result-card">
         <span>Gross Earnings</span>
         <strong>${summary.grossEarnings.toFixed(2)}</strong>
