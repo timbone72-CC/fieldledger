@@ -128,3 +128,10 @@
     grid-template-columns: auto 1fr auto;
   }
 }
+
+
+.card-actions {
+  display: grid;
+  gap: 8px;
+  justify-items: end;
+}

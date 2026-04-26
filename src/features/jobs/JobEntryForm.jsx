@@ -1,15 +1,40 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { loadActivePayPeriod, saveActivePayPeriod } from "../pay-periods/activePayPeriodStorage.js";
 import { calculateJobPay } from "../../shared/utils/calculateJobPay.js";
 import { DEFAULT_HOURLY_RATE, JOB_TYPES } from "../../shared/constants/fieldLedgerDefaults.js";
 
 export default function JobEntryForm() {
+  const [editingJobId, setEditingJobId] = useState("");
   const [jobType, setJobType] = useState(JOB_TYPES.BUCKING);
   const [hoursWorked, setHoursWorked] = useState("");
   const [baseJobPay, setBaseJobPay] = useState("");
   const [totalJobHours, setTotalJobHours] = useState("");
   const [hourlyRateSnapshot, setHourlyRateSnapshot] = useState(DEFAULT_HOURLY_RATE);
   const [saveMessage, setSaveMessage] = useState("");
+
+  useEffect(() => {
+    function loadJobForEditing(event) {
+      const job = event.detail?.job;
+
+      if (!job) {
+        return;
+      }
+
+      setEditingJobId(job.id);
+      setJobType(job.jobType || JOB_TYPES.BUCKING);
+      setHoursWorked(job.jobType === JOB_TYPES.BUCKING ? String(job.hoursWorked || "") : "");
+      setBaseJobPay(job.jobType === JOB_TYPES.TORQUE_TURN ? String(job.baseJobPay || "") : "");
+      setTotalJobHours(job.jobType === JOB_TYPES.TORQUE_TURN ? String(job.totalJobHours || "") : "");
+      setHourlyRateSnapshot(job.hourlyRateSnapshot ?? DEFAULT_HOURLY_RATE);
+      setSaveMessage("Editing saved job. Make changes, then save.");
+    }
+
+    window.addEventListener("fieldledger:edit-job", loadJobForEditing);
+
+    return () => {
+      window.removeEventListener("fieldledger:edit-job", loadJobForEditing);
+    };
+  }, []);
 
   const calculatedPay = useMemo(() => {
     return calculateJobPay({
@@ -21,35 +46,62 @@ export default function JobEntryForm() {
     });
   }, [baseJobPay, hourlyRateSnapshot, hoursWorked, jobType, totalJobHours]);
 
+  function resetForm(message) {
+    setEditingJobId("");
+    setHoursWorked("");
+    setBaseJobPay("");
+    setTotalJobHours("");
+    setSaveMessage(message);
+  }
+
   function saveJob() {
     const payPeriod = loadActivePayPeriod();
 
     const job = {
-      id: crypto.randomUUID(),
+      id: editingJobId || crypto.randomUUID(),
       jobType,
       hoursWorked: jobType === JOB_TYPES.BUCKING ? Number(hoursWorked || 0) : 0,
       baseJobPay: jobType === JOB_TYPES.TORQUE_TURN ? Number(baseJobPay || 0) : 0,
       totalJobHours: jobType === JOB_TYPES.TORQUE_TURN ? Number(totalJobHours || 0) : 0,
       hourlyRateSnapshot: Number(hourlyRateSnapshot || 0),
       totalPay: calculatedPay,
-      createdAt: new Date().toISOString(),
+      createdAt: editingJobId ? undefined : new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
     };
+
+    const existingJobs = Array.isArray(payPeriod.jobs) ? payPeriod.jobs : [];
+
+    const nextJobs = editingJobId
+      ? existingJobs.map((existingJob) => {
+          if (existingJob.id !== editingJobId) {
+            return existingJob;
+          }
+
+          return {
+            ...existingJob,
+            ...job,
+            createdAt: existingJob.createdAt,
+          };
+        })
+      : [...existingJobs, job];
 
     saveActivePayPeriod({
       ...payPeriod,
-      jobs: [...payPeriod.jobs, job],
+      jobs: nextJobs,
       updatedAt: new Date().toISOString(),
     });
 
-    setHoursWorked("");
-    setBaseJobPay("");
-    setTotalJobHours("");
-    setSaveMessage("Job saved. Refresh to update the summary.");
+    resetForm(editingJobId ? "Job updated. Refresh to update the summary." : "Job saved. Refresh to update the summary.");
+    window.location.reload();
+  }
+
+  function cancelEdit() {
+    resetForm("");
   }
 
   return (
     <section className="panel">
-      <h2>Add Job Ticket</h2>
+      <h2>{editingJobId ? "Edit Job Ticket" : "Add Job Ticket"}</h2>
 
       <label className="field">
         Job Type
@@ -115,8 +167,14 @@ export default function JobEntryForm() {
       </div>
 
       <button type="button" onClick={saveJob}>
-        Save Job
+        {editingJobId ? "Save Job Changes" : "Save Job"}
       </button>
+
+      {editingJobId && (
+        <button type="button" onClick={cancelEdit}>
+          Cancel Edit
+        </button>
+      )}
 
       {saveMessage && <p className="helper">{saveMessage}</p>}
     </section>

@@ -4,6 +4,14 @@ export default function SavedJobsList() {
   const payPeriod = loadActivePayPeriod();
   const jobs = Array.isArray(payPeriod.jobs) ? payPeriod.jobs : [];
 
+  function editJob(job) {
+    window.dispatchEvent(
+      new CustomEvent("fieldledger:edit-job", {
+        detail: { job },
+      }),
+    );
+  }
+
   function deleteJob(jobId) {
     const confirmed = window.confirm("Delete this saved job?");
 
@@ -35,9 +43,14 @@ export default function SavedJobsList() {
             <div className="result-card" key={job.id}>
               <span>{formatJobLabel(job)}</span>
               <strong>${Number(job.totalPay || 0).toFixed(2)}</strong>
-              <button type="button" onClick={() => deleteJob(job.id)}>
-                Delete
-              </button>
+              <div className="card-actions">
+                <button type="button" onClick={() => editJob(job)}>
+                  Edit
+                </button>
+                <button type="button" onClick={() => deleteJob(job.id)}>
+                  Delete
+                </button>
+              </div>
             </div>
           ))}
         </div>
