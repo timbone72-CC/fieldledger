@@ -29,10 +29,15 @@
 - JSON backup import restores a valid FieldLedger pay period after confirmation.
 - Spreadsheet CSV download exports saved pay-period jobs and expenses.
 - Export / Backup dropdown appears near the top of the dashboard.
+- Production build passed.
+- Milestone audit passed with no blocking issues.
+- JSON backup restore imports a valid backup after confirmation.
+- Print / Save PDF Report opens the browser print dialog.
 - Core contract docs have been cleaned.
 
 ## Recent Commits
 
+- 2e47a4e Update checkpoint after photo remove buttons
 - ef5d982 Add ticket photo remove button
 - 0e20985 Add receipt photo remove button
 - c8043fe Add printable pay period report button
@@ -47,7 +52,6 @@
 - 2801e64 Add IndexedDB photo blob storage helper
 - f018777 Update checkpoint after photo placeholders
 - a1d3384 Add photo id placeholders to saved records
-- 5773f46 Update checkpoint after contract cleanup
 
 ## Storage
 
@@ -75,7 +79,7 @@ main
 
 Current head:
 
-ef5d982 Add ticket photo remove button
+2e47a4e Update checkpoint after photo remove buttons
 
 ## Known MVP Gaps
 
@@ -92,4 +96,4 @@ Run final contract audit before more feature work.
 
 Best next contract-safe move:
 
-Next likely step: run final contract audit before more feature work.
+Next likely step: continue remaining MVP work, then run final audit when feature-complete.
