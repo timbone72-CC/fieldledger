@@ -4,5 +4,9 @@ import react from "@vitejs/plugin-react";
 // https://vite.dev/config/
 export default defineConfig({
   base: "/fieldledger/",
+  build: {
+    outDir: "docs",
+    emptyOutDir: false,
+  },
   plugins: [react()],
 });
