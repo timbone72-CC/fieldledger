@@ -1,10 +1,43 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { loadActivePayPeriod, saveActivePayPeriod } from "../pay-periods/activePayPeriodStorage.js";
+import { loadPhotoBlob } from "../../shared/storage/photoBlobStorage.js";
 
 export default function SavedExpensesList() {
   const payPeriod = loadActivePayPeriod();
   const expenses = Array.isArray(payPeriod.expenses) ? payPeriod.expenses : [];
   const [selectedExpenseIds, setSelectedExpenseIds] = useState([]);
+  const [previewUrls, setPreviewUrls] = useState({});
+
+  useEffect(() => {
+    let active = true;
+    const urls = {};
+
+    async function loadPreviews() {
+      for (const expense of expenses) {
+        if (!expense.receiptPhotoId) continue;
+
+        try {
+          const record = await loadPhotoBlob(expense.receiptPhotoId);
+          if (record?.blob) {
+            urls[expense.id] = URL.createObjectURL(record.blob);
+          }
+        } catch {
+          // ignore broken preview
+        }
+      }
+
+      if (active) {
+        setPreviewUrls(urls);
+      }
+    }
+
+    loadPreviews();
+
+    return () => {
+      active = false;
+      Object.values(urls).forEach((url) => URL.revokeObjectURL(url));
+    };
+  }, [expenses]);
 
   function editSelectedExpense() {
     const selectedExpenseId = selectedExpenseIds[0];
@@ -26,7 +59,6 @@ export default function SavedExpensesList() {
       if (currentIds.includes(expenseId)) {
         return currentIds.filter((id) => id !== expenseId);
       }
-
       return [...currentIds, expenseId];
     });
   }
@@ -87,8 +119,25 @@ export default function SavedExpensesList() {
                   checked={selectedExpenseIds.includes(expense.id)}
                   onChange={() => toggleExpenseSelection(expense.id)}
                 />
-                <span>{formatExpenseLabel(expense)}</span>
-                <strong>${Number(expense.amount || 0).toFixed(2)}</strong>
+
+                <div>
+                  <span>{formatExpenseLabel(expense)}</span>
+                  <strong>${Number(expense.amount || 0).toFixed(2)}</strong>
+
+                  {previewUrls[expense.id] && (
+                    <img
+                      src={previewUrls[expense.id]}
+                      alt="Receipt preview"
+                      style={{
+                        display: "block",
+                        maxWidth: "120px",
+                        marginTop: "0.5rem",
+                        borderRadius: "0.5rem",
+                        border: "1px solid #d8d4ef",
+                      }}
+                    />
+                  )}
+                </div>
               </label>
             ))}
           </div>
