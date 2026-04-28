@@ -30,6 +30,11 @@
 - Spreadsheet CSV download exports saved pay-period jobs and expenses.
 - Export / Backup dropdown appears near the top of the dashboard.
 - Production build passed.
+- Phone and computer data remain separate because records are stored locally per browser.
+- GitHub Pages app URL: https://timbone72-cc.github.io/fieldledger/
+- GitHub Pages phone link works.
+- Git remote uses SSH.
+- GitHub repo is connected.
 - Milestone audit passed with no blocking issues.
 - JSON backup restore imports a valid backup after confirmation.
 - Print / Save PDF Report opens the browser print dialog.
@@ -37,6 +42,9 @@
 
 ## Recent Commits
 
+- 9b7867b Add GitHub Pages build output
+- a90ea2d Configure Vite for GitHub Pages
+- df16cb6 Update checkpoint after milestone audit
 - 2e47a4e Update checkpoint after photo remove buttons
 - ef5d982 Add ticket photo remove button
 - 0e20985 Add receipt photo remove button
@@ -49,9 +57,6 @@
 - bd2e872 Add ticket photo preview to job form
 - 5722c2e Update checkpoint after receipt photo storage
 - 2f3f2c9 Add receipt photo preview to expense form
-- 2801e64 Add IndexedDB photo blob storage helper
-- f018777 Update checkpoint after photo placeholders
-- a1d3384 Add photo id placeholders to saved records
 
 ## Storage
 
@@ -79,7 +84,7 @@ main
 
 Current head:
 
-2e47a4e Update checkpoint after photo remove buttons
+9b7867b Add GitHub Pages build output
 
 ## Known MVP Gaps
 
