@@ -6,9 +6,9 @@ export default function SettingsPanel() {
 
   const [hourlyRate, setHourlyRate] = useState(savedSettings.hourlyRate);
   const [selfEmploymentTaxRate, setSelfEmploymentTaxRate] = useState(
-    savedSettings.selfEmploymentTaxRate * 100,
+    (savedSettings.selfEmploymentTaxRate * 100).toFixed(2),
   );
-  const [federalTaxRate, setFederalTaxRate] = useState(savedSettings.federalTaxRate * 100);
+  const [federalTaxRate, setFederalTaxRate] = useState((savedSettings.federalTaxRate * 100).toFixed(2));
   const [saveMessage, setSaveMessage] = useState("");
 
   function saveUserSettings() {
