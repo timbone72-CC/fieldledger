@@ -1,104 +1,63 @@
 # FieldLedger Current State Checkpoint
 
-## Confirmed Working
+## Current Head
 
-- React/Vite app runs locally.
-- Dashboard / Jobs / Expenses / Settings tabs work.
-- Manual pay period info saves locally.
-- Bucking job entries save locally.
-- Torque Turn job entries save locally.
-- New saved jobs include payPeriodId.
-- New saved jobs include ticketPhotoId placeholder.
-- Saved jobs can be deleted.
-- Saved jobs can be edited.
-- Expense entries save locally.
-- New saved expenses include payPeriodId.
-- New saved expenses include receiptPhotoId placeholder.
-- Saved expenses can be selected with checkboxes.
-- Selected expenses can be deleted.
-- Saved expenses can be edited.
-- Save-time validation blocks negative job hours/pay values.
-- Save-time validation blocks negative expense amounts.
-- Saved jobs list displays saved jobs.
-- Saved expenses list displays saved expenses.
-- Pay period summary calculates from saved local data.
-- Rough tax estimate uses saved settings.
-- Settings save default hourly rate and tax rates.
-- Clear pay period resets saved local data.
-- JSON backup download exports the active pay period.
-- JSON backup import restores a valid FieldLedger pay period after confirmation.
-- Spreadsheet CSV download exports saved pay-period jobs and expenses.
-- Export / Backup dropdown appears near the top of the dashboard.
-- Production build passed.
-- Phone and computer data remain separate because records are stored locally per browser.
-- GitHub Pages app URL: https://timbone72-cc.github.io/fieldledger/
-- GitHub Pages phone link works.
-- Git remote uses SSH.
-- GitHub repo is connected.
-- Milestone audit passed with no blocking issues.
-- JSON backup restore imports a valid backup after confirmation.
-- Print / Save PDF Report opens the browser print dialog.
-- Core contract docs have been cleaned.
+0cef6f0 Add Bucking state default hours
 
 ## Recent Commits
 
-- 9b7867b Add GitHub Pages build output
-- a90ea2d Configure Vite for GitHub Pages
-- df16cb6 Update checkpoint after milestone audit
-- 2e47a4e Update checkpoint after photo remove buttons
-- ef5d982 Add ticket photo remove button
-- 0e20985 Add receipt photo remove button
-- c8043fe Add printable pay period report button
-- d47e08d Update checkpoint after JSON backup restore
-- 673e5c0 Add JSON backup restore
-- fbd68fa Update checkpoint after spreadsheet CSV export
-- b764c45 Add spreadsheet CSV export dropdown
-- 42b164b Update checkpoint after ticket photo storage
-- bd2e872 Add ticket photo preview to job form
-- 5722c2e Update checkpoint after receipt photo storage
-- 2f3f2c9 Add receipt photo preview to expense form
-
-## Storage
-
-Active pay period localStorage key:
-
-fieldledger.activePayPeriod
-
-Settings localStorage key:
-
-fieldledger.settings
-
-## Core Tests
-
-Confirmed passing:
-
-- calculateJobPay tests passed
-- calculatePayPeriodSummary tests passed
-- calculateTaxEstimate tests passed
-
-## Current Good Rollback Point
-
-Current branch:
-
-main
-
-Current head:
-
+0cef6f0 Add Bucking state default hours
+7c5f3ee Fix Bucking pay contract formatting
+673e120 Update Bucking pay contract for state defaults
+27867d1 Update checkpoint after GitHub Pages phone link
 9b7867b Add GitHub Pages build output
+a90ea2d Configure Vite for GitHub Pages
+df16cb6 Update checkpoint after milestone audit
+2e47a4e Update checkpoint after photo remove buttons
 
-## Known MVP Gaps
+## Confirmed Working State
 
-- Receipt photo attachment/storage is built for expenses using IndexedDB blob storage and receiptPhotoId references.
-- Ticket photo attachment/storage is built for jobs using IndexedDB blob storage and ticketPhotoId references.
-- JSON backup and spreadsheet CSV export exist, but PDF export is not built yet.
-- Receipt photo preview works from IndexedDB when editing saved expenses.
-- Receipt photos can be removed from saved expenses.
-- Ticket photos can be removed from saved jobs.
+- React/Vite app runs locally.
+- Manual pay period info saves locally.
+- Bucking jobs save locally.
+- Bucking jobs support state-based default hours:
+  - Texas defaults to 6 hours per job.
+  - New Mexico defaults to 8 hours per job.
+  - Hours Worked remains manually editable before saving.
+- Torque Turn jobs save locally.
+- Expenses save locally.
+- Saved jobs list works.
+- Saved expenses list works.
+- Pay period summary works.
+- Tax estimate works.
+- Clear pay period works.
+- JSON backup download works.
+- Receipt/ticket photo attach, preview, and remove support exists.
+- Core calculation tests pass.
 
-## Recommended Next Feature
+## Locked Rules
 
-Run final contract audit before more feature work.
+- MVP remains offline-first.
+- MVP remains AI-free.
+- MVP remains net-zero-cost.
+- Manual review is required before saving.
+- Bucking pay = hoursWorked × hourlyRateSnapshot.
+- Torque Turn pay = baseJobPay + max(totalJobHours - 24, 0) × hourlyRateSnapshot.
+- Expenses reduce net income but do not change gross earnings.
+- Tax estimates are planning only, not tax advice.
+- Structured records use localStorage.
+- Large photo/blob storage uses IndexedDB.
+- Saved records store photo IDs by reference, not image blobs.
 
-Best next contract-safe move:
+## Latest Manual Browser Test
 
-Next likely step: continue remaining MVP work, then run final audit when feature-complete.
+Bucking default-hours behavior passed:
+
+- Texas, 1 job, 6 hours, $28/hour = $168.00.
+- Texas, 2 jobs, 12 hours, $28/hour = $336.00.
+- New Mexico, 2 jobs, 16 hours, $28/hour = $448.00.
+- Manual override to 7 hours, $28/hour = $196.00.
+
+## Next Recommended Move
+
+Run a milestone audit before adding the next feature.
