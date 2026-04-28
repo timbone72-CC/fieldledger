@@ -25,7 +25,21 @@ export default function DownloadPayPeriodCsvButton() {
 
 function buildPayPeriodCsv(payPeriod) {
   const rows = [
-    ["Section", "Date", "Type", "Name", "Category", "Hours", "Base Pay", "Hourly Rate", "Amount", "Notes"],
+    [
+      "Section",
+      "Date",
+      "Type",
+      "Name",
+      "Category",
+      "Bucking State",
+      "Jobs Completed",
+      "Hours Per Job",
+      "Hours",
+      "Base Pay",
+      "Hourly Rate",
+      "Amount",
+      "Notes",
+    ],
   ];
 
   const jobs = Array.isArray(payPeriod?.jobs) ? payPeriod.jobs : [];
@@ -38,6 +52,9 @@ function buildPayPeriodCsv(payPeriod) {
       job.jobType || "",
       job.company || "",
       "",
+      job.jobType === "bucking" ? job.buckingState || "" : "",
+      job.jobType === "bucking" ? job.jobsCompleted || 0 : "",
+      job.jobType === "bucking" ? job.hoursPerJob || 0 : "",
       job.jobType === "torque_turn" ? job.totalJobHours || 0 : job.hoursWorked || 0,
       job.baseJobPay || 0,
       job.hourlyRateSnapshot || 0,
@@ -53,6 +70,9 @@ function buildPayPeriodCsv(payPeriod) {
       "",
       expense.vendor || "",
       expense.category || "",
+      "",
+      "",
+      "",
       "",
       "",
       "",
