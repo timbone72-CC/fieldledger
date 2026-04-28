@@ -10,8 +10,8 @@ const summary = calculatePayPeriodSummary({
     },
     {
       jobType: "torque_turn",
-      baseJobPay: 1400,
-      totalJobHours: 31,
+      baseJobPay: 750,
+      additionalHours: 2,
       hourlyRateSnapshot: 28,
     },
   ],
@@ -26,9 +26,9 @@ const summary = calculatePayPeriodSummary({
 });
 
 assert.deepEqual(summary, {
-  grossEarnings: 1764,
+  grossEarnings: 974,
   expenseTotal: 75,
-  netIncome: 1689,
+  netIncome: 899,
   jobCount: 2,
   expenseCount: 2,
 });

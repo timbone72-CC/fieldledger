@@ -55,7 +55,7 @@ function buildPayPeriodCsv(payPeriod) {
       job.jobType === "bucking" ? job.buckingState || "" : "",
       job.jobType === "bucking" ? job.jobsCompleted || 0 : "",
       job.jobType === "bucking" ? job.hoursPerJob || 0 : "",
-      job.jobType === "torque_turn" ? job.totalJobHours || 0 : job.hoursWorked || 0,
+      job.jobType === "torque_turn" ? job.additionalHours || 0 : job.hoursWorked || 0,
       job.baseJobPay || 0,
       job.hourlyRateSnapshot || 0,
       job.totalPay || 0,
