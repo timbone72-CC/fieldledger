@@ -9,6 +9,7 @@ export default function SettingsPanel() {
     (savedSettings.selfEmploymentTaxRate * 100).toFixed(2),
   );
   const [federalTaxRate, setFederalTaxRate] = useState((savedSettings.federalTaxRate * 100).toFixed(2));
+  const [stateTaxRate, setStateTaxRate] = useState((savedSettings.stateTaxRate * 100).toFixed(2));
   const [saveMessage, setSaveMessage] = useState("");
 
   function saveUserSettings() {
@@ -16,6 +17,7 @@ export default function SettingsPanel() {
       hourlyRate: Number(hourlyRate || 0),
       selfEmploymentTaxRate: Number(selfEmploymentTaxRate || 0) / 100,
       federalTaxRate: Number(federalTaxRate || 0) / 100,
+      stateTaxRate: Number(stateTaxRate || 0) / 100,
     });
 
     setSaveMessage("Settings saved.");
@@ -55,6 +57,17 @@ export default function SettingsPanel() {
           step="0.01"
           value={federalTaxRate}
           onChange={(event) => setFederalTaxRate(event.target.value)}
+        />
+      </label>
+
+      <label className="field">
+        State Tax Rate % (Oklahoma default)
+        <input
+          type="number"
+          min="0"
+          step="0.01"
+          value={stateTaxRate}
+          onChange={(event) => setStateTaxRate(event.target.value)}
         />
       </label>
 
