@@ -72,26 +72,26 @@ The saved Bucking job must use the final reviewed hoursWorked value, not blindly
 
 ## 5. Torque Turn Pay Rule
 
-Torque Turn jobs use base job pay plus extra hourly pay after the first 24 hours on that job.
+Torque Turn jobs use base job pay plus additional hourly pay after the first 24 hours on that job.
+
+The user enters the additional hours worked after the first 24 hours.
 
 Required fields:
 
 - baseJobPay
-- totalJobHours
+- additionalHours
 - hourlyRateSnapshot
 
 Formula:
 
-    extraHours = max(totalJobHours - 24, 0)
-    torqueTurnTotal = baseJobPay + (extraHours × hourlyRateSnapshot)
+    torqueTurnTotal = baseJobPay + (additionalHours × hourlyRateSnapshot)
 
 Example:
 
-    baseJobPay = 1400
-    totalJobHours = 31
-    extraHours = 31 - 24 = 7
-    extraPay = 7 × 28 = 196
-    torqueTurnTotal = 1596
+    baseJobPay = 750
+    additionalHours = 2
+    hourlyRateSnapshot = 28
+    torqueTurnTotal = 750 + (2 × 28) = 806
 
 ## 6. Pay Period Gross Earnings
 
