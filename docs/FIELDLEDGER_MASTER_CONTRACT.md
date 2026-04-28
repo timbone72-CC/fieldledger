@@ -66,8 +66,8 @@ Torque Turn pay is based on base job pay plus hourly pay only after the first 24
 
 Formula:
 
-    extraHours = max(totalJobHours - 24, 0)
-    torqueTurnTotal = baseJobPay + (extraHours × hourlyRateSnapshot)
+    additionalHours = user input (hours after first 24)
+    torqueTurnTotal = baseJobPay + (additionalHours × hourlyRateSnapshot)
 
 ### 3.3 Hourly Rate Snapshot
 

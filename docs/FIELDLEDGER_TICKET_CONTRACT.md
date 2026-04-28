@@ -57,9 +57,9 @@ docs/FIELDLEDGER_PAY_CONTRACT.md
 Torque Turn tickets require:
 
 baseJobPay
-totalJobHours
+additionalHours
 hourlyRateSnapshot
-extraHours
+additionalHours
 totalPay
 
 Torque Turn extra hours begin only after the first 24 hours on that job.
