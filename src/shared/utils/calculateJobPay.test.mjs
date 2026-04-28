@@ -13,21 +13,21 @@ assert.equal(
 assert.equal(
   calculateJobPay({
     jobType: "torque_turn",
-    baseJobPay: 1400,
-    totalJobHours: 31,
+    baseJobPay: 750,
+    additionalHours: 2,
     hourlyRateSnapshot: 28,
   }),
-  1596
+  806
 );
 
 assert.equal(
   calculateJobPay({
     jobType: "torque_turn",
-    baseJobPay: 1400,
-    totalJobHours: 20,
+    baseJobPay: 750,
+    additionalHours: 0,
     hourlyRateSnapshot: 28,
   }),
-  1400
+  750
 );
 
 console.log("calculateJobPay tests passed");

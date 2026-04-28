@@ -26,7 +26,7 @@ export default function JobEntryForm() {
   const [jobsCompleted, setJobsCompleted] = useState("1");
   const [hoursWorked, setHoursWorked] = useState(String(BUCKING_HOURS_BY_STATE[BUCKING_STATES.TEXAS]));
   const [baseJobPay, setBaseJobPay] = useState("");
-  const [totalJobHours, setTotalJobHours] = useState("");
+  const [additionalHours, setAdditionalHours] = useState("");
   const [hourlyRateSnapshot, setHourlyRateSnapshot] = useState(loadSettings().hourlyRate);
   const [ticketPhotoId, setTicketPhotoId] = useState("");
   const [ticketPhotoFile, setTicketPhotoFile] = useState(null);
@@ -47,7 +47,7 @@ export default function JobEntryForm() {
       setJobsCompleted(job.jobType === JOB_TYPES.BUCKING ? String(job.jobsCompleted || "1") : "1");
       setHoursWorked(job.jobType === JOB_TYPES.BUCKING ? String(job.hoursWorked || "") : "");
       setBaseJobPay(job.jobType === JOB_TYPES.TORQUE_TURN ? String(job.baseJobPay || "") : "");
-      setTotalJobHours(job.jobType === JOB_TYPES.TORQUE_TURN ? String(job.totalJobHours || "") : "");
+      setAdditionalHours(job.jobType === JOB_TYPES.TORQUE_TURN ? String(job.additionalHours || "") : "");
       setHourlyRateSnapshot(job.hourlyRateSnapshot ?? loadSettings().hourlyRate ?? DEFAULT_HOURLY_RATE);
       setTicketPhotoId(job.ticketPhotoId || "");
       setTicketPhotoFile(null);
@@ -66,10 +66,10 @@ export default function JobEntryForm() {
       jobType,
       hoursWorked,
       baseJobPay,
-      totalJobHours,
+      additionalHours,
       hourlyRateSnapshot,
     });
-  }, [baseJobPay, hourlyRateSnapshot, hoursWorked, jobType, totalJobHours]);
+  }, [baseJobPay, hourlyRateSnapshot, hoursWorked, jobType, additionalHours]);
 
   useEffect(() => {
     let previewUrl = "";
@@ -110,7 +110,7 @@ export default function JobEntryForm() {
     setJobsCompleted("1");
     setHoursWorked(String(BUCKING_HOURS_BY_STATE[BUCKING_STATES.TEXAS]));
     setBaseJobPay("");
-    setTotalJobHours("");
+    setAdditionalHours("");
     setTicketPhotoId("");
     setTicketPhotoFile(null);
     setTicketPhotoPreviewUrl("");
@@ -124,14 +124,14 @@ export default function JobEntryForm() {
     const hoursPerJobValue = jobType === JOB_TYPES.BUCKING ? Number(BUCKING_HOURS_BY_STATE[buckingState] || 0) : 0;
     const hoursWorkedValue = jobType === JOB_TYPES.BUCKING ? Number(hoursWorked || 0) : 0;
     const baseJobPayValue = jobType === JOB_TYPES.TORQUE_TURN ? Number(baseJobPay || 0) : 0;
-    const totalJobHoursValue = jobType === JOB_TYPES.TORQUE_TURN ? Number(totalJobHours || 0) : 0;
+    const additionalHoursValue = jobType === JOB_TYPES.TORQUE_TURN ? Number(additionalHours || 0) : 0;
     const hourlyRateSnapshotValue = Number(hourlyRateSnapshot || 0);
 
     if (
       jobsCompletedValue < 0 ||
       hoursWorkedValue < 0 ||
       baseJobPayValue < 0 ||
-      totalJobHoursValue < 0 ||
+      additionalHoursValue < 0 ||
       hourlyRateSnapshotValue < 0
     ) {
       setSaveMessage("Negative hours or pay values are not allowed.");
@@ -159,7 +159,7 @@ export default function JobEntryForm() {
       hoursPerJob: hoursPerJobValue,
       hoursWorked: hoursWorkedValue,
       baseJobPay: baseJobPayValue,
-      totalJobHours: totalJobHoursValue,
+      additionalHours: additionalHoursValue,
       hourlyRateSnapshot: hourlyRateSnapshotValue,
       totalPay: calculatedPay,
       createdAt: editingJobId ? undefined : new Date().toISOString(),
@@ -318,13 +318,13 @@ export default function JobEntryForm() {
           </label>
 
           <label className="field">
-            Total Job Hours
+            Additional Hours After 24
             <input
               type="number"
               min="0"
               step="0.25"
-              value={totalJobHours}
-              onChange={(event) => setTotalJobHours(event.target.value)}
+              value={additionalHours}
+              onChange={(event) => setAdditionalHours(event.target.value)}
             />
           </label>
         </>

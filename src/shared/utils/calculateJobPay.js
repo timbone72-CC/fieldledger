@@ -9,10 +9,9 @@ export function calculateJobPay(job) {
 
   if (jobType === "torque_turn") {
     const baseJobPay = safeNumber(job?.baseJobPay);
-    const totalJobHours = safeNumber(job?.totalJobHours);
-    const extraHours = Math.max(totalJobHours - 24, 0);
+    const additionalHours = safeNumber(job?.additionalHours ?? job?.totalJobHours);
 
-    return baseJobPay + extraHours * hourlyRateSnapshot;
+    return baseJobPay + additionalHours * hourlyRateSnapshot;
   }
 
   return 0;
