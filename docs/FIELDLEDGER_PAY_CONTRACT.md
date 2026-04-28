@@ -29,21 +29,46 @@ Changing the user’s default hourly rate later must not change old saved job to
 
 ## 4. Bucking Pay Rule
 
-Bucking jobs are paid by hours only.
+Bucking jobs are paid by hours.
 
-Required fields:
+The app may provide default Bucking hours based on job state, but the user must be able to manually edit the hours before saving.
 
+Default Bucking hours:
+
+- Texas = 6 hours per job
+- New Mexico = 8 hours per job
+
+Required Bucking fields:
+
+- buckingState
+- jobsCompleted
+- hoursPerJob
 - hoursWorked
 - hourlyRateSnapshot
 
-Formula:
+Default hours formula:
 
-    buckingTotal = hoursWorked × hourlyRateSnapshot
+hoursWorked = jobsCompleted × hoursPerJob
 
-Example:
+Pay formula:
 
-    6 hours × 28 = 168
+buckingTotal = hoursWorked × hourlyRateSnapshot
 
+Example Texas:
+
+2 jobs × 6 hours = 12 hours
+12 hours × $28 = $336
+
+Example New Mexico:
+
+2 jobs × 8 hours = 16 hours
+16 hours × $28 = $448
+
+Manual override rule:
+
+The user may manually change hoursWorked before saving.
+
+The saved Bucking job must use the final reviewed hoursWorked value, not blindly recalculate after the user edits it.
 ## 5. Torque Turn Pay Rule
 
 Torque Turn jobs use base job pay plus extra hourly pay after the first 24 hours on that job.
