@@ -44,6 +44,7 @@ Default starting rates:
 
     selfEmploymentTaxRate = 0.153
     federalTaxRate = 0.12
+    stateTaxRate = 0.045
 
 These are planning defaults only.
 
@@ -69,13 +70,19 @@ Formula:
 
     estimatedFederalTax = estimatedTaxableIncome × federalTaxRate
 
-## 9. Total Estimated Tax Rule
+## 9. State Tax Rule
 
 Formula:
 
-    estimatedTotalTax = estimatedSelfEmploymentTax + estimatedFederalTax
+    estimatedStateTax = estimatedTaxableIncome × stateTaxRate
 
-## 10. Estimated Take-Home Rule
+## 10. Total Estimated Tax Rule
+
+Formula:
+
+    estimatedTotalTax = estimatedSelfEmploymentTax + estimatedFederalTax + estimatedStateTax
+
+## 11. Estimated Take-Home Rule
 
 Formula:
 
@@ -83,7 +90,7 @@ Formula:
 
 If net income is negative, estimated take-home after tax should equal net income.
 
-## 11. Expense Rule
+## 12. Expense Rule
 
 Expenses may reduce net income inside the app.
 
@@ -91,7 +98,7 @@ The app must not claim that an expense is deductible.
 
 Expense deductibility is outside the MVP scope.
 
-## 12. Export Rule
+## 13. Export Rule
 
 Any export that includes tax estimates must include:
 
@@ -102,7 +109,7 @@ Any export that includes tax estimates must include:
 - estimated take-home after tax
 - tax disclaimer
 
-## 13. MVP Boundary
+## 14. MVP Boundary
 
 The MVP only provides rough planning estimates.
 
