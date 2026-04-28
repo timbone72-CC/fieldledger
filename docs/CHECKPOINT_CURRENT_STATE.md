@@ -61,3 +61,9 @@ Bucking default-hours behavior passed:
 ## Next Recommended Move
 
 Run a milestone audit before adding the next feature.
+
+## Tracked TODO
+
+- Add clean printable report layout:
+  - Hide tabs, buttons, forms, export controls, file inputs, and empty entry fields.
+  - Show only report title, pay period info, saved jobs, saved expenses, summary, and tax disclaimer.
