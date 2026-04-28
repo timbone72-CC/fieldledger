@@ -1,8 +1,43 @@
+import { useEffect, useState } from "react";
 import { loadActivePayPeriod, saveActivePayPeriod } from "../pay-periods/activePayPeriodStorage.js";
+import { loadPhotoBlob } from "../../shared/storage/photoBlobStorage.js";
 
 export default function SavedJobsList() {
   const payPeriod = loadActivePayPeriod();
   const jobs = Array.isArray(payPeriod.jobs) ? payPeriod.jobs : [];
+  const [previewUrls, setPreviewUrls] = useState({});
+
+  useEffect(() => {
+    let active = true;
+    const urls = {};
+
+    async function loadPreviews() {
+      for (const job of jobs) {
+        if (!job.ticketPhotoId) continue;
+
+        try {
+          const record = await loadPhotoBlob(job.ticketPhotoId);
+
+          if (record?.blob) {
+            urls[job.id] = URL.createObjectURL(record.blob);
+          }
+        } catch {
+          // Ignore broken preview records.
+        }
+      }
+
+      if (active) {
+        setPreviewUrls(urls);
+      }
+    }
+
+    loadPreviews();
+
+    return () => {
+      active = false;
+      Object.values(urls).forEach((url) => URL.revokeObjectURL(url));
+    };
+  }, [jobs]);
 
   function editJob(job) {
     window.dispatchEvent(
@@ -43,6 +78,21 @@ export default function SavedJobsList() {
             <div className="result-card" key={job.id}>
               <span>{formatJobLabel(job)}</span>
               <strong>${Number(job.totalPay || 0).toFixed(2)}</strong>
+
+              {previewUrls[job.id] && (
+                <img
+                  src={previewUrls[job.id]}
+                  alt="Ticket preview"
+                  style={{
+                    display: "block",
+                    maxWidth: "120px",
+                    marginTop: "0.5rem",
+                    borderRadius: "0.5rem",
+                    border: "1px solid #d8d4ef",
+                  }}
+                />
+              )}
+
               <div className="card-actions">
                 <button type="button" onClick={() => editJob(job)}>
                   Edit
