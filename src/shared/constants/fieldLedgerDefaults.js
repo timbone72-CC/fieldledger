@@ -4,6 +4,8 @@ export const DEFAULT_SELF_EMPLOYMENT_TAX_RATE = 0.153;
 
 export const DEFAULT_FEDERAL_TAX_RATE = 0.12;
 
+export const DEFAULT_STATE_TAX_RATE = 0.045;
+
 export const JOB_TYPES = {
   BUCKING: "bucking",
   TORQUE_TURN: "torque_turn",

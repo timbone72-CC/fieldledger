@@ -23,5 +23,6 @@ export function createDefaultSettings() {
     hourlyRate: DEFAULT_HOURLY_RATE,
     selfEmploymentTaxRate: DEFAULT_SELF_EMPLOYMENT_TAX_RATE,
     federalTaxRate: DEFAULT_FEDERAL_TAX_RATE,
+    stateTaxRate: 0.045,
   };
 }
