@@ -2,18 +2,18 @@
 
 ## Current Head
 
-0cef6f0 Add Bucking state default hours
+62b5072 Track clean printable report TODO
 
 ## Recent Commits
 
+62b5072 Track clean printable report TODO
+96773fd Add Bucking breakdown to CSV export
+3b9b5ae Show Bucking breakdown in saved jobs list
+68edae7 Update checkpoint after Bucking default hours
 0cef6f0 Add Bucking state default hours
 7c5f3ee Fix Bucking pay contract formatting
 673e120 Update Bucking pay contract for state defaults
 27867d1 Update checkpoint after GitHub Pages phone link
-9b7867b Add GitHub Pages build output
-a90ea2d Configure Vite for GitHub Pages
-df16cb6 Update checkpoint after milestone audit
-2e47a4e Update checkpoint after photo remove buttons
 
 ## Confirmed Working State
 
@@ -34,6 +34,10 @@ df16cb6 Update checkpoint after milestone audit
 - JSON backup download works.
 - Receipt/ticket photo attach, preview, and remove support exists.
 - Core calculation tests pass.
+- JSON backup includes buckingState, jobsCompleted, hoursPerJob, hoursWorked, hourlyRateSnapshot, and totalPay.
+- Print preview includes the saved Bucking breakdown because it prints the current page.
+- CSV export includes Bucking State, Jobs Completed, Hours Per Job, Hours, Hourly Rate, and Amount.
+- Saved Jobs list shows Bucking breakdown with state, jobs completed, hours per job, and final hours worked.
 
 ## Locked Rules
 
