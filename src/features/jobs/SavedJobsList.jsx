@@ -64,5 +64,14 @@ function formatJobLabel(job) {
     return `Torque Turn — ${Number(job.totalJobHours || 0)} hrs`;
   }
 
-  return `Bucking — ${Number(job.hoursWorked || 0)} hrs`;
+  const buckingState = job.buckingState || "State not set";
+  const jobsCompleted = Number(job.jobsCompleted || 0);
+  const hoursPerJob = Number(job.hoursPerJob || 0);
+  const hoursWorked = Number(job.hoursWorked || 0);
+
+  if (jobsCompleted > 0 && hoursPerJob > 0) {
+    return `Bucking — ${buckingState} — ${jobsCompleted} job${jobsCompleted === 1 ? "" : "s"} × ${hoursPerJob} hrs = ${hoursWorked} hrs`;
+  }
+
+  return `Bucking — ${hoursWorked} hrs`;
 }
