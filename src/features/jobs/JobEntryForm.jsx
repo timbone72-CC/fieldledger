@@ -5,10 +5,26 @@ import { DEFAULT_HOURLY_RATE, JOB_TYPES } from "../../shared/constants/fieldLedg
 import { deletePhotoBlob, loadPhotoBlob, savePhotoBlob } from "../../shared/storage/photoBlobStorage.js";
 import { loadSettings } from "../settings/settingsStorage.js";
 
+const BUCKING_STATES = {
+  TEXAS: "Texas",
+  NEW_MEXICO: "New Mexico",
+};
+
+const BUCKING_HOURS_BY_STATE = {
+  [BUCKING_STATES.TEXAS]: 6,
+  [BUCKING_STATES.NEW_MEXICO]: 8,
+};
+
+function calculateDefaultBuckingHours(jobsCompleted, buckingState) {
+  return Number(jobsCompleted || 0) * Number(BUCKING_HOURS_BY_STATE[buckingState] || 0);
+}
+
 export default function JobEntryForm() {
   const [editingJobId, setEditingJobId] = useState("");
   const [jobType, setJobType] = useState(JOB_TYPES.BUCKING);
-  const [hoursWorked, setHoursWorked] = useState("");
+  const [buckingState, setBuckingState] = useState(BUCKING_STATES.TEXAS);
+  const [jobsCompleted, setJobsCompleted] = useState("1");
+  const [hoursWorked, setHoursWorked] = useState(String(BUCKING_HOURS_BY_STATE[BUCKING_STATES.TEXAS]));
   const [baseJobPay, setBaseJobPay] = useState("");
   const [totalJobHours, setTotalJobHours] = useState("");
   const [hourlyRateSnapshot, setHourlyRateSnapshot] = useState(loadSettings().hourlyRate);
@@ -27,6 +43,8 @@ export default function JobEntryForm() {
 
       setEditingJobId(job.id);
       setJobType(job.jobType || JOB_TYPES.BUCKING);
+      setBuckingState(job.buckingState || BUCKING_STATES.TEXAS);
+      setJobsCompleted(job.jobType === JOB_TYPES.BUCKING ? String(job.jobsCompleted || "1") : "1");
       setHoursWorked(job.jobType === JOB_TYPES.BUCKING ? String(job.hoursWorked || "") : "");
       setBaseJobPay(job.jobType === JOB_TYPES.TORQUE_TURN ? String(job.baseJobPay || "") : "");
       setTotalJobHours(job.jobType === JOB_TYPES.TORQUE_TURN ? String(job.totalJobHours || "") : "");
@@ -88,7 +106,9 @@ export default function JobEntryForm() {
 
   function resetForm(message) {
     setEditingJobId("");
-    setHoursWorked("");
+    setBuckingState(BUCKING_STATES.TEXAS);
+    setJobsCompleted("1");
+    setHoursWorked(String(BUCKING_HOURS_BY_STATE[BUCKING_STATES.TEXAS]));
     setBaseJobPay("");
     setTotalJobHours("");
     setTicketPhotoId("");
@@ -100,12 +120,15 @@ export default function JobEntryForm() {
   async function saveJob() {
     const payPeriod = loadActivePayPeriod();
 
+    const jobsCompletedValue = jobType === JOB_TYPES.BUCKING ? Number(jobsCompleted || 0) : 0;
+    const hoursPerJobValue = jobType === JOB_TYPES.BUCKING ? Number(BUCKING_HOURS_BY_STATE[buckingState] || 0) : 0;
     const hoursWorkedValue = jobType === JOB_TYPES.BUCKING ? Number(hoursWorked || 0) : 0;
     const baseJobPayValue = jobType === JOB_TYPES.TORQUE_TURN ? Number(baseJobPay || 0) : 0;
     const totalJobHoursValue = jobType === JOB_TYPES.TORQUE_TURN ? Number(totalJobHours || 0) : 0;
     const hourlyRateSnapshotValue = Number(hourlyRateSnapshot || 0);
 
     if (
+      jobsCompletedValue < 0 ||
       hoursWorkedValue < 0 ||
       baseJobPayValue < 0 ||
       totalJobHoursValue < 0 ||
@@ -131,6 +154,9 @@ export default function JobEntryForm() {
       payPeriodId: payPeriod.id,
       ticketPhotoId: nextTicketPhotoId,
       jobType,
+      buckingState: jobType === JOB_TYPES.BUCKING ? buckingState : "",
+      jobsCompleted: jobsCompletedValue,
+      hoursPerJob: hoursPerJobValue,
       hoursWorked: hoursWorkedValue,
       baseJobPay: baseJobPayValue,
       totalJobHours: totalJobHoursValue,
@@ -201,7 +227,20 @@ export default function JobEntryForm() {
 
       <label className="field">
         Job Type
-        <select value={jobType} onChange={(event) => setJobType(event.target.value)}>
+        <select
+          value={jobType}
+          onChange={(event) => {
+            const nextJobType = event.target.value;
+
+            setJobType(nextJobType);
+
+            if (nextJobType === JOB_TYPES.BUCKING) {
+              setBuckingState(BUCKING_STATES.TEXAS);
+              setJobsCompleted("1");
+              setHoursWorked(String(BUCKING_HOURS_BY_STATE[BUCKING_STATES.TEXAS]));
+            }
+          }}
+        >
           <option value={JOB_TYPES.BUCKING}>Bucking</option>
           <option value={JOB_TYPES.TORQUE_TURN}>Torque Turn</option>
         </select>
@@ -219,16 +258,50 @@ export default function JobEntryForm() {
       </label>
 
       {jobType === JOB_TYPES.BUCKING && (
-        <label className="field">
-          Hours Worked
-          <input
-            type="number"
-            min="0"
-            step="0.25"
-            value={hoursWorked}
-            onChange={(event) => setHoursWorked(event.target.value)}
-          />
-        </label>
+        <>
+          <label className="field">
+            Bucking State
+            <select
+              value={buckingState}
+              onChange={(event) => {
+                const nextState = event.target.value;
+
+                setBuckingState(nextState);
+                setHoursWorked(String(calculateDefaultBuckingHours(jobsCompleted, nextState)));
+              }}
+            >
+              <option value={BUCKING_STATES.TEXAS}>Texas</option>
+              <option value={BUCKING_STATES.NEW_MEXICO}>New Mexico</option>
+            </select>
+          </label>
+
+          <label className="field">
+            Jobs Completed
+            <input
+              type="number"
+              min="0"
+              step="1"
+              value={jobsCompleted}
+              onChange={(event) => {
+                const nextJobsCompleted = event.target.value;
+
+                setJobsCompleted(nextJobsCompleted);
+                setHoursWorked(String(calculateDefaultBuckingHours(nextJobsCompleted, buckingState)));
+              }}
+            />
+          </label>
+
+          <label className="field">
+            Hours Worked
+            <input
+              type="number"
+              min="0"
+              step="0.25"
+              value={hoursWorked}
+              onChange={(event) => setHoursWorked(event.target.value)}
+            />
+          </label>
+        </>
       )}
 
       {jobType === JOB_TYPES.TORQUE_TURN && (
