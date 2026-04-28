@@ -2,18 +2,20 @@
 
 ## Current Head
 
-62b5072 Track clean printable report TODO
+b1cd512 Add state tax to tax contract and total tax calculation
 
 ## Recent Commits
 
-62b5072 Track clean printable report TODO
-96773fd Add Bucking breakdown to CSV export
-3b9b5ae Show Bucking breakdown in saved jobs list
-68edae7 Update checkpoint after Bucking default hours
-0cef6f0 Add Bucking state default hours
-7c5f3ee Fix Bucking pay contract formatting
-673e120 Update Bucking pay contract for state defaults
-27867d1 Update checkpoint after GitHub Pages phone link
+b1cd512 Add state tax to tax contract and total tax calculation
+155626e Add state tax rate to settings UI
+5ee4257 Add state tax rate support to tax estimate (Oklahoma default 4.5%)
+bf23730 Clean up tax rate display in settings
+b2b9dac Fix summary test and CSV export for Torque Turn additional hours
+5c16f0f Fix Torque Turn pay contract for additional hours
+e4a804f Fix Torque Turn pay: use additional hours after 24 and update UI field
+bcac372 Add ticket photo preview to saved jobs list
+511d729 Add receipt photo preview to saved expenses list
+96e8633 Update checkpoint after Bucking follow-through
 
 ## Confirmed Working State
 
@@ -46,7 +48,7 @@
 - MVP remains net-zero-cost.
 - Manual review is required before saving.
 - Bucking pay = hoursWorked × hourlyRateSnapshot.
-- Torque Turn pay = baseJobPay + max(totalJobHours - 24, 0) × hourlyRateSnapshot.
+- Torque Turn pay = baseJobPay + additionalHours × hourlyRateSnapshot.
 - Expenses reduce net income but do not change gross earnings.
 - Tax estimates are planning only, not tax advice.
 - Structured records use localStorage.
