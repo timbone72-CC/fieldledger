@@ -69,6 +69,7 @@ Manual override rule:
 The user may manually change hoursWorked before saving.
 
 The saved Bucking job must use the final reviewed hoursWorked value, not blindly recalculate after the user edits it.
+
 ## 5. Torque Turn Pay Rule
 
 Torque Turn jobs use base job pay plus extra hourly pay after the first 24 hours on that job.
