@@ -22,9 +22,9 @@ FieldLedger may show mileage as:
 
 Each mileage entry must support:
 
-- vehicle
 - id
 - payPeriodId
+- vehicle
 - date
 - startLocation
 - endLocation
@@ -47,14 +47,15 @@ Changing the mileage rate later must not change old saved mileage estimates.
 
 Mileage estimate is calculated as:
 
-```text
 mileageEstimate = miles × mileageRateSnapshot
 
 Pay-period mileage total is calculated as:
 
 totalBusinessMiles = sum(all mileage entry miles)
+
 totalMileageEstimate = sum(all mileage estimates)
-6. Invalid Input Rule
+
+## 6. Invalid Input Rule
 
 Negative miles are not allowed.
 
@@ -62,23 +63,25 @@ Negative mileage rates are not allowed.
 
 Blank numeric values may be treated as zero while editing, but saved records must use valid reviewed values.
 
-7. Manual Review Rule
+## 7. Manual Review Rule
 
 The user must be able to review and edit all mileage fields before saving.
 
-8. Export Rule
+## 8. Export Rule
 
 Exports that include mileage must show:
 
-date
-start location
-end location
-business purpose
-miles
-mileage rate snapshot
-mileage estimate
-notes
-9. MVP Boundary
+- date
+- vehicle
+- start location
+- end location
+- business purpose
+- miles
+- mileage rate snapshot
+- mileage estimate
+- notes
+
+## 9. MVP Boundary
 
 Mileage must work offline.
 
