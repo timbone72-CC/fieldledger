@@ -2,10 +2,13 @@
 
 ## Current Head
 
-b1cd512 Add state tax to tax contract and total tax calculation
+87294f5 Rebuild GitHub Pages after Torque Turn and tax updates
 
 ## Recent Commits
 
+87294f5 Rebuild GitHub Pages after Torque Turn and tax updates
+b6aa6e7 Clean up Torque Turn additional hours wording in contracts
+9f2b8b8 Update checkpoint after Torque Turn fix and state tax feature
 b1cd512 Add state tax to tax contract and total tax calculation
 155626e Add state tax rate to settings UI
 5ee4257 Add state tax rate support to tax estimate (Oklahoma default 4.5%)
@@ -13,9 +16,6 @@ bf23730 Clean up tax rate display in settings
 b2b9dac Fix summary test and CSV export for Torque Turn additional hours
 5c16f0f Fix Torque Turn pay contract for additional hours
 e4a804f Fix Torque Turn pay: use additional hours after 24 and update UI field
-bcac372 Add ticket photo preview to saved jobs list
-511d729 Add receipt photo preview to saved expenses list
-96e8633 Update checkpoint after Bucking follow-through
 
 ## Confirmed Working State
 
