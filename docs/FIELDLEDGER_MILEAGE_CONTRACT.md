@@ -22,6 +22,7 @@ FieldLedger may show mileage as:
 
 Each mileage entry must support:
 
+- vehicle
 - id
 - payPeriodId
 - date
