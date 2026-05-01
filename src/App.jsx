@@ -6,6 +6,8 @@ import ExportActionsDropdown from "./features/exports/ExportActionsDropdown.jsx"
 import JobEntryForm from "./features/jobs/JobEntryForm.jsx";
 import SavedJobsList from "./features/jobs/SavedJobsList.jsx";
 import MileageEntryForm from "./features/mileage/MileageEntryForm.jsx";
+import SavedMileageList from "./features/mileage/SavedMileageList.jsx";
+import SavedMileageList from "./features/mileage/SavedMileageList.jsx";
 import PayPeriodInfoForm from "./features/pay-periods/PayPeriodInfoForm.jsx";
 import PayPeriodSummaryPanel from "./features/pay-periods/PayPeriodSummaryPanel.jsx";
 import SettingsPanel from "./features/settings/SettingsPanel.jsx";
@@ -92,7 +94,12 @@ export default function App() {
         </>
       )}
 
-      {activeTab === TABS.MILEAGE && <MileageEntryForm />}
+      {activeTab === TABS.MILEAGE && (
+        <>
+          <SavedMileageList />
+          <MileageEntryForm />
+        </>
+      )}
 
       {activeTab === TABS.SETTINGS && <SettingsPanel />}
     </main>
