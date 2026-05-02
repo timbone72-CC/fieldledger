@@ -20,5 +20,19 @@ export const EXPENSE_CATEGORIES = [
   "Other",
 ];
 
+export const TIMESHEET_COMPANIES = [
+  "Conoco Phillips",
+  "Exxon Mobile",
+  "Avent Natural Resources",
+];
+
+export const TIMESHEET_RIG_NAMES = [
+  "Scan Vision",
+  "Nabors X20",
+  "Noram 21",
+  "Noram 32",
+  "H&P 615",
+];
+
 export const TAX_DISCLAIMER =
   "Tax estimates are for planning only and are not tax advice.";

@@ -5,6 +5,7 @@ import { loadPhotoBlob } from "../../shared/storage/photoBlobStorage.js";
 export default function SavedJobsList() {
   const payPeriod = loadActivePayPeriod();
   const jobs = Array.isArray(payPeriod.jobs) ? payPeriod.jobs : [];
+  const jobsPreviewKey = jobs.map((job) => `${job.id}:${job.ticketPhotoId || ""}`).join("|");
   const [previewUrls, setPreviewUrls] = useState({});
 
   useEffect(() => {
@@ -37,7 +38,7 @@ export default function SavedJobsList() {
       active = false;
       Object.values(urls).forEach((url) => URL.revokeObjectURL(url));
     };
-  }, [jobs]);
+  }, [jobsPreviewKey]);
 
   function editJob(job) {
     window.dispatchEvent(

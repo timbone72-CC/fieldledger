@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { loadActivePayPeriod, saveActivePayPeriod } from "../pay-periods/activePayPeriodStorage.js";
 import { calculateJobPay } from "../../shared/utils/calculateJobPay.js";
-import { DEFAULT_HOURLY_RATE, JOB_TYPES } from "../../shared/constants/fieldLedgerDefaults.js";
+import { DEFAULT_HOURLY_RATE, JOB_TYPES, TIMESHEET_COMPANIES } from "../../shared/constants/fieldLedgerDefaults.js";
 import { deletePhotoBlob, loadPhotoBlob, savePhotoBlob } from "../../shared/storage/photoBlobStorage.js";
 import { loadSettings } from "../settings/settingsStorage.js";
 
@@ -34,6 +34,7 @@ export default function JobEntryForm() {
   const [saveMessage, setSaveMessage] = useState("");
   const [date, setDate] = useState("");
   const [company, setCompany] = useState("");
+  const [rigNameOrNumber, setRigNameOrNumber] = useState("");
 
   useEffect(() => {
     function loadJobForEditing(event) {
@@ -55,6 +56,7 @@ export default function JobEntryForm() {
       setTicketPhotoFile(null);
       setDate(job.date || "");
       setCompany(job.company || "");
+      setRigNameOrNumber(job.rigNameOrNumber || "");
       setSaveMessage("Editing saved job. Make changes, then save.");
     }
 
@@ -120,6 +122,7 @@ export default function JobEntryForm() {
     setTicketPhotoPreviewUrl("");
     setDate("");
     setCompany("");
+    setRigNameOrNumber("");
     setSaveMessage(message);
   }
 
@@ -158,7 +161,7 @@ export default function JobEntryForm() {
     const job = {
       date,
       company,
-      date,
+      rigNameOrNumber,
       id: editingJobId || crypto.randomUUID(),
       payPeriodId: payPeriod.id,
       ticketPhotoId: nextTicketPhotoId,
@@ -268,9 +271,25 @@ export default function JobEntryForm() {
         Company
         <input
           type="text"
+          list="timesheet-company-options"
           value={company}
           onChange={(event) => setCompany(event.target.value)}
-          placeholder="Example: Conoco Phillips"
+          placeholder="Select or type company"
+        />
+        <datalist id="timesheet-company-options">
+          {TIMESHEET_COMPANIES.map((companyOption) => (
+            <option key={companyOption} value={companyOption} />
+          ))}
+        </datalist>
+      </label>
+
+      <label className="field">
+        Rig Name/Number
+        <input
+          type="text"
+          value={rigNameOrNumber}
+          onChange={(event) => setRigNameOrNumber(event.target.value)}
+          placeholder="Example: Scan Vision"
         />
       </label>
 
