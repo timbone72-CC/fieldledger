@@ -100,8 +100,8 @@ export default function App() {
 
       {activeTab === TABS.MILEAGE && (
         <>
-          <SavedMileageList />
-          <MileageEntryForm />
+          <SavedMileageList key={`mileage-${refreshCount}`} onMileageDeleted={refreshAppData} />
+          <MileageEntryForm onMileageSaved={refreshAppData} />
         </>
       )}
 

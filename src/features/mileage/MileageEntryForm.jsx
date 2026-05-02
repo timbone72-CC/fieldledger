@@ -3,7 +3,7 @@ import { loadActivePayPeriod, saveActivePayPeriod } from "../pay-periods/activeP
 
 const DEFAULT_MILEAGE_RATE = 0.67;
 
-export default function MileageEntryForm() {
+export default function MileageEntryForm({ onMileageSaved }) {
   const [editingMileageId, setEditingMileageId] = useState("");
   const [date, setDate] = useState("");
   const [vehicle, setVehicle] = useState("");
@@ -124,7 +124,9 @@ export default function MileageEntryForm() {
 
     resetForm("Mileage saved. Refresh to update the summary.");
 
-    window.location.reload();
+    if (typeof onMileageSaved === "function") {
+      onMileageSaved();
+    }
   }
 
   return (

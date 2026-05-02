@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { loadActivePayPeriod, saveActivePayPeriod } from "../pay-periods/activePayPeriodStorage.js";
 
-export default function SavedMileageList() {
+export default function SavedMileageList({ onMileageDeleted }) {
   const payPeriod = loadActivePayPeriod();
   const mileageEntries = Array.isArray(payPeriod.mileageEntries) ? payPeriod.mileageEntries : [];
   const [selectedMileageIds, setSelectedMileageIds] = useState([]);
@@ -52,7 +52,9 @@ export default function SavedMileageList() {
       updatedAt: new Date().toISOString(),
     });
 
-    window.location.reload();
+    if (typeof onMileageDeleted === "function") {
+      onMileageDeleted();
+    }
   }
 
   return (
