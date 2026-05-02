@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { loadActivePayPeriod, saveActivePayPeriod } from "../pay-periods/activePayPeriodStorage.js";
 import { loadPhotoBlob } from "../../shared/storage/photoBlobStorage.js";
 
-export default function SavedExpensesList() {
+export default function SavedExpensesList({ onExpenseDeleted }) {
   const payPeriod = loadActivePayPeriod();
   const expenses = Array.isArray(payPeriod.expenses) ? payPeriod.expenses : [];
   const [selectedExpenseIds, setSelectedExpenseIds] = useState([]);
@@ -82,7 +82,9 @@ export default function SavedExpensesList() {
       updatedAt: new Date().toISOString(),
     });
 
-    window.location.reload();
+    if (typeof onExpenseDeleted === "function") {
+      onExpenseDeleted();
+    }
   }
 
   return (

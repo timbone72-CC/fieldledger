@@ -3,7 +3,7 @@ import { loadActivePayPeriod, saveActivePayPeriod } from "../pay-periods/activeP
 import { EXPENSE_CATEGORIES } from "../../shared/constants/fieldLedgerDefaults.js";
 import { deletePhotoBlob, loadPhotoBlob, savePhotoBlob } from "../../shared/storage/photoBlobStorage.js";
 
-export default function ExpenseEntryForm() {
+export default function ExpenseEntryForm({ onExpenseSaved }) {
   const [editingExpenseId, setEditingExpenseId] = useState("");
   const [date, setDate] = useState("");
   const [vendor, setVendor] = useState("");
@@ -147,7 +147,9 @@ export default function ExpenseEntryForm() {
         : "Expense saved. Refresh to update the summary.",
     );
 
-    window.location.reload();
+    if (typeof onExpenseSaved === "function") {
+      onExpenseSaved();
+    }
   }
 
   async function removeReceiptPhoto() {

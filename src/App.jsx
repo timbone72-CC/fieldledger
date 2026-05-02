@@ -93,8 +93,8 @@ export default function App() {
 
       {activeTab === TABS.EXPENSES && (
         <>
-          <SavedExpensesList />
-          <ExpenseEntryForm />
+          <SavedExpensesList key={`expenses-${refreshCount}`} onExpenseDeleted={refreshAppData} />
+          <ExpenseEntryForm onExpenseSaved={refreshAppData} />
         </>
       )}
 
