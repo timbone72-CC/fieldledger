@@ -2,18 +2,18 @@
 
 ## Current Head
 
-b715a23 Refresh mileage data without page reload
+4e277f0 Remove old GitHub Pages build assets
 
 ## Recent Commits
 
+4e277f0 Remove old GitHub Pages build assets
+0d39306 Add mileage summary and backup-before-clear
+9d75a86 Update checkpoint after reload cleanup
 b715a23 Refresh mileage data without page reload
 6064b3c Refresh expense data without page reload
 31155f5 Refresh job deletion without page reload
 1d0434d Update checkpoint after integrity cleanup
 1ded66c Normalize active pay period storage
-c9c811a Store transportation as numeric value
-0b5443e Align Torque Turn hours with contract
-664a520 Refresh job data without page reload
 
 ## Confirmed Working State
 
@@ -30,8 +30,10 @@ c9c811a Store transportation as numeric value
 - Saved jobs list works.
 - Saved expenses list works.
 - Pay period summary works.
+- Pay period summary shows business miles and mileage estimate.
 - Tax estimate works.
-- Clear pay period works.
+- Clear pay period downloads a full JSON backup before confirmation.
+- Clear pay period cancel keeps data visible.
 - JSON backup download works.
 - Receipt/ticket photo attach, preview, and remove support exists.
 - Company field saves on job tickets.
