@@ -33,6 +33,7 @@ export default function JobEntryForm() {
   const [ticketPhotoPreviewUrl, setTicketPhotoPreviewUrl] = useState("");
   const [saveMessage, setSaveMessage] = useState("");
   const [date, setDate] = useState("");
+  const [company, setCompany] = useState("");
 
   useEffect(() => {
     function loadJobForEditing(event) {
@@ -53,6 +54,7 @@ export default function JobEntryForm() {
       setTicketPhotoId(job.ticketPhotoId || "");
       setTicketPhotoFile(null);
       setDate(job.date || "");
+      setCompany(job.company || "");
       setSaveMessage("Editing saved job. Make changes, then save.");
     }
 
@@ -117,6 +119,7 @@ export default function JobEntryForm() {
     setTicketPhotoFile(null);
     setTicketPhotoPreviewUrl("");
     setDate("");
+    setCompany("");
     setSaveMessage(message);
   }
 
@@ -153,6 +156,8 @@ export default function JobEntryForm() {
     }
 
     const job = {
+      date,
+      company,
       date,
       id: editingJobId || crypto.randomUUID(),
       payPeriodId: payPeriod.id,
@@ -256,6 +261,16 @@ export default function JobEntryForm() {
           type="date"
           value={date}
           onChange={(event) => setDate(event.target.value)}
+        />
+      </label>
+
+      <label className="field">
+        Company
+        <input
+          type="text"
+          value={company}
+          onChange={(event) => setCompany(event.target.value)}
+          placeholder="Example: Conoco Phillips"
         />
       </label>
 
