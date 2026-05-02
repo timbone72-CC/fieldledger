@@ -43,6 +43,21 @@ export default function MileageEntryForm() {
       return;
     }
 
+    if (!vehicle.trim()) {
+      setSaveMessage("Vehicle is required.");
+      return;
+    }
+
+    if (!date) {
+      setSaveMessage("Date is required.");
+      return;
+    }
+
+    if (milesValue <= 0) {
+      setSaveMessage("Miles must be greater than 0.");
+      return;
+    }
+
     const mileageEntry = {
       id: crypto.randomUUID(),
       payPeriodId: payPeriod.id,
