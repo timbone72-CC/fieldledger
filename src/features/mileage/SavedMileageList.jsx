@@ -16,6 +16,21 @@ export default function SavedMileageList() {
     });
   }
 
+  function editSelectedMileage() {
+    const selectedMileageId = selectedMileageIds[0];
+    const selectedMileage = mileageEntries.find((entry) => entry.id === selectedMileageId);
+
+    if (!selectedMileage || selectedMileageIds.length !== 1) {
+      return;
+    }
+
+    window.dispatchEvent(
+      new CustomEvent("fieldledger:edit-mileage", {
+        detail: { mileageEntry: selectedMileage },
+      }),
+    );
+  }
+
   function deleteSelectedMileage() {
     const selectedCount = selectedMileageIds.length;
     const confirmed = window.confirm(`Delete ${selectedCount} selected mileage entrie(s)?`);
@@ -49,6 +64,14 @@ export default function SavedMileageList() {
       ) : (
         <>
           <div className="section-actions">
+            <button
+              type="button"
+              onClick={editSelectedMileage}
+              disabled={selectedMileageIds.length !== 1}
+            >
+              Edit Selected Mileage
+            </button>
+
             <button
               type="button"
               onClick={deleteSelectedMileage}

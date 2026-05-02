@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { loadActivePayPeriod, saveActivePayPeriod } from "../pay-periods/activePayPeriodStorage.js";
 
 const DEFAULT_MILEAGE_RATE = 0.67;
 
 export default function MileageEntryForm() {
+  const [editingMileageId, setEditingMileageId] = useState("");
   const [date, setDate] = useState("");
   const [vehicle, setVehicle] = useState("");
   const [startLocation, setStartLocation] = useState("");
@@ -14,7 +15,35 @@ export default function MileageEntryForm() {
   const [notes, setNotes] = useState("");
   const [saveMessage, setSaveMessage] = useState("");
 
+  useEffect(() => {
+    function loadMileageForEditing(event) {
+      const mileageEntry = event.detail?.mileageEntry;
+
+      if (!mileageEntry) {
+        return;
+      }
+
+      setEditingMileageId(mileageEntry.id);
+      setDate(mileageEntry.date || "");
+      setVehicle(mileageEntry.vehicle || "");
+      setStartLocation(mileageEntry.startLocation || "");
+      setEndLocation(mileageEntry.endLocation || "");
+      setBusinessPurpose(mileageEntry.businessPurpose || "");
+      setMiles(String(mileageEntry.miles || ""));
+      setMileageRateSnapshot(Number(mileageEntry.mileageRateSnapshot || DEFAULT_MILEAGE_RATE));
+      setNotes(mileageEntry.notes || "");
+      setSaveMessage("Editing saved mileage. Make changes, then save.");
+    }
+
+    window.addEventListener("fieldledger:edit-mileage", loadMileageForEditing);
+
+    return () => {
+      window.removeEventListener("fieldledger:edit-mileage", loadMileageForEditing);
+    };
+  }, []);
+
   function resetForm(message) {
+    setEditingMileageId("");
     setDate("");
     setVehicle("");
     setStartLocation("");
@@ -59,7 +88,7 @@ export default function MileageEntryForm() {
     }
 
     const mileageEntry = {
-      id: crypto.randomUUID(),
+      id: editingMileageId || crypto.randomUUID(),
       payPeriodId: payPeriod.id,
       date,
       vehicle,
@@ -73,7 +102,19 @@ export default function MileageEntryForm() {
       updatedAt: new Date().toISOString(),
     };
 
-    const nextEntries = [...existingEntries, mileageEntry];
+    const nextEntries = editingMileageId
+      ? existingEntries.map((entry) => {
+          if (entry.id !== editingMileageId) {
+            return entry;
+          }
+
+          return {
+            ...entry,
+            ...mileageEntry,
+            createdAt: entry.createdAt,
+          };
+        })
+      : [...existingEntries, mileageEntry];
 
     saveActivePayPeriod({
       ...payPeriod,
