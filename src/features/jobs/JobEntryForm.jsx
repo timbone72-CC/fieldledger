@@ -140,6 +140,7 @@ export default function JobEntryForm({ onJobSaved }) {
     const hoursWorkedValue = jobType === JOB_TYPES.BUCKING ? Number(hoursWorked || 0) : 0;
     const baseJobPayValue = jobType === JOB_TYPES.TORQUE_TURN ? Number(baseJobPay || 0) : 0;
     const additionalHoursValue = jobType === JOB_TYPES.TORQUE_TURN ? Number(additionalHours || 0) : 0;
+    const transportationValue = Number(transportation || 0);
     const hourlyRateSnapshotValue = Number(hourlyRateSnapshot || 0);
 
     if (
@@ -147,6 +148,7 @@ export default function JobEntryForm({ onJobSaved }) {
       hoursWorkedValue < 0 ||
       baseJobPayValue < 0 ||
       additionalHoursValue < 0 ||
+      transportationValue < 0 ||
       hourlyRateSnapshotValue < 0
     ) {
       setSaveMessage("Negative hours or pay values are not allowed.");
@@ -175,7 +177,7 @@ export default function JobEntryForm({ onJobSaved }) {
       company,
       rigNameOrNumber,
       fieldTicketNumber,
-      transportation,
+      transportation: transportationValue,
       id: editingJobId || crypto.randomUUID(),
       payPeriodId: payPeriod.id,
       ticketPhotoId: nextTicketPhotoId,
@@ -323,7 +325,9 @@ export default function JobEntryForm({ onJobSaved }) {
       <label className="field">
         Transportation
         <input
-          type="text"
+          type="number"
+          min="0"
+          step="0.01"
           value={transportation}
           onChange={(event) => setTransportation(event.target.value)}
           placeholder="Example: 150"
