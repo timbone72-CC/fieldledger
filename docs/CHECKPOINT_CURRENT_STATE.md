@@ -2,18 +2,18 @@
 
 ## Current Head
 
-1ded66c Normalize active pay period storage
+b715a23 Refresh mileage data without page reload
 
 ## Recent Commits
 
+b715a23 Refresh mileage data without page reload
+6064b3c Refresh expense data without page reload
+31155f5 Refresh job deletion without page reload
+1d0434d Update checkpoint after integrity cleanup
 1ded66c Normalize active pay period storage
 c9c811a Store transportation as numeric value
 0b5443e Align Torque Turn hours with contract
 664a520 Refresh job data without page reload
-ec464cf Add required job field validation
-42f17bd Update checkpoint after Legend timesheet export phase
-e58bf8f Add transportation to job tickets
-f6a6f16 Add field ticket number to job tickets
 
 ## Confirmed Working State
 
@@ -51,7 +51,9 @@ f6a6f16 Add field ticket number to job tickets
 - Verified CSV row:
   - 2026-05-01, Exxon Mobile, Scan Vision, 12345, blank day rate, 6 hours, 150 transportation, 168 total.
 - Saved jobs preview loop was fixed.
-- Job save no longer uses a full page reload.
+- Job save/delete no longer uses a full page reload.
+- Expense save/delete no longer uses a full page reload.
+- Mileage save/delete no longer uses a full page reload.
 - Active pay period storage normalizes missing or old data shape fields.
 - Core calculation tests pass.
 
