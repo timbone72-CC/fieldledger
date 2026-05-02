@@ -73,7 +73,7 @@ function buildPayPeriodCsv(payPeriod) {
 
 function getHoursWorkedForTimesheet(job) {
   if (job?.jobType === "torque_turn") {
-    return job.totalJobHours || job.additionalHours || 0;
+    return job.additionalHours || 0;
   }
 
   return job?.hoursWorked || 0;

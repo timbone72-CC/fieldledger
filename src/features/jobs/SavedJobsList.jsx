@@ -112,7 +112,7 @@ export default function SavedJobsList() {
 
 function formatJobLabel(job) {
   if (job.jobType === "torque_turn") {
-    return `Torque Turn — ${Number(job.totalJobHours || 0)} hrs`;
+    return `Torque Turn — ${Number(job.additionalHours || 0)} additional hrs`;
   }
 
   const buckingState = job.buckingState || "State not set";
