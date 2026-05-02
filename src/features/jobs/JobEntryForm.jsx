@@ -35,6 +35,7 @@ export default function JobEntryForm() {
   const [date, setDate] = useState("");
   const [company, setCompany] = useState("");
   const [rigNameOrNumber, setRigNameOrNumber] = useState("");
+  const [fieldTicketNumber, setFieldTicketNumber] = useState("");
 
   useEffect(() => {
     function loadJobForEditing(event) {
@@ -57,6 +58,7 @@ export default function JobEntryForm() {
       setDate(job.date || "");
       setCompany(job.company || "");
       setRigNameOrNumber(job.rigNameOrNumber || "");
+      setFieldTicketNumber(job.fieldTicketNumber || "");
       setSaveMessage("Editing saved job. Make changes, then save.");
     }
 
@@ -123,6 +125,7 @@ export default function JobEntryForm() {
     setDate("");
     setCompany("");
     setRigNameOrNumber("");
+    setFieldTicketNumber("");
     setSaveMessage(message);
   }
 
@@ -162,6 +165,7 @@ export default function JobEntryForm() {
       date,
       company,
       rigNameOrNumber,
+      fieldTicketNumber,
       id: editingJobId || crypto.randomUUID(),
       payPeriodId: payPeriod.id,
       ticketPhotoId: nextTicketPhotoId,
@@ -290,6 +294,16 @@ export default function JobEntryForm() {
           value={rigNameOrNumber}
           onChange={(event) => setRigNameOrNumber(event.target.value)}
           placeholder="Example: Scan Vision"
+        />
+      </label>
+
+      <label className="field">
+        Field Ticket Number
+        <input
+          type="text"
+          value={fieldTicketNumber}
+          onChange={(event) => setFieldTicketNumber(event.target.value)}
+          placeholder="Example: 12345"
         />
       </label>
 
