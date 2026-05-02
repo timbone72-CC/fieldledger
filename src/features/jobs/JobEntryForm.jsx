@@ -32,6 +32,7 @@ export default function JobEntryForm() {
   const [ticketPhotoFile, setTicketPhotoFile] = useState(null);
   const [ticketPhotoPreviewUrl, setTicketPhotoPreviewUrl] = useState("");
   const [saveMessage, setSaveMessage] = useState("");
+  const [date, setDate] = useState("");
 
   useEffect(() => {
     function loadJobForEditing(event) {
@@ -51,6 +52,7 @@ export default function JobEntryForm() {
       setHourlyRateSnapshot(job.hourlyRateSnapshot ?? loadSettings().hourlyRate ?? DEFAULT_HOURLY_RATE);
       setTicketPhotoId(job.ticketPhotoId || "");
       setTicketPhotoFile(null);
+      setDate(job.date || "");
       setSaveMessage("Editing saved job. Make changes, then save.");
     }
 
@@ -114,6 +116,7 @@ export default function JobEntryForm() {
     setTicketPhotoId("");
     setTicketPhotoFile(null);
     setTicketPhotoPreviewUrl("");
+    setDate("");
     setSaveMessage(message);
   }
 
@@ -150,6 +153,7 @@ export default function JobEntryForm() {
     }
 
     const job = {
+      date,
       id: editingJobId || crypto.randomUUID(),
       payPeriodId: payPeriod.id,
       ticketPhotoId: nextTicketPhotoId,
@@ -244,6 +248,15 @@ export default function JobEntryForm() {
           <option value={JOB_TYPES.BUCKING}>Bucking</option>
           <option value={JOB_TYPES.TORQUE_TURN}>Torque Turn</option>
         </select>
+      </label>
+
+      <label className="field">
+        Date
+        <input
+          type="date"
+          value={date}
+          onChange={(event) => setDate(event.target.value)}
+        />
       </label>
 
       <label className="field">
