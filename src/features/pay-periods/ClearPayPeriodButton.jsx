@@ -1,9 +1,13 @@
-import { clearActivePayPeriod } from "./activePayPeriodStorage.js";
+import { clearActivePayPeriod, loadActivePayPeriod } from "./activePayPeriodStorage.js";
 
 export default function ClearPayPeriodButton() {
   function handleClear() {
+    const payPeriod = loadActivePayPeriod();
+
+    downloadJsonBackup(payPeriod);
+
     const confirmed = window.confirm(
-      "Clear the current pay period? This removes saved jobs and expenses from this browser."
+      "A JSON backup was downloaded first. Clear the current pay period from this browser now?"
     );
 
     if (!confirmed) {
@@ -19,4 +23,28 @@ export default function ClearPayPeriodButton() {
       Clear Pay Period
     </button>
   );
+}
+
+function downloadJsonBackup(payPeriod) {
+  const fileName = buildFileName(payPeriod);
+  const fileContent = JSON.stringify(payPeriod, null, 2);
+  const blob = new Blob([fileContent], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = fileName;
+  link.click();
+
+  URL.revokeObjectURL(url);
+}
+
+function buildFileName(payPeriod) {
+  const label = payPeriod?.label || "current-pay-period";
+  const safeLabel = label
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+
+  return `fieldledger-${safeLabel || "pay-period"}-backup-before-clear.json`;
 }

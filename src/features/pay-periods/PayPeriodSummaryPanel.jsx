@@ -1,4 +1,5 @@
 import { calculatePayPeriodSummary } from "../../shared/utils/calculatePayPeriodSummary.js";
+import { calculateMileageSummary } from "../../shared/utils/calculateMileageSummary.js";
 import { calculateTaxEstimate } from "../../shared/utils/calculateTaxEstimate.js";
 import { TAX_DISCLAIMER } from "../../shared/constants/fieldLedgerDefaults.js";
 import { loadSettings } from "../settings/settingsStorage.js";
@@ -7,6 +8,7 @@ import { loadActivePayPeriod } from "./activePayPeriodStorage.js";
 export default function PayPeriodSummaryPanel() {
   const payPeriod = loadActivePayPeriod();
   const summary = calculatePayPeriodSummary(payPeriod);
+  const mileageSummary = calculateMileageSummary(payPeriod.mileageEntries);
   const settings = loadSettings();
   const taxEstimate = calculateTaxEstimate(summary, {
     selfEmploymentTaxRate: settings.selfEmploymentTaxRate,
@@ -37,6 +39,16 @@ export default function PayPeriodSummaryPanel() {
       <div className="result-card">
         <span>Net Income</span>
         <strong>${summary.netIncome.toFixed(2)}</strong>
+      </div>
+
+      <div className="result-card">
+        <span>Business Miles</span>
+        <strong>{mileageSummary.totalBusinessMiles.toFixed(2)} mi</strong>
+      </div>
+
+      <div className="result-card">
+        <span>Mileage Estimate</span>
+        <strong>${mileageSummary.totalMileageEstimate.toFixed(2)}</strong>
       </div>
 
       <div className="result-card">
