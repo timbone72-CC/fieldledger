@@ -19,7 +19,7 @@ function calculateDefaultBuckingHours(jobsCompleted, buckingState) {
   return Number(jobsCompleted || 0) * Number(BUCKING_HOURS_BY_STATE[buckingState] || 0);
 }
 
-export default function JobEntryForm() {
+export default function JobEntryForm({ onJobSaved }) {
   const [editingJobId, setEditingJobId] = useState("");
   const [jobType, setJobType] = useState(JOB_TYPES.BUCKING);
   const [buckingState, setBuckingState] = useState(BUCKING_STATES.TEXAS);
@@ -214,8 +214,11 @@ export default function JobEntryForm() {
       updatedAt: new Date().toISOString(),
     });
 
-    resetForm(editingJobId ? "Job updated. Refresh to update the summary." : "Job saved. Refresh to update the summary.");
-    window.location.reload();
+    resetForm(editingJobId ? "Job updated." : "Job saved.");
+
+    if (typeof onJobSaved === "function") {
+      onJobSaved();
+    }
   }
 
   async function removeTicketPhoto() {

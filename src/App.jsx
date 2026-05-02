@@ -21,6 +21,11 @@ const TABS = {
 
 export default function App() {
   const [activeTab, setActiveTab] = useState(TABS.DASHBOARD);
+  const [refreshCount, setRefreshCount] = useState(0);
+
+  function refreshAppData() {
+    setRefreshCount((currentCount) => currentCount + 1);
+  }
 
   return (
     <main className="app-shell">
@@ -75,14 +80,14 @@ export default function App() {
         <>
           <PayPeriodInfoForm />
           <ExportActionsDropdown />
-          <PayPeriodSummaryPanel />
+          <PayPeriodSummaryPanel key={`summary-${refreshCount}`} />
         </>
       )}
 
       {activeTab === TABS.JOBS && (
         <>
-          <SavedJobsList />
-          <JobEntryForm />
+          <SavedJobsList key={`jobs-${refreshCount}`} />
+          <JobEntryForm onJobSaved={refreshAppData} />
         </>
       )}
 
