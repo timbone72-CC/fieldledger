@@ -2,18 +2,18 @@
 
 ## Current Head
 
-e58bf8f Add transportation to job tickets
+1ded66c Normalize active pay period storage
 
 ## Recent Commits
 
+1ded66c Normalize active pay period storage
+c9c811a Store transportation as numeric value
+0b5443e Align Torque Turn hours with contract
+664a520 Refresh job data without page reload
+ec464cf Add required job field validation
+42f17bd Update checkpoint after Legend timesheet export phase
 e58bf8f Add transportation to job tickets
 f6a6f16 Add field ticket number to job tickets
-1219873 Add timesheet company autofill and fix saved jobs preview loop
-debbfde Add company field to job tickets
-3b54a0b Align CSV export with Legend timesheet and add job date
-ec4a7a5 Rebuild GitHub Pages after mileage tracking
-d0b762d Update checkpoint after mileage tracking milestone
-0fc6852 Add edit selected mileage entries
 
 ## Confirmed Working State
 
@@ -37,7 +37,7 @@ d0b762d Update checkpoint after mileage tracking milestone
 - Company field saves on job tickets.
 - Rig Name/Number field saves on job tickets.
 - Field Ticket Number saves on job tickets.
-- Transportation saves on job tickets.
+- Transportation saves on job tickets as a numeric value.
 - Company field supports default suggestions and manual typing.
 - CSV export now matches the visible Legend Energy timesheet columns:
   - Date
@@ -51,6 +51,8 @@ d0b762d Update checkpoint after mileage tracking milestone
 - Verified CSV row:
   - 2026-05-01, Exxon Mobile, Scan Vision, 12345, blank day rate, 6 hours, 150 transportation, 168 total.
 - Saved jobs preview loop was fixed.
+- Job save no longer uses a full page reload.
+- Active pay period storage normalizes missing or old data shape fields.
 - Core calculation tests pass.
 
 ## Locked Rules
@@ -88,7 +90,7 @@ Exported CSV row confirmed:
 
 ## Next Recommended Move
 
-Run a milestone audit before adding the next feature.
+Continue integration + integrity cleanup before adding new features.
 
 ## Tracked TODO
 
