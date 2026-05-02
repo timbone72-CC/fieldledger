@@ -164,6 +164,12 @@ export default function JobEntryForm() {
       }
     }
 
+    
+    if (!date || !company) {
+      setSaveMessage("Date and Company are required.");
+      return;
+    }
+
     const job = {
       date,
       company,
