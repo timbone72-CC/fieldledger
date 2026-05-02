@@ -2,20 +2,20 @@
 
 ## Current Head
 
-87294f5 Rebuild GitHub Pages after Torque Turn and tax updates
+0fc6852 Add edit selected mileage entries
 
 ## Recent Commits
 
-87294f5 Rebuild GitHub Pages after Torque Turn and tax updates
-b6aa6e7 Clean up Torque Turn additional hours wording in contracts
-9f2b8b8 Update checkpoint after Torque Turn fix and state tax feature
-b1cd512 Add state tax to tax contract and total tax calculation
-155626e Add state tax rate to settings UI
-5ee4257 Add state tax rate support to tax estimate (Oklahoma default 4.5%)
-bf23730 Clean up tax rate display in settings
-b2b9dac Fix summary test and CSV export for Torque Turn additional hours
-5c16f0f Fix Torque Turn pay contract for additional hours
-e4a804f Fix Torque Turn pay: use additional hours after 24 and update UI field
+0fc6852 Add edit selected mileage entries
+2d15855 Add mileage save validation
+75910cc Add delete selected mileage entries
+95223b3 Display saved mileage entries
+061b92c Add contract-aligned mileage save
+5bf3989 Fix mileage contract formatting
+0927a9b Update mileage contract and fix duplicate import
+4dbf46d Add saved mileage placeholder
+007f5e3 Add mileage tab
+bdb9cc2 Add mileage entry form placeholder
 
 ## Confirmed Working State
 
