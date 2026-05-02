@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { loadActivePayPeriod, saveActivePayPeriod } from "../pay-periods/activePayPeriodStorage.js";
 import { loadPhotoBlob } from "../../shared/storage/photoBlobStorage.js";
 
-export default function SavedJobsList() {
+export default function SavedJobsList({ onJobDeleted }) {
   const payPeriod = loadActivePayPeriod();
   const jobs = Array.isArray(payPeriod.jobs) ? payPeriod.jobs : [];
   const jobsPreviewKey = jobs.map((job) => `${job.id}:${job.ticketPhotoId || ""}`).join("|");
@@ -64,7 +64,9 @@ export default function SavedJobsList() {
       updatedAt: new Date().toISOString(),
     });
 
-    window.location.reload();
+    if (typeof onJobDeleted === "function") {
+      onJobDeleted();
+    }
   }
 
   return (

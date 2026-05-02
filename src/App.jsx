@@ -86,7 +86,7 @@ export default function App() {
 
       {activeTab === TABS.JOBS && (
         <>
-          <SavedJobsList key={`jobs-${refreshCount}`} />
+          <SavedJobsList key={`jobs-${refreshCount}`} onJobDeleted={refreshAppData} />
           <JobEntryForm onJobSaved={refreshAppData} />
         </>
       )}
