@@ -135,11 +135,16 @@ export default function ExpenseEntryForm({ onExpenseSaved }) {
         })
       : [...existingExpenses, expense];
 
-    saveActivePayPeriod({
+    const saved = saveActivePayPeriod({
       ...payPeriod,
       expenses: nextExpenses,
       updatedAt: new Date().toISOString(),
     });
+
+    if (!saved) {
+      setSaveMessage("Expense could not be saved.");
+      return;
+    }
 
     resetForm(
       editingExpenseId
