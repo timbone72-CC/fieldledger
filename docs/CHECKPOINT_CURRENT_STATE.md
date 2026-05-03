@@ -2,18 +2,15 @@
 
 ## Current Head
 
-4e277f0 Remove old GitHub Pages build assets
+cdb9407 Remove unused GitHub Pages assets after print modes
 
 ## Recent Commits
 
+cdb9407 Remove unused GitHub Pages assets after print modes
+7167fe5 Add dual print modes: timesheet + full report with print-only layout
+89b6d67 Update checkpoint after mileage summary backup safety
 4e277f0 Remove old GitHub Pages build assets
 0d39306 Add mileage summary and backup-before-clear
-9d75a86 Update checkpoint after reload cleanup
-b715a23 Refresh mileage data without page reload
-6064b3c Refresh expense data without page reload
-31155f5 Refresh job deletion without page reload
-1d0434d Update checkpoint after integrity cleanup
-1ded66c Normalize active pay period storage
 
 ## Confirmed Working State
 
