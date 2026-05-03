@@ -13,12 +13,17 @@ export default function SettingsPanel() {
   const [saveMessage, setSaveMessage] = useState("");
 
   function saveUserSettings() {
-    saveSettings({
+    const saved = saveSettings({
       hourlyRate: Number(hourlyRate || 0),
       selfEmploymentTaxRate: Number(selfEmploymentTaxRate || 0) / 100,
       federalTaxRate: Number(federalTaxRate || 0) / 100,
       stateTaxRate: Number(stateTaxRate || 0) / 100,
     });
+
+    if (!saved) {
+      setSaveMessage("");
+      return;
+    }
 
     setSaveMessage("Settings saved.");
   }
