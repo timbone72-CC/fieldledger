@@ -58,11 +58,15 @@ export default function SavedJobsList({ onJobDeleted }) {
     const latestPayPeriod = loadActivePayPeriod();
     const latestJobs = Array.isArray(latestPayPeriod.jobs) ? latestPayPeriod.jobs : [];
 
-    saveActivePayPeriod({
+    const saved = saveActivePayPeriod({
       ...latestPayPeriod,
       jobs: latestJobs.filter((job) => job.id !== jobId),
       updatedAt: new Date().toISOString(),
     });
+
+    if (!saved) {
+      return;
+    }
 
     if (typeof onJobDeleted === "function") {
       onJobDeleted();
