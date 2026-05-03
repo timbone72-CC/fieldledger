@@ -1,12 +1,6 @@
-export default function PrintPayPeriodReportButton({ setPrintMode }) {
+export default function PrintPayPeriodReportButton() {
   function handlePrintFull() {
-    if (setPrintMode) {
-      setPrintMode("full");
-    }
-
-    setTimeout(() => {
-      window.print();
-    }, 50);
+    window.print();
   }
 
   return (
