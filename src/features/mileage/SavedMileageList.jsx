@@ -44,13 +44,17 @@ export default function SavedMileageList({ onMileageDeleted }) {
       ? latestPayPeriod.mileageEntries
       : [];
 
-    saveActivePayPeriod({
+    const saved = saveActivePayPeriod({
       ...latestPayPeriod,
       mileageEntries: latestMileageEntries.filter(
         (entry) => !selectedMileageIds.includes(entry.id),
       ),
       updatedAt: new Date().toISOString(),
     });
+
+    if (!saved) {
+      return;
+    }
 
     if (typeof onMileageDeleted === "function") {
       onMileageDeleted();
