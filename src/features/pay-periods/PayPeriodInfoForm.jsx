@@ -12,13 +12,18 @@ export default function PayPeriodInfoForm() {
   function savePayPeriodInfo() {
     const currentPayPeriod = loadActivePayPeriod();
 
-    saveActivePayPeriod({
+    const saved = saveActivePayPeriod({
       ...currentPayPeriod,
       label,
       startDate,
       endDate,
       updatedAt: new Date().toISOString(),
     });
+
+    if (!saved) {
+      setSaveMessage("Pay period could not be saved.");
+      return;
+    }
 
     setSaveMessage("Pay period saved.");
   }
