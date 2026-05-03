@@ -2,15 +2,18 @@
 
 ## Current Head
 
-cdb9407 Remove unused GitHub Pages assets after print modes
+4e67763 Only show pay period saved after storage succeeds
 
 ## Recent Commits
 
-cdb9407 Remove unused GitHub Pages assets after print modes
-7167fe5 Add dual print modes: timesheet + full report with print-only layout
-89b6d67 Update checkpoint after mileage summary backup safety
-4e277f0 Remove old GitHub Pages build assets
-0d39306 Add mileage summary and backup-before-clear
+4e67763 Only show pay period saved after storage succeeds
+8462a93 Stop job delete refresh when storage fails
+30e09a1 Stop mileage delete refresh when storage fails
+be4b52f Stop mileage save success when storage fails
+d95f444 Stop expense delete refresh when storage fails
+8b5cf1a Stop expense save success when storage fails
+13bd7c8 Remove unused full report print mode state
+8b2c3b4 Stop job save success when storage fails
 
 ## Confirmed Working State
 
