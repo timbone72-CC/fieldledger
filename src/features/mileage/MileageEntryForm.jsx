@@ -116,11 +116,16 @@ export default function MileageEntryForm({ onMileageSaved }) {
         })
       : [...existingEntries, mileageEntry];
 
-    saveActivePayPeriod({
+    const saved = saveActivePayPeriod({
       ...payPeriod,
       mileageEntries: nextEntries,
       updatedAt: new Date().toISOString(),
     });
+
+    if (!saved) {
+      setSaveMessage("Mileage could not be saved.");
+      return;
+    }
 
     resetForm("Mileage saved. Refresh to update the summary.");
 
