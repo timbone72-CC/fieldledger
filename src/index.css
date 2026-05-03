@@ -109,3 +109,40 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
+
+
+/* PRINT MODES */
+
+@media print {
+  body.print-timesheet .hero-card,
+  body.print-timesheet .tab-bar,
+  body.print-timesheet .export-actions,
+  body.print-timesheet button,
+  body.print-timesheet .result-card,
+  body.print-timesheet .panel:has(.result-card) {
+    display: none !important;
+  }
+}
+
+.timesheet-print-view {
+  display: none;
+}
+
+@media print {
+  body.print-timesheet .timesheet-print-view {
+    display: block !important;
+  }
+
+  body.print-timesheet .timesheet-print-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11px;
+  }
+
+  body.print-timesheet .timesheet-print-table th,
+  body.print-timesheet .timesheet-print-table td {
+    border: 1px solid #000;
+    padding: 4px;
+    text-align: left;
+  }
+}

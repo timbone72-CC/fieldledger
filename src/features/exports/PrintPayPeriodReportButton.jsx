@@ -1,11 +1,17 @@
-export default function PrintPayPeriodReportButton() {
-  function printReport() {
-    window.print();
+export default function PrintPayPeriodReportButton({ setPrintMode }) {
+  function handlePrintFull() {
+    if (setPrintMode) {
+      setPrintMode("full");
+    }
+
+    setTimeout(() => {
+      window.print();
+    }, 50);
   }
 
   return (
-    <button type="button" onClick={printReport}>
-      Print / Save PDF Report
+    <button type="button" onClick={handlePrintFull}>
+      Print Full Report
     </button>
   );
 }

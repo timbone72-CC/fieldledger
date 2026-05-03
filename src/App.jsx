@@ -10,6 +10,7 @@ import SavedMileageList from "./features/mileage/SavedMileageList.jsx";
 import PayPeriodInfoForm from "./features/pay-periods/PayPeriodInfoForm.jsx";
 import PayPeriodSummaryPanel from "./features/pay-periods/PayPeriodSummaryPanel.jsx";
 import SettingsPanel from "./features/settings/SettingsPanel.jsx";
+import TimesheetPrintView from "./features/exports/TimesheetPrintView.jsx";
 
 const TABS = {
   DASHBOARD: "dashboard",
@@ -22,6 +23,7 @@ const TABS = {
 export default function App() {
   const [activeTab, setActiveTab] = useState(TABS.DASHBOARD);
   const [refreshCount, setRefreshCount] = useState(0);
+  const [printMode, setPrintMode] = useState(null);
 
   function refreshAppData() {
     setRefreshCount((currentCount) => currentCount + 1);
@@ -79,7 +81,8 @@ export default function App() {
       {activeTab === TABS.DASHBOARD && (
         <>
           <PayPeriodInfoForm />
-          <ExportActionsDropdown />
+          <ExportActionsDropdown setPrintMode={setPrintMode} />
+          <TimesheetPrintView />
           <PayPeriodSummaryPanel key={`summary-${refreshCount}`} />
         </>
       )}
