@@ -210,11 +210,16 @@ export default function JobEntryForm({ onJobSaved }) {
         })
       : [...existingJobs, job];
 
-    saveActivePayPeriod({
+    const saved = saveActivePayPeriod({
       ...payPeriod,
       jobs: nextJobs,
       updatedAt: new Date().toISOString(),
     });
+
+    if (!saved) {
+      setSaveMessage("Job could not be saved.");
+      return;
+    }
 
     resetForm(editingJobId ? "Job updated." : "Job saved.");
 
