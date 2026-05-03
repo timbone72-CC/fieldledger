@@ -14,7 +14,12 @@ export default function ClearPayPeriodButton() {
       return;
     }
 
-    clearActivePayPeriod();
+    const cleared = clearActivePayPeriod();
+
+    if (!cleared) {
+      return;
+    }
+
     window.location.reload();
   }
 
