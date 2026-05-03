@@ -27,10 +27,15 @@ export default function ImportPayPeriodJsonButton() {
         return;
       }
 
-      saveActivePayPeriod({
+      const saved = saveActivePayPeriod({
         ...payPeriod,
         updatedAt: new Date().toISOString(),
       });
+
+      if (!saved) {
+        event.target.value = "";
+        return;
+      }
 
       window.location.reload();
     } catch {
