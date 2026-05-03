@@ -11,7 +11,7 @@ export function loadSettings() {
 }
 
 export function saveSettings(settings) {
-  saveJson(STORAGE_KEYS.SETTINGS, {
+  return saveJson(STORAGE_KEYS.SETTINGS, {
     ...createDefaultSettings(),
     ...settings,
     updatedAt: new Date().toISOString(),

@@ -6,11 +6,11 @@ export function loadActivePayPeriod() {
 }
 
 export function saveActivePayPeriod(payPeriod) {
-  saveJson(STORAGE_KEYS.ACTIVE_PAY_PERIOD, normalizePayPeriod(payPeriod));
+  return saveJson(STORAGE_KEYS.ACTIVE_PAY_PERIOD, normalizePayPeriod(payPeriod));
 }
 
 export function clearActivePayPeriod() {
-  removeJson(STORAGE_KEYS.ACTIVE_PAY_PERIOD);
+  return removeJson(STORAGE_KEYS.ACTIVE_PAY_PERIOD);
 }
 
 export function createEmptyPayPeriod() {
