@@ -76,11 +76,15 @@ export default function SavedExpensesList({ onExpenseDeleted }) {
       ? latestPayPeriod.expenses
       : [];
 
-    saveActivePayPeriod({
+    const saved = saveActivePayPeriod({
       ...latestPayPeriod,
       expenses: latestExpenses.filter((expense) => !selectedExpenseIds.includes(expense.id)),
       updatedAt: new Date().toISOString(),
     });
+
+    if (!saved) {
+      return;
+    }
 
     if (typeof onExpenseDeleted === "function") {
       onExpenseDeleted();
