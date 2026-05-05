@@ -2,10 +2,12 @@
 
 ## Current Head
 
-9211ee8 Record CSV mileage export decision in checkpoint
+c232f9c Add active pay period record validation
 
 ## Recent Commits
 
+c232f9c Add active pay period record validation
+8e1a46d Update checkpoint after Torque Turn sheet formula verification
 9211ee8 Record CSV mileage export decision in checkpoint
 92619c6 Update checkpoint after mileage print + JSON validation integration
 a4c8d53 Add mileage summary to printable report and rebuild assets
@@ -14,8 +16,6 @@ a4c8d53 Add mileage summary to printable report and rebuild assets
 b968f9d Rebuild live app after reliability phase
 b181a2e Update checkpoint after reliability phase
 4e67763 Only show pay period saved after storage succeeds
-8462a93 Stop job delete refresh when storage fails
-30e09a1 Stop mileage delete refresh when storage fails
 
 ## Confirmed Working State
 
