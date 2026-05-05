@@ -33,6 +33,43 @@ function normalizePayPeriod(payPeriod) {
     return emptyPayPeriod;
   }
 
+  const safeJobs = Array.isArray(payPeriod.jobs)
+    ? payPeriod.jobs.filter((job) => {
+        return (
+          job &&
+          typeof job === "object" &&
+          typeof job.id === "string" &&
+          typeof job.payPeriodId === "string" &&
+          typeof job.jobType === "string" &&
+          typeof job.totalPay === "number"
+        );
+      })
+    : [];
+
+  const safeExpenses = Array.isArray(payPeriod.expenses)
+    ? payPeriod.expenses.filter((expense) => {
+        return (
+          expense &&
+          typeof expense === "object" &&
+          typeof expense.id === "string" &&
+          typeof expense.payPeriodId === "string" &&
+          typeof expense.amount === "number"
+        );
+      })
+    : [];
+
+  const safeMileage = Array.isArray(payPeriod.mileageEntries)
+    ? payPeriod.mileageEntries.filter((entry) => {
+        return (
+          entry &&
+          typeof entry === "object" &&
+          typeof entry.id === "string" &&
+          typeof entry.payPeriodId === "string" &&
+          typeof entry.miles === "number"
+        );
+      })
+    : [];
+
   return {
     ...emptyPayPeriod,
     ...payPeriod,
@@ -41,8 +78,9 @@ function normalizePayPeriod(payPeriod) {
     startDate: typeof payPeriod.startDate === "string" ? payPeriod.startDate : emptyPayPeriod.startDate,
     endDate: typeof payPeriod.endDate === "string" ? payPeriod.endDate : emptyPayPeriod.endDate,
     status: typeof payPeriod.status === "string" ? payPeriod.status : emptyPayPeriod.status,
-    jobs: Array.isArray(payPeriod.jobs) ? payPeriod.jobs : [],
-    expenses: Array.isArray(payPeriod.expenses) ? payPeriod.expenses : [],
-    mileageEntries: Array.isArray(payPeriod.mileageEntries) ? payPeriod.mileageEntries : [],
+    jobs: safeJobs,
+    expenses: safeExpenses,
+    mileageEntries: safeMileage,
   };
 }
+
