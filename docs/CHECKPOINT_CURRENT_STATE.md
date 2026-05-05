@@ -2,10 +2,11 @@
 
 ## Current Head
 
-92619c6 Update checkpoint after mileage print + JSON validation integration
+9211ee8 Record CSV mileage export decision in checkpoint
 
 ## Recent Commits
 
+9211ee8 Record CSV mileage export decision in checkpoint
 92619c6 Update checkpoint after mileage print + JSON validation integration
 a4c8d53 Add mileage summary to printable report and rebuild assets
 50b50d1 Require mileage entries in JSON backup validation
@@ -45,6 +46,7 @@ b181a2e Update checkpoint after reliability phase
 - Company field supports default suggestions and manual typing.
 - CSV export currently matches the visible Legend Energy timesheet job columns.
 - CSV export intentionally remains job/timesheet-only until the export contract defines a separate mileage/full-report export.
+- Google Sheets Timesheet formula now supports Torque Turn rows when Day Rate is present.
 - Job save/delete no longer uses a full page reload.
 - Expense save/delete no longer uses a full page reload.
 - Mileage save/delete no longer uses a full page reload.
@@ -71,7 +73,15 @@ b181a2e Update checkpoint after reliability phase
 
 ## Latest Manual Browser Test
 
-Printable full report passed:
+Torque Turn CSV-to-Google-Sheets pipeline passed:
+
+- App exported Torque Turn row with Day Rate 1400 and Additional Hours 7.
+- Google Sheet initially calculated Total incorrectly as $346.00.
+- Sheet formula was corrected to use Day Rate + Hours Worked × 28 when Day Rate is present.
+- Repair Timesheet Formulas was run successfully.
+- Torque Turn row stayed correct at $1,596.00.
+
+Previous printable full report test passed:
 
 - Dashboard opened successfully.
 - Print Full Report opened browser print preview.
@@ -87,11 +97,10 @@ Continue integration + integrity cleanup before adding new features.
 
 Next target:
 
-- Verify CSV export behavior for Torque Turn jobs.
+- Continue integration + integrity cleanup.
 
 ## Tracked TODO
 
-- Verify CSV export behavior for Torque Turn jobs.
 - Review printable report layout against the Legend Energy timesheet.
 - Decide whether Rig Name/Number should use autofill with manual typing like Company.
 - Add future way to manage saved company and rig suggestion lists.
