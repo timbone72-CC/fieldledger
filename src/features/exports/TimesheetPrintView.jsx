@@ -1,8 +1,12 @@
 import { loadActivePayPeriod } from "../pay-periods/activePayPeriodStorage.js";
+import { calculateMileageSummary } from "../../shared/utils/calculateMileageSummary.js";
 
 export default function TimesheetPrintView() {
   const payPeriod = loadActivePayPeriod();
   const jobs = Array.isArray(payPeriod.jobs) ? payPeriod.jobs : [];
+  const mileageEntries = Array.isArray(payPeriod.mileageEntries) ? payPeriod.mileageEntries : [];
+
+  const mileageSummary = calculateMileageSummary(mileageEntries);
 
   return (
     <section className="timesheet-print-view">
@@ -42,6 +46,25 @@ export default function TimesheetPrintView() {
           )}
         </tbody>
       </table>
+
+      <section className="timesheet-mileage-summary">
+        <h3>Mileage Summary</h3>
+
+        {mileageEntries.length === 0 ? (
+          <p>No mileage entries.</p>
+        ) : (
+          <>
+            <p>
+              Total Business Miles:{" "}
+              <strong>{mileageSummary.totalBusinessMiles.toFixed(2)} mi</strong>
+            </p>
+            <p>
+              Estimated Mileage Value:{" "}
+              <strong>${mileageSummary.totalMileageEstimate.toFixed(2)}</strong>
+            </p>
+          </>
+        )}
+      </section>
     </section>
   );
 }
