@@ -63,6 +63,7 @@ function isValidPayPeriodBackup(value) {
     typeof value === "object" &&
     typeof value.id === "string" &&
     Array.isArray(value.jobs) &&
-    Array.isArray(value.expenses)
+    Array.isArray(value.expenses) &&
+    Array.isArray(value.mileageEntries)
   );
 }
