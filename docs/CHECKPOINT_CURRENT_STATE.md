@@ -2,62 +2,53 @@
 
 ## Current Head
 
-4e67763 Only show pay period saved after storage succeeds
+a4c8d53 Add mileage summary to printable report and rebuild assets
 
 ## Recent Commits
 
+a4c8d53 Add mileage summary to printable report and rebuild assets
+50b50d1 Require mileage entries in JSON backup validation
+7c48e9b Improve print full report mode and rebuild GitHub Pages assets
+b968f9d Rebuild live app after reliability phase
+b181a2e Update checkpoint after reliability phase
 4e67763 Only show pay period saved after storage succeeds
 8462a93 Stop job delete refresh when storage fails
 30e09a1 Stop mileage delete refresh when storage fails
-be4b52f Stop mileage save success when storage fails
-d95f444 Stop expense delete refresh when storage fails
-8b5cf1a Stop expense save success when storage fails
-13bd7c8 Remove unused full report print mode state
-8b2c3b4 Stop job save success when storage fails
 
 ## Confirmed Working State
 
 - React/Vite app runs locally.
 - Manual pay period info saves locally.
 - Bucking jobs save locally.
-- Bucking jobs support state-based default hours:
-  - Texas defaults to 6 hours per job.
-  - New Mexico defaults to 8 hours per job.
-  - Hours Worked remains manually editable before saving.
 - Torque Turn jobs save locally.
 - Expenses save locally.
 - Mileage entries save, display, edit, and delete.
 - Saved jobs list works.
 - Saved expenses list works.
+- Saved mileage list works.
 - Pay period summary works.
 - Pay period summary shows business miles and mileage estimate.
 - Tax estimate works.
 - Clear pay period downloads a full JSON backup before confirmation.
 - Clear pay period cancel keeps data visible.
-- JSON backup download works.
+- JSON backup download exports the full active pay period.
+- JSON import now requires mileageEntries in valid backups.
+- JSON backup/import was manually verified with jobs, expenses, and mileage still present.
+- Printable full report now includes a Mileage Summary section.
+- Print Full Report was manually verified in browser print preview.
 - Receipt/ticket photo attach, preview, and remove support exists.
 - Company field saves on job tickets.
 - Rig Name/Number field saves on job tickets.
 - Field Ticket Number saves on job tickets.
 - Transportation saves on job tickets as a numeric value.
 - Company field supports default suggestions and manual typing.
-- CSV export now matches the visible Legend Energy timesheet columns:
-  - Date
-  - Company
-  - Rig Name/Number
-  - Field Ticket Number
-  - Day Rate
-  - Hours Worked
-  - Transportation
-  - Total
-- Verified CSV row:
-  - 2026-05-01, Exxon Mobile, Scan Vision, 12345, blank day rate, 6 hours, 150 transportation, 168 total.
-- Saved jobs preview loop was fixed.
+- CSV export currently matches the visible Legend Energy timesheet job columns.
 - Job save/delete no longer uses a full page reload.
 - Expense save/delete no longer uses a full page reload.
 - Mileage save/delete no longer uses a full page reload.
 - Active pay period storage normalizes missing or old data shape fields.
 - Core calculation tests pass.
+- Latest build passed with Vite and rebuilt GitHub Pages assets.
 
 ## Locked Rules
 
@@ -68,6 +59,7 @@ d95f444 Stop expense delete refresh when storage fails
 - Bucking pay = hoursWorked × hourlyRateSnapshot.
 - Torque Turn pay = baseJobPay + additionalHours × hourlyRateSnapshot.
 - Expenses reduce net income but do not change gross earnings.
+- Mileage estimate is shown for planning only and must not be treated as a guaranteed deduction.
 - Tax estimates are planning only, not tax advice.
 - Structured records use localStorage.
 - Large photo/blob storage uses IndexedDB.
@@ -77,30 +69,29 @@ d95f444 Stop expense delete refresh when storage fails
 
 ## Latest Manual Browser Test
 
-Legend timesheet CSV export passed:
+Printable full report passed:
 
-- Date: 2026-05-01
-- Company: Exxon Mobile
-- Rig Name/Number: Scan Vision
-- Field Ticket Number: 12345
-- Transportation: 150
-- Bucking jobs completed: 1
-- Hours Worked: 6
-- Total: 168
-
-Exported CSV row confirmed:
-
-2026-05-01,Exxon Mobile,Scan Vision,12345,,6,150,168
+- Dashboard opened successfully.
+- Print Full Report opened browser print preview.
+- Timesheet report still showed job/report content.
+- Pay Period Summary remained visible.
+- Business Miles showed 299.60 mi.
+- Mileage Estimate showed $200.74.
+- Print preview generated successfully.
 
 ## Next Recommended Move
 
 Continue integration + integrity cleanup before adding new features.
 
+Next target:
+
+- Inspect CSV export and decide whether mileage should be included there, kept separate, or handled in a secondary export/report section.
+
 ## Tracked TODO
 
+- Inspect CSV export for mileage integration decision.
+- Verify CSV export behavior for Torque Turn jobs.
+- Review printable report layout against the Legend Energy timesheet.
 - Decide whether Rig Name/Number should use autofill with manual typing like Company.
 - Add future way to manage saved company and rig suggestion lists.
-- Review printable report layout against the Legend Energy timesheet.
-- Verify JSON backup/import preserves new job ticket fields.
-- Verify CSV export behavior for Torque Turn jobs.
 - Clean old generated docs/assets files if needed after build churn.
