@@ -2,10 +2,11 @@
 
 ## Current Head
 
-a4c8d53 Add mileage summary to printable report and rebuild assets
+92619c6 Update checkpoint after mileage print + JSON validation integration
 
 ## Recent Commits
 
+92619c6 Update checkpoint after mileage print + JSON validation integration
 a4c8d53 Add mileage summary to printable report and rebuild assets
 50b50d1 Require mileage entries in JSON backup validation
 7c48e9b Improve print full report mode and rebuild GitHub Pages assets
@@ -43,6 +44,7 @@ b181a2e Update checkpoint after reliability phase
 - Transportation saves on job tickets as a numeric value.
 - Company field supports default suggestions and manual typing.
 - CSV export currently matches the visible Legend Energy timesheet job columns.
+- CSV export intentionally remains job/timesheet-only until the export contract defines a separate mileage/full-report export.
 - Job save/delete no longer uses a full page reload.
 - Expense save/delete no longer uses a full page reload.
 - Mileage save/delete no longer uses a full page reload.
@@ -85,11 +87,10 @@ Continue integration + integrity cleanup before adding new features.
 
 Next target:
 
-- Inspect CSV export and decide whether mileage should be included there, kept separate, or handled in a secondary export/report section.
+- Verify CSV export behavior for Torque Turn jobs.
 
 ## Tracked TODO
 
-- Inspect CSV export for mileage integration decision.
 - Verify CSV export behavior for Torque Turn jobs.
 - Review printable report layout against the Legend Energy timesheet.
 - Decide whether Rig Name/Number should use autofill with manual typing like Company.
