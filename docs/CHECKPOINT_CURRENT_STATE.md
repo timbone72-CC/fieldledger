@@ -2,10 +2,12 @@
 
 ## Current Head
 
-c232f9c Add active pay period record validation
+75fecba Fix mileage delete confirmation wording
 
 ## Recent Commits
 
+75fecba Fix mileage delete confirmation wording
+8b205b2 Update checkpoint after active pay period validation
 c232f9c Add active pay period record validation
 8e1a46d Update checkpoint after Torque Turn sheet formula verification
 9211ee8 Record CSV mileage export decision in checkpoint
@@ -14,8 +16,6 @@ a4c8d53 Add mileage summary to printable report and rebuild assets
 50b50d1 Require mileage entries in JSON backup validation
 7c48e9b Improve print full report mode and rebuild GitHub Pages assets
 b968f9d Rebuild live app after reliability phase
-b181a2e Update checkpoint after reliability phase
-4e67763 Only show pay period saved after storage succeeds
 
 ## Confirmed Working State
 
