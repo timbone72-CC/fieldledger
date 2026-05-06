@@ -2,18 +2,18 @@
 
 ## Current Head
 
-308c2a1 Add active pay period schema version
+8840d26 Warn user when corrupted local storage is recovered
 
 ## Recent Commits
 
+8840d26 Warn user when corrupted local storage is recovered
+6425077 Update checkpoint after storage integrity protections
 308c2a1 Add active pay period schema version
 d828ec9 Verify local JSON storage round trip
 e621db8 Add local JSON storage recovery test
 530654a Update checkpoint after export integrity tests
 45af636 Add printable report integrity test
 998e6ea Add CSV export integrity test
-5222650 Add JSON backup round-trip integrity test
-a0d4607 Add app version and cache recovery note
 
 ## Confirmed Working State
 
@@ -51,6 +51,7 @@ a0d4607 Add app version and cache recovery note
 - Expense save/delete no longer uses a full page reload.
 - Mileage save/delete no longer uses a full page reload.
 - Active pay period storage normalizes missing or old data shape fields.
+- Corrupted local JSON storage now warns the user and falls back safely.
 - Core calculation tests pass.
 - JSON backup round-trip integrity test passes.
 - CSV export integrity test passes.
