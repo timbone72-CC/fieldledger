@@ -2,18 +2,15 @@
 
 ## Current Head
 
-e0b8b96 Show storage recovery notice in app
+82e532c Add active pay period validation utility
 
 ## Recent Commits
 
+82e532c Add active pay period validation utility
+617f9ac Update checkpoint after storage recovery banner
 e0b8b96 Show storage recovery notice in app
 b866c9c Update checkpoint after corrupted storage warning
 8840d26 Warn user when corrupted local storage is recovered
-6425077 Update checkpoint after storage integrity protections
-308c2a1 Add active pay period schema version
-d828ec9 Verify local JSON storage round trip
-e621db8 Add local JSON storage recovery test
-530654a Update checkpoint after export integrity tests
 
 ## Confirmed Working State
 
