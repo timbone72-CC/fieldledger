@@ -8,6 +8,12 @@ export function loadJson(key, fallbackValue) {
 
     return JSON.parse(storedValue);
   } catch {
+    if (typeof window.alert === "function") {
+      window.alert(
+        "FieldLedger found corrupted saved data and loaded a safe blank version instead. If you have a backup JSON file, use Import JSON to restore it."
+      );
+    }
+
     return fallbackValue;
   }
 }
