@@ -1,6 +1,8 @@
 import { STORAGE_KEYS } from "../../shared/constants/storageKeys.js";
 import { loadJson, removeJson, saveJson } from "../../shared/storage/localJsonStorage.js";
 
+const ACTIVE_PAY_PERIOD_SCHEMA_VERSION = 1;
+
 export function loadActivePayPeriod() {
   return normalizePayPeriod(loadJson(STORAGE_KEYS.ACTIVE_PAY_PERIOD, createEmptyPayPeriod()));
 }
@@ -22,6 +24,7 @@ export function createEmptyPayPeriod() {
     status: "open",
     jobs: [],
     expenses: [],
+    schemaVersion: ACTIVE_PAY_PERIOD_SCHEMA_VERSION,
     mileageEntries: [],
   };
 }
@@ -78,6 +81,7 @@ function normalizePayPeriod(payPeriod) {
     startDate: typeof payPeriod.startDate === "string" ? payPeriod.startDate : emptyPayPeriod.startDate,
     endDate: typeof payPeriod.endDate === "string" ? payPeriod.endDate : emptyPayPeriod.endDate,
     status: typeof payPeriod.status === "string" ? payPeriod.status : emptyPayPeriod.status,
+    schemaVersion: ACTIVE_PAY_PERIOD_SCHEMA_VERSION,
     jobs: safeJobs,
     expenses: safeExpenses,
     mileageEntries: safeMileage,
