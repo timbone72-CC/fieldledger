@@ -2,20 +2,18 @@
 
 ## Current Head
 
-b299345 Delay timesheet print until view renders
+45af636 Add printable report integrity test
 
 ## Recent Commits
 
+45af636 Add printable report integrity test
+998e6ea Add CSV export integrity test
+5222650 Add JSON backup round-trip integrity test
+a0d4607 Add app version and cache recovery note
+f930a14 Update checkpoint after live print recovery test
 b299345 Delay timesheet print until view renders
 7a0451d Rebuild live app after print rendering fix
 14792d0 Fix timesheet print rendering flow
-9362664 Fix timesheet print mode visibility
-9c22a6e Update checkpoint after mileage integrity fixes
-6f5e473 Validate mileage entries during JSON import
-ca53a0c Add mileage detail rows to printable timesheet
-ca229a7 Clarify MVP CSV export scope in export contract
-cc97683 Update checkpoint after destructive action audit
-75fecba Fix mileage delete confirmation wording
 
 ## Confirmed Working State
 
@@ -54,6 +52,9 @@ cc97683 Update checkpoint after destructive action audit
 - Mileage save/delete no longer uses a full page reload.
 - Active pay period storage normalizes missing or old data shape fields.
 - Core calculation tests pass.
+- JSON backup round-trip integrity test passes.
+- CSV export integrity test passes.
+- Printable report integrity test passes.
 - Latest build passed with Vite and rebuilt GitHub Pages assets.
 - Live Print Timesheet now opens the spreadsheet-style timesheet view instead of the full report cards.
 - Browser data reset was recovered successfully by importing a JSON backup.
