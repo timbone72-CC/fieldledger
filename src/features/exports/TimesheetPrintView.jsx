@@ -25,6 +25,7 @@ export default function TimesheetPrintView() {
             <th>Total</th>
           </tr>
         </thead>
+
         <tbody>
           {jobs.length === 0 ? (
             <tr>
@@ -48,16 +49,52 @@ export default function TimesheetPrintView() {
       </table>
 
       <section className="timesheet-mileage-summary">
-        <h3>Mileage Summary</h3>
+        <h3>Mileage Details</h3>
 
         {mileageEntries.length === 0 ? (
           <p>No mileage entries.</p>
         ) : (
           <>
+            <table className="timesheet-print-table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Vehicle</th>
+                  <th>Start</th>
+                  <th>End</th>
+                  <th>Purpose</th>
+                  <th>Miles</th>
+                  <th>Rate</th>
+                  <th>Estimate</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {mileageEntries.map((entry) => (
+                  <tr key={entry.id}>
+                    <td>{entry.date || ""}</td>
+                    <td>{entry.vehicle || ""}</td>
+                    <td>{entry.startLocation || ""}</td>
+                    <td>{entry.endLocation || ""}</td>
+                    <td>{entry.businessPurpose || ""}</td>
+                    <td>{Number(entry.miles || 0).toFixed(1)}</td>
+                    <td>${Number(entry.mileageRateSnapshot || 0).toFixed(2)}</td>
+                    <td>
+                      $
+                      {Number(
+                        (entry.miles || 0) * (entry.mileageRateSnapshot || 0),
+                      ).toFixed(2)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
             <p>
               Total Business Miles:{" "}
               <strong>{mileageSummary.totalBusinessMiles.toFixed(2)} mi</strong>
             </p>
+
             <p>
               Estimated Mileage Value:{" "}
               <strong>${mileageSummary.totalMileageEstimate.toFixed(2)}</strong>
