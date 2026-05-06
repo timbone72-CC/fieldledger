@@ -2,20 +2,20 @@
 
 ## Current Head
 
-6f5e473 Validate mileage entries during JSON import
+b299345 Delay timesheet print until view renders
 
 ## Recent Commits
 
+b299345 Delay timesheet print until view renders
+7a0451d Rebuild live app after print rendering fix
+14792d0 Fix timesheet print rendering flow
+9362664 Fix timesheet print mode visibility
+9c22a6e Update checkpoint after mileage integrity fixes
 6f5e473 Validate mileage entries during JSON import
 ca53a0c Add mileage detail rows to printable timesheet
 ca229a7 Clarify MVP CSV export scope in export contract
 cc97683 Update checkpoint after destructive action audit
 75fecba Fix mileage delete confirmation wording
-8b205b2 Update checkpoint after active pay period validation
-c232f9c Add active pay period record validation
-8e1a46d Update checkpoint after Torque Turn sheet formula verification
-9211ee8 Record CSV mileage export decision in checkpoint
-92619c6 Update checkpoint after mileage print + JSON validation integration
 
 ## Confirmed Working State
 
@@ -55,6 +55,8 @@ c232f9c Add active pay period record validation
 - Active pay period storage normalizes missing or old data shape fields.
 - Core calculation tests pass.
 - Latest build passed with Vite and rebuilt GitHub Pages assets.
+- Live Print Timesheet now opens the spreadsheet-style timesheet view instead of the full report cards.
+- Browser data reset was recovered successfully by importing a JSON backup.
 
 ## Locked Rules
 
@@ -82,6 +84,14 @@ Torque Turn CSV-to-Google-Sheets pipeline passed:
 - Sheet formula was corrected to use Day Rate + Hours Worked × 28 when Day Rate is present.
 - Repair Timesheet Formulas was run successfully.
 - Torque Turn row stayed correct at $1,596.00.
+
+Latest live recovery test passed:
+
+- Live app initially showed cached/stale print behavior.
+- Incognito confirmed updated Print Timesheet spreadsheet view.
+- Browser data reset cleared local app data as expected.
+- JSON backup import restored saved data successfully.
+- Print Timesheet worked after restore.
 
 Previous printable full report test passed:
 
