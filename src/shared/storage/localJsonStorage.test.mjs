@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { loadJson } from "./localJsonStorage.js";
+import { loadJson, saveJson } from "./localJsonStorage.js";
 
 const storage = new Map();
 
@@ -20,8 +20,19 @@ global.window = {
 storage.set("bad-json", "{broken");
 
 const fallbackValue = { safe: true };
-const loadedValue = loadJson("bad-json", fallbackValue);
+const loadedFallbackValue = loadJson("bad-json", fallbackValue);
 
-assert.deepEqual(loadedValue, fallbackValue);
+assert.deepEqual(loadedFallbackValue, fallbackValue);
+
+const savedValue = {
+  label: "Storage Test",
+  jobs: [{ id: "job-1", totalPay: 168 }],
+};
+
+const saveResult = saveJson("good-json", savedValue);
+const loadedSavedValue = loadJson("good-json", null);
+
+assert.equal(saveResult, true);
+assert.deepEqual(loadedSavedValue, savedValue);
 
 console.log("localJsonStorage tests passed");
