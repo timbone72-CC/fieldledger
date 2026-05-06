@@ -2,18 +2,18 @@
 
 ## Current Head
 
-45af636 Add printable report integrity test
+308c2a1 Add active pay period schema version
 
 ## Recent Commits
 
+308c2a1 Add active pay period schema version
+d828ec9 Verify local JSON storage round trip
+e621db8 Add local JSON storage recovery test
+530654a Update checkpoint after export integrity tests
 45af636 Add printable report integrity test
 998e6ea Add CSV export integrity test
 5222650 Add JSON backup round-trip integrity test
 a0d4607 Add app version and cache recovery note
-f930a14 Update checkpoint after live print recovery test
-b299345 Delay timesheet print until view renders
-7a0451d Rebuild live app after print rendering fix
-14792d0 Fix timesheet print rendering flow
 
 ## Confirmed Working State
 
