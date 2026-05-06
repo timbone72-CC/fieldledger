@@ -2,20 +2,20 @@
 
 ## Current Head
 
-75fecba Fix mileage delete confirmation wording
+6f5e473 Validate mileage entries during JSON import
 
 ## Recent Commits
 
+6f5e473 Validate mileage entries during JSON import
+ca53a0c Add mileage detail rows to printable timesheet
+ca229a7 Clarify MVP CSV export scope in export contract
+cc97683 Update checkpoint after destructive action audit
 75fecba Fix mileage delete confirmation wording
 8b205b2 Update checkpoint after active pay period validation
 c232f9c Add active pay period record validation
 8e1a46d Update checkpoint after Torque Turn sheet formula verification
 9211ee8 Record CSV mileage export decision in checkpoint
 92619c6 Update checkpoint after mileage print + JSON validation integration
-a4c8d53 Add mileage summary to printable report and rebuild assets
-50b50d1 Require mileage entries in JSON backup validation
-7c48e9b Improve print full report mode and rebuild GitHub Pages assets
-b968f9d Rebuild live app after reliability phase
 
 ## Confirmed Working State
 
@@ -35,8 +35,10 @@ b968f9d Rebuild live app after reliability phase
 - Clear pay period cancel keeps data visible.
 - JSON backup download exports the full active pay period.
 - JSON import now requires mileageEntries in valid backups.
+- JSON import now validates required mileage entry fields before restore.
 - JSON backup/import was manually verified with jobs, expenses, and mileage still present.
 - Printable full report now includes a Mileage Summary section.
+- Printable timesheet now includes row-level mileage details and mileage totals.
 - Print Full Report was manually verified in browser print preview.
 - Receipt/ticket photo attach, preview, and remove support exists.
 - Company field saves on job tickets.
