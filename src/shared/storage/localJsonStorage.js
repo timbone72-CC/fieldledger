@@ -1,3 +1,17 @@
+const STORAGE_RECOVERY_EVENT = "fieldledger:storage-recovery";
+
+function notifyStorageRecovery(message) {
+  if (typeof window.dispatchEvent !== "function" || typeof window.CustomEvent !== "function") {
+    return;
+  }
+
+  window.dispatchEvent(
+    new window.CustomEvent(STORAGE_RECOVERY_EVENT, {
+      detail: { message },
+    })
+  );
+}
+
 export function loadJson(key, fallbackValue) {
   try {
     const storedValue = window.localStorage.getItem(key);
@@ -8,11 +22,9 @@ export function loadJson(key, fallbackValue) {
 
     return JSON.parse(storedValue);
   } catch {
-    if (typeof window.alert === "function") {
-      window.alert(
-        "FieldLedger found corrupted saved data and loaded a safe blank version instead. If you have a backup JSON file, use Import JSON to restore it."
-      );
-    }
+    notifyStorageRecovery(
+      "FieldLedger found corrupted saved data and loaded a safe blank version instead. If you have a backup JSON file, use Import JSON to restore it."
+    );
 
     return fallbackValue;
   }

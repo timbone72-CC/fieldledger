@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import ExpenseEntryForm from "./features/expenses/ExpenseEntryForm.jsx";
 import SavedExpensesList from "./features/expenses/SavedExpensesList.jsx";
@@ -24,6 +24,19 @@ export default function App() {
   const [activeTab, setActiveTab] = useState(TABS.DASHBOARD);
   const [refreshCount, setRefreshCount] = useState(0);
   const [showTimesheetPrintView, setShowTimesheetPrintView] = useState(false);
+  const [storageRecoveryMessage, setStorageRecoveryMessage] = useState("");
+
+  useEffect(() => {
+    function handleStorageRecovery(event) {
+      setStorageRecoveryMessage(event.detail?.message || "FieldLedger recovered from a storage problem.");
+    }
+
+    window.addEventListener("fieldledger:storage-recovery", handleStorageRecovery);
+
+    return () => {
+      window.removeEventListener("fieldledger:storage-recovery", handleStorageRecovery);
+    };
+  }, []);
 
   function refreshAppData() {
     setRefreshCount((currentCount) => currentCount + 1);
@@ -39,6 +52,16 @@ export default function App() {
           subtract expenses, and export a clean pay-period report.
         </p>
       </section>
+
+      {storageRecoveryMessage && (
+        <section className="storage-recovery-banner" role="alert">
+          <strong>Storage recovery notice</strong>
+          <p>{storageRecoveryMessage}</p>
+          <button type="button" onClick={() => setStorageRecoveryMessage("")}>
+            Dismiss
+          </button>
+        </section>
+      )}
 
       <nav className="tab-bar" aria-label="FieldLedger sections">
         <button

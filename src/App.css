@@ -143,3 +143,21 @@
   gap: 10px;
   margin-bottom: 14px;
 }
+
+.storage-recovery-banner {
+  margin: 0 0 18px;
+  padding: 16px;
+  border: 1px solid #d9a441;
+  border-radius: 14px;
+  background: #fff8e6;
+  color: #3b2b00;
+}
+
+.storage-recovery-banner strong {
+  display: block;
+  margin-bottom: 6px;
+}
+
+.storage-recovery-banner p {
+  margin: 0 0 12px;
+}
