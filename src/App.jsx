@@ -23,7 +23,7 @@ const TABS = {
 export default function App() {
   const [activeTab, setActiveTab] = useState(TABS.DASHBOARD);
   const [refreshCount, setRefreshCount] = useState(0);
-  const [printMode, setPrintMode] = useState(null);
+  const [showTimesheetPrintView, setShowTimesheetPrintView] = useState(false);
 
   function refreshAppData() {
     setRefreshCount((currentCount) => currentCount + 1);
@@ -81,8 +81,8 @@ export default function App() {
       {activeTab === TABS.DASHBOARD && (
         <>
           <PayPeriodInfoForm />
-          <ExportActionsDropdown setPrintMode={setPrintMode} />
-          <TimesheetPrintView />
+          <ExportActionsDropdown onShowTimesheet={() => setShowTimesheetPrintView(true)} />
+          {showTimesheetPrintView && <TimesheetPrintView />}
           <PayPeriodSummaryPanel key={`summary-${refreshCount}`} />
         </>
       )}

@@ -4,7 +4,7 @@ import ImportPayPeriodJsonButton from "./ImportPayPeriodJsonButton.jsx";
 import PrintPayPeriodReportButton from "./PrintPayPeriodReportButton.jsx";
 import ClearPayPeriodButton from "../pay-periods/ClearPayPeriodButton.jsx";
 
-export default function ExportActionsDropdown({ setPrintMode }) {
+export default function ExportActionsDropdown({ onShowTimesheet }) {
   return (
     <details className="export-actions">
       <summary>Export / Backup</summary>
@@ -12,11 +12,11 @@ export default function ExportActionsDropdown({ setPrintMode }) {
         <DownloadPayPeriodJsonButton />
         <DownloadPayPeriodCsvButton />
         <ImportPayPeriodJsonButton />
-        <PrintPayPeriodReportButton setPrintMode={setPrintMode} />
+        <PrintPayPeriodReportButton />
 
         <button type="button" onClick={() => {
-          if (setPrintMode) {
-            setPrintMode("timesheet");
+          if (typeof onShowTimesheet === "function") {
+            onShowTimesheet();
           }
 
           document.body.classList.add("print-timesheet");
