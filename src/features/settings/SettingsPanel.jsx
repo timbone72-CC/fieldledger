@@ -81,6 +81,14 @@ export default function SettingsPanel() {
         hourly rate will not change old saved jobs.
       </p>
 
+      <div className="helper">
+        <strong>App Version:</strong> FieldLedger local MVP
+        <br />
+        If the live app looks outdated after an update, first try closing and reopening the browser tab.
+        If it still looks old, use JSON Backup, then refresh or clear browser site data only after confirming
+        the backup downloaded.
+      </div>
+
       <button type="button" onClick={saveUserSettings}>
         Save Settings
       </button>
