@@ -118,9 +118,12 @@ code {
   body.print-timesheet .tab-bar,
   body.print-timesheet .export-actions,
   body.print-timesheet button,
-  body.print-timesheet .result-card,
-  body.print-timesheet .panel:has(.result-card) {
+  body.print-timesheet .panel {
     display: none !important;
+  }
+
+  body.print-timesheet .timesheet-print-view {
+    display: block !important;
   }
 }
 
