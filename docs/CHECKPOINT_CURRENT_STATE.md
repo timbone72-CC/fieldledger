@@ -2,18 +2,18 @@
 
 ## Current Head
 
-8840d26 Warn user when corrupted local storage is recovered
+e0b8b96 Show storage recovery notice in app
 
 ## Recent Commits
 
+e0b8b96 Show storage recovery notice in app
+b866c9c Update checkpoint after corrupted storage warning
 8840d26 Warn user when corrupted local storage is recovered
 6425077 Update checkpoint after storage integrity protections
 308c2a1 Add active pay period schema version
 d828ec9 Verify local JSON storage round trip
 e621db8 Add local JSON storage recovery test
 530654a Update checkpoint after export integrity tests
-45af636 Add printable report integrity test
-998e6ea Add CSV export integrity test
 
 ## Confirmed Working State
 
@@ -52,6 +52,7 @@ e621db8 Add local JSON storage recovery test
 - Mileage save/delete no longer uses a full page reload.
 - Active pay period storage normalizes missing or old data shape fields.
 - Corrupted local JSON storage now warns the user and falls back safely.
+- In-app storage recovery banner now appears instead of disruptive recovery alerts.
 - Core calculation tests pass.
 - JSON backup round-trip integrity test passes.
 - CSV export integrity test passes.
