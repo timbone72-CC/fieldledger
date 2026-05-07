@@ -1,0 +1,17 @@
+{
+  "name": "FieldLedger",
+  "short_name": "FieldLedger",
+  "description": "Offline-first 1099 field work tracker",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#08060d",
+  "theme_color": "#863bff",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "48x46",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
