@@ -103,8 +103,11 @@ export default function App() {
 
       {activeTab === TABS.DASHBOARD && (
         <>
-          <PayPeriodInfoForm />
-          <ExportActionsDropdown onShowTimesheet={() => setShowTimesheetPrintView(true)} />
+          <PayPeriodInfoForm key={`pay-period-info-${refreshCount}`} />
+          <ExportActionsDropdown
+            onShowTimesheet={() => setShowTimesheetPrintView(true)}
+            onDataChanged={refreshAppData}
+          />
           {showTimesheetPrintView && <TimesheetPrintView />}
           <PayPeriodSummaryPanel key={`summary-${refreshCount}`} />
         </>

@@ -1,7 +1,7 @@
 import { saveActivePayPeriod } from "../pay-periods/activePayPeriodStorage.js";
 import { isValidPayPeriodBackup } from "./validatePayPeriodBackup.js";
 
-export default function ImportPayPeriodJsonButton() {
+export default function ImportPayPeriodJsonButton({ onImportComplete }) {
   async function importJson(event) {
     const file = event.target.files?.[0];
 
@@ -38,7 +38,11 @@ export default function ImportPayPeriodJsonButton() {
         return;
       }
 
-      window.location.reload();
+      if (typeof onImportComplete === "function") {
+        onImportComplete();
+      }
+
+      event.target.value = "";
     } catch {
       window.alert("Could not import this JSON backup.");
       event.target.value = "";

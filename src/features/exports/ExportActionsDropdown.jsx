@@ -4,7 +4,7 @@ import ImportPayPeriodJsonButton from "./ImportPayPeriodJsonButton.jsx";
 import PrintPayPeriodReportButton from "./PrintPayPeriodReportButton.jsx";
 import ClearPayPeriodButton from "../pay-periods/ClearPayPeriodButton.jsx";
 
-export default function ExportActionsDropdown({ onShowTimesheet }) {
+export default function ExportActionsDropdown({ onShowTimesheet, onDataChanged }) {
   function handlePrintTimesheet() {
     if (typeof onShowTimesheet === "function") {
       onShowTimesheet();
@@ -35,7 +35,7 @@ export default function ExportActionsDropdown({ onShowTimesheet }) {
           <strong>Backup / Restore</strong>
         </p>
         <DownloadPayPeriodJsonButton />
-        <ImportPayPeriodJsonButton />
+        <ImportPayPeriodJsonButton onImportComplete={onDataChanged} />
 
         <p className="helper">
           <strong>Timesheet / Reports</strong>
@@ -50,7 +50,7 @@ export default function ExportActionsDropdown({ onShowTimesheet }) {
         <p className="helper">
           <strong>Danger Zone</strong>
         </p>
-        <ClearPayPeriodButton />
+        <ClearPayPeriodButton onPayPeriodCleared={onDataChanged} />
       </div>
     </details>
   );
