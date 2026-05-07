@@ -2,18 +2,18 @@
 
 ## Current Head
 
-06cf714 Rebuild live app after printable layout update
+8f50141 Rebuild live app after print CSS cleanup
 
 ## Recent Commits
 
-06cf714 Rebuild live app after printable layout update
-2d710f2 Update checkpoint after printable layout density
-581e7fd Improve printable timesheet layout density
-9c9c304 Update checkpoint after printable column protection
-72807cd Protect printable timesheet columns
-9223cc3 Update checkpoint after mobile export stacking
-65a4292 Improve mobile export menu stacking
-c9de8d6 Update checkpoint after export menu polish
+8f50141 Rebuild live app after print CSS cleanup
+16bac19 Remove duplicate compact print table styles
+591abff Record compact print density verification
+960bf15 Record compact timesheet print verification
+c9c6e86 Record full report mileage print verification
+ef1dbb8 Record CSV mileage export verification
+948c58e Record live phone print verification
+3d0875e Update checkpoint after live printable layout rebuild
 
 ## Confirmed Working State
 
