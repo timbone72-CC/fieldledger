@@ -17,6 +17,7 @@ export default function ClearPayPeriodButton({ onPayPeriodCleared }) {
     const cleared = clearActivePayPeriod();
 
     if (!cleared) {
+      window.alert("FieldLedger could not clear this pay period. Your data should still be intact.");
       return;
     }
 

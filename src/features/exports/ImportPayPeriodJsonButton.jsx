@@ -34,6 +34,7 @@ export default function ImportPayPeriodJsonButton({ onImportComplete }) {
       });
 
       if (!saved) {
+        window.alert("FieldLedger could not save this imported backup. Your current pay period was not replaced.");
         event.target.value = "";
         return;
       }
