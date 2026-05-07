@@ -248,3 +248,22 @@
   list-style-position: inside;
   text-align: left;
 }
+
+.panel .result-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+  padding: 14px 16px;
+  text-align: left;
+}
+
+.panel .result-card span {
+  color: #66667a;
+  font-weight: 600;
+}
+
+.panel .result-card strong {
+  font-size: 1.2rem;
+}
