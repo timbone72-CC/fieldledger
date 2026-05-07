@@ -2,16 +2,16 @@
 
 ## Current Head
 
-d032bc5 Show app version info in settings
+a13d12f Improve export menu readability
 
 ## Recent Commits
 
+a13d12f Improve export menu readability
+1336025 Update checkpoint after version visibility
 d032bc5 Show app version info in settings
 ae5b253 Update checkpoint after trusted-user guidance
 c744e20 Add trusted-user backup guidance to settings
 05cb726 Update checkpoint after mobile polish
-2b9d85c Rebuild live app after mobile polish
-3ffec3b Compact pay period summary layout
 
 ## Confirmed Working State
 
