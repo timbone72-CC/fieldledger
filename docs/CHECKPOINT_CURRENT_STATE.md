@@ -2,18 +2,18 @@
 
 ## Current Head
 
-dd2c34f Harden JSON backup record validation
+8b7de47 Add data ownership reminder
 
 ## Recent Commits
 
+8b7de47 Add data ownership reminder
+3a8c476 Update checkpoint after backup validation hardening
 dd2c34f Harden JSON backup record validation
 8770afd Improve import and clear failure feedback
 f782ad2 Remove reload from import and clear flows
 59b2739 Update checkpoint after edit UX cleanup
 24cdca8 Clean up edit and delete wording
 6655c02 Improve mileage edit mode UX
-05e1e6b Update checkpoint after import validation hardening
-f27cb92 Extract JSON backup import validation
 
 ## Confirmed Working State
 
