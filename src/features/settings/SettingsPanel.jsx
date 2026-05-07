@@ -82,6 +82,14 @@ export default function SettingsPanel() {
       </p>
 
       <div className="helper">
+        <strong>FieldLedger Basics:</strong>
+        <br />
+        FieldLedger saves data in this browser on this device. Your phone and computer do not automatically
+        share data. Use JSON Backup before clearing browser data, switching devices, or importing a replacement
+        backup. Tax and mileage estimates are for planning only.
+      </div>
+
+      <div className="helper">
         <strong>App Version:</strong> FieldLedger local MVP
         <br />
         If the live app looks outdated after an update, first try closing and reopening the browser tab.
