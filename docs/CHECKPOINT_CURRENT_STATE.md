@@ -2,17 +2,15 @@
 
 ## Current Head
 
-65a4292 Improve mobile export menu stacking
-
+8b4d40f Protect printable timesheet columns
 ## Recent Commits
 
+8b4d40f Protect printable timesheet columns
 65a4292 Improve mobile export menu stacking
 c9de8d6 Update checkpoint after export menu polish
 a13d12f Improve export menu readability
 1336025 Update checkpoint after version visibility
 d032bc5 Show app version info in settings
-ae5b253 Update checkpoint after trusted-user guidance
-
 ## Confirmed Working State
 
 - React/Vite app runs locally.
