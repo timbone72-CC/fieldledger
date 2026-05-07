@@ -162,7 +162,7 @@
   margin: 0 0 12px;
 }
 
-@media (max-width: 520px) {
+@media (max-width: 700px) {
   .app-shell {
     width: min(100% - 20px, 1100px);
     padding: 18px 0 32px;
@@ -188,8 +188,14 @@
   }
 
   .card-actions button,
-  .section-actions button {
+  .section-actions button,
+  .export-actions-menu button,
+  .export-actions-menu label {
     width: 100%;
+  }
+
+  .export-actions-menu {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -266,4 +272,9 @@
 
 .panel .result-card strong {
   font-size: 1.2rem;
+}
+@media (max-width: 700px) {
+  .export-actions-menu {
+    grid-template-columns: 1fr;
+  }
 }
