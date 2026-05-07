@@ -31,15 +31,25 @@ export default function ExportActionsDropdown({ onShowTimesheet }) {
           data, switching devices, or importing a replacement backup.
         </p>
 
+        <p className="helper">
+          <strong>Backup / Restore</strong>
+        </p>
         <DownloadPayPeriodJsonButton />
-        <DownloadPayPeriodCsvButton />
         <ImportPayPeriodJsonButton />
+
+        <p className="helper">
+          <strong>Timesheet / Reports</strong>
+        </p>
+        <DownloadPayPeriodCsvButton />
         <PrintPayPeriodReportButton />
 
         <button type="button" onClick={handlePrintTimesheet}>
           Print Timesheet
         </button>
 
+        <p className="helper">
+          <strong>Danger Zone</strong>
+        </p>
         <ClearPayPeriodButton />
       </div>
     </details>
