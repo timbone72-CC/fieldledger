@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { APP_NAME, APP_VERSION_DATE, APP_VERSION_LABEL, APP_VERSION_NOTE } from "../../shared/constants/appInfo.js";
 import { loadSettings, saveSettings } from "./settingsStorage.js";
 
 export default function SettingsPanel() {
@@ -90,7 +91,9 @@ export default function SettingsPanel() {
       </div>
 
       <div className="helper">
-        <strong>App Version:</strong> FieldLedger local MVP
+        <strong>App Version:</strong> {APP_NAME} — {APP_VERSION_LABEL}
+        <br />
+        Current update: {APP_VERSION_DATE} — {APP_VERSION_NOTE}
         <br />
         If the live app looks outdated after an update, first try closing and reopening the browser tab.
         If it still looks old, use JSON Backup, then refresh or clear browser site data only after confirming
