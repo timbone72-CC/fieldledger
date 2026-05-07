@@ -2,16 +2,16 @@
 
 ## Current Head
 
-a13d12f Improve export menu readability
+65a4292 Improve mobile export menu stacking
 
 ## Recent Commits
 
+65a4292 Improve mobile export menu stacking
+c9de8d6 Update checkpoint after export menu polish
 a13d12f Improve export menu readability
 1336025 Update checkpoint after version visibility
 d032bc5 Show app version info in settings
 ae5b253 Update checkpoint after trusted-user guidance
-c744e20 Add trusted-user backup guidance to settings
-05cb726 Update checkpoint after mobile polish
 
 ## Confirmed Working State
 
