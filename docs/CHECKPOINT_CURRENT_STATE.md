@@ -65,6 +65,7 @@ aec0c38 Record JSON import integrity checks
 - Local JSON storage save failure now has a direct test confirming safe failure return and user warning.
 - Missing IndexedDB photo blob records now have a direct integrity test confirming safe null return without crash.
 - Missing ticket photo blob was manually verified in browser: saved job stayed visible, preview disappeared safely, and the app did not crash.
+- Missing receipt photo blob was manually verified in browser: saved expense stayed visible, preview disappeared safely, and the app did not crash.
 
 ## Locked Rules
 
