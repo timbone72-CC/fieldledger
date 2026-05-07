@@ -2,16 +2,16 @@
 
 ## Current Head
 
-c744e20 Add trusted-user backup guidance to settings
+d032bc5 Show app version info in settings
 
 ## Recent Commits
 
+d032bc5 Show app version info in settings
+ae5b253 Update checkpoint after trusted-user guidance
 c744e20 Add trusted-user backup guidance to settings
 05cb726 Update checkpoint after mobile polish
 2b9d85c Rebuild live app after mobile polish
 3ffec3b Compact pay period summary layout
-566c356 Polish mobile export actions
-9650532 Improve mobile layout spacing
 
 ## Confirmed Working State
 
