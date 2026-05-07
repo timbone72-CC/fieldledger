@@ -2,14 +2,14 @@
 
 ## Current Head
 
-7ca8977 Add storage save failure test
+4e41575 Strengthen JSON backup round trip test
 
 ## Recent Commits
 
+4e41575 Strengthen JSON backup round trip test
+b38e17d Update checkpoint after storage failure test
 7ca8977 Add storage save failure test
 aec0c38 Record JSON import integrity checks
-114606f Record corrupted storage tab recovery checks
-fed150d Update checkpoint after expense recovery fix
 
 ## Confirmed Working State
 
@@ -50,7 +50,7 @@ fed150d Update checkpoint after expense recovery fix
 - Corrupted local JSON storage now warns the user and falls back safely.
 - In-app storage recovery banner now appears instead of disruptive recovery alerts.
 - Core calculation tests pass.
-- JSON backup round-trip integrity test passes.
+- JSON backup round-trip integrity test passes with jobs, expenses, mileage, ticketPhotoId, and receiptPhotoId preserved.
 - CSV export integrity test passes.
 - Printable report integrity test passes.
 - Latest build passed with Vite and rebuilt GitHub Pages assets.
