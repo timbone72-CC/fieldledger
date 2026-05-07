@@ -26,6 +26,11 @@ export default function ExportActionsDropdown({ onShowTimesheet }) {
       <summary>Export / Backup</summary>
 
       <div className="export-actions-menu">
+        <p className="helper">
+          FieldLedger data is saved in this browser. Download a JSON backup before clearing browser
+          data, switching devices, or importing a replacement backup.
+        </p>
+
         <DownloadPayPeriodJsonButton />
         <DownloadPayPeriodCsvButton />
         <ImportPayPeriodJsonButton />
