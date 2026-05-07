@@ -2,16 +2,16 @@
 
 ## Current Head
 
-962524e Add export backup data safety reminder
+b8d016c Rebuild live app after backup safety reminder
 
 ## Recent Commits
 
+b8d016c Rebuild live app after backup safety reminder
+3360af5 Update checkpoint after backup safety reminder
 962524e Add export backup data safety reminder
 b3ec553 Record summary export report cross-check
 18f2c55 Record missing receipt photo preview check
 092b407 Record missing ticket photo preview check
-d3a9f21 Update checkpoint after photo blob integrity test
-d059423 Add photo blob missing record test
 
 ## Confirmed Working State
 
@@ -68,6 +68,7 @@ d059423 Add photo blob missing record test
 - Missing receipt photo blob was manually verified in browser: saved expense stayed visible, preview disappeared safely, and the app did not crash.
 - Summary/export/report cross-check passed: summary shows earnings, expenses, net, mileage, and tax; CSV remains job/timesheet-only; print/report includes mileage; JSON backup preserves jobs, expenses, mileage, and photo IDs.
 - Export / Backup menu now warns that FieldLedger data is saved in this browser and recommends downloading a JSON backup before clearing browser data, switching devices, or importing a replacement backup.
+- Latest production build passed and GitHub Pages docs assets were rebuilt after the backup safety reminder.
 
 ## Locked Rules
 
