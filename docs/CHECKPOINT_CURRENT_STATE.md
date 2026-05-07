@@ -137,3 +137,38 @@ Next target:
 - Decide whether Rig Name/Number should use autofill with manual typing like Company.
 - Add future way to manage saved company and rig suggestion lists.
 - Clean old generated docs/assets files if needed after build churn.
+
+## Trusted-User Workflow Validation
+
+Validated successfully from phone live app.
+
+Verified working:
+
+- Bucking job entry
+- Torque Turn job entry
+- Expense entry
+- Mileage entry
+- Pay period summary
+- Tax estimate
+- CSV export
+- Printable report
+- JSON backup download
+
+Trusted-user workflow test values:
+
+- Bucking: 6 hours × 28 = 168
+- Torque Turn: 1400 base + 7 extra hours × 28 = 1596
+- Expense: 50
+- Mileage: 100 miles
+
+Verified totals:
+
+- Gross earnings: 1764
+- Net income after expense: 1714
+
+Result:
+
+- No blank screen
+- No console errors
+- Phone live app passed workflow test
+
