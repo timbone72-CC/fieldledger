@@ -2,15 +2,15 @@
 
 ## Current Head
 
-fe39951 Validate normalized active pay period storage
+adab208 Fix expense preview render loop after recovery
 
 ## Recent Commits
 
+adab208 Fix expense preview render loop after recovery
+03179c1 Update checkpoint after storage validation wiring
 fe39951 Validate normalized active pay period storage
 2fae11f Update checkpoint after validation utility
 82e532c Add active pay period validation utility
-617f9ac Update checkpoint after storage recovery banner
-e0b8b96 Show storage recovery notice in app
 
 ## Confirmed Working State
 
