@@ -127,16 +127,20 @@ export default function MileageEntryForm({ onMileageSaved }) {
       return;
     }
 
-    resetForm("Mileage saved. Refresh to update the summary.");
+    resetForm(editingMileageId ? "Mileage updated." : "Mileage saved.");
 
     if (typeof onMileageSaved === "function") {
       onMileageSaved();
     }
   }
 
+  function cancelEdit() {
+    resetForm("");
+  }
+
   return (
     <section className="panel">
-      <h2>Add Mileage</h2>
+      <h2>{editingMileageId ? "Edit Mileage" : "Add Mileage"}</h2>
 
       <label className="field">
         Date
@@ -179,8 +183,14 @@ export default function MileageEntryForm({ onMileageSaved }) {
       </label>
 
       <button type="button" onClick={saveMileageEntry}>
-        Save Mileage
+        {editingMileageId ? "Save Mileage Changes" : "Save Mileage"}
       </button>
+
+      {editingMileageId && (
+        <button type="button" onClick={cancelEdit}>
+          Cancel Edit
+        </button>
+      )}
 
       {saveMessage && <p className="helper">{saveMessage}</p>}
     </section>
