@@ -92,6 +92,7 @@ c9de8d6 Update checkpoint after export menu polish
 
 ## Latest Manual Browser Test
 
+- Compact Print Timesheet layout retains single-page landscape output even at 150% Chrome print scaling, confirming additional readability headroom without pagination failure.
 - Print Timesheet verified as compact operational export: mileage-enabled timesheet renders successfully in landscape mode on a single printed page.
 - Print Full Report verified with mileage-enabled pay period: job data, mileage totals, tax summary, and report sections render successfully in print preview without blank-page failure.
 - CSV export verified with mileage present in pay period: Legend-style CSV exports only job rows, excludes mileage rows, and imports cleanly into Google Sheets.
