@@ -92,6 +92,7 @@ c9de8d6 Update checkpoint after export menu polish
 
 ## Latest Manual Browser Test
 
+- Live phone print behavior verified after rebuild: print preview opens, main timesheet table is readable, mileage appears below the main table, and no blank print page occurs.
 Torque Turn CSV-to-Google-Sheets pipeline passed:
 
 - App exported Torque Turn row with Day Rate 1400 and Additional Hours 7.
