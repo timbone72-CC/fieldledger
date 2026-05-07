@@ -273,12 +273,6 @@
 .panel .result-card strong {
   font-size: 1.2rem;
 }
-@media (max-width: 700px) {
-  .export-actions-menu {
-    grid-template-columns: 1fr;
-  }
-}
-
 /* 15. Printable Timesheet Layout */
 @media print {
   .timesheet-print-view {
