@@ -6,6 +6,7 @@ const originalPayPeriod = {
   startDate: "2026-05-01",
   endDate: "2026-05-15",
   status: "open",
+  schemaVersion: 1,
   jobs: [
     {
       id: "job-1",
@@ -60,6 +61,7 @@ assert.deepEqual(restoredPayPeriod, originalPayPeriod);
 assert.deepEqual(restoredPayPeriod.jobs, originalPayPeriod.jobs);
 assert.deepEqual(restoredPayPeriod.expenses, originalPayPeriod.expenses);
 assert.deepEqual(restoredPayPeriod.mileageEntries, originalPayPeriod.mileageEntries);
+assert.equal(restoredPayPeriod.schemaVersion, 1);
 
 assert.equal(restoredPayPeriod.jobs[0].ticketPhotoId, "ticket-photo-1");
 assert.equal(restoredPayPeriod.expenses[0].receiptPhotoId, "receipt-photo-1");
