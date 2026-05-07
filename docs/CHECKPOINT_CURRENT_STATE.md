@@ -2,18 +2,18 @@
 
 ## Current Head
 
-54d06b2 Protect schema version in JSON backup test
+f27cb92 Extract JSON backup import validation
 
 ## Recent Commits
 
+f27cb92 Extract JSON backup import validation
+615bfe1 Test local JSON remove failure handling
+49d712d Update checkpoint after schema version hardening
 54d06b2 Protect schema version in JSON backup test
 da8a370 Validate active pay period schema version
 bb23595 Update checkpoint after print CSS live rebuild
 8f50141 Rebuild live app after print CSS cleanup
 16bac19 Remove duplicate compact print table styles
-591abff Record compact print density verification
-960bf15 Record compact timesheet print verification
-c9c6e86 Record full report mileage print verification
 
 ## Confirmed Working State
 
