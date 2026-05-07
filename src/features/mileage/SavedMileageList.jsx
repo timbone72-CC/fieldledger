@@ -33,7 +33,9 @@ export default function SavedMileageList({ onMileageDeleted }) {
 
   function deleteSelectedMileage() {
     const selectedCount = selectedMileageIds.length;
-    const confirmed = window.confirm(`Delete ${selectedCount} selected mileage entry/entries?`);
+    const confirmed = window.confirm(
+      `Delete ${selectedCount} selected mileage ${selectedCount === 1 ? "entry" : "entries"}?`,
+    );
 
     if (!confirmed) {
       return;

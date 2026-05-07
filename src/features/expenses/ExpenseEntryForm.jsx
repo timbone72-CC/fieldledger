@@ -148,8 +148,8 @@ export default function ExpenseEntryForm({ onExpenseSaved }) {
 
     resetForm(
       editingExpenseId
-        ? "Expense updated. Refresh to update the summary."
-        : "Expense saved. Refresh to update the summary.",
+        ? "Expense updated."
+        : "Expense saved.",
     );
 
     if (typeof onExpenseSaved === "function") {
