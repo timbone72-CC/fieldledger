@@ -1,14 +1,17 @@
 import { STORAGE_KEYS } from "../../shared/constants/storageKeys.js";
 import { loadJson, removeJson, saveJson } from "../../shared/storage/localJsonStorage.js";
+import { validateActivePayPeriod } from "../../shared/utils/validateActivePayPeriod.js";
 
 const ACTIVE_PAY_PERIOD_SCHEMA_VERSION = 1;
 
 export function loadActivePayPeriod() {
-  return normalizePayPeriod(loadJson(STORAGE_KEYS.ACTIVE_PAY_PERIOD, createEmptyPayPeriod()));
+  return validateNormalizedPayPeriod(
+    normalizePayPeriod(loadJson(STORAGE_KEYS.ACTIVE_PAY_PERIOD, createEmptyPayPeriod()))
+  );
 }
 
 export function saveActivePayPeriod(payPeriod) {
-  return saveJson(STORAGE_KEYS.ACTIVE_PAY_PERIOD, normalizePayPeriod(payPeriod));
+  return saveJson(STORAGE_KEYS.ACTIVE_PAY_PERIOD, validateNormalizedPayPeriod(normalizePayPeriod(payPeriod)));
 }
 
 export function clearActivePayPeriod() {
@@ -27,6 +30,16 @@ export function createEmptyPayPeriod() {
     schemaVersion: ACTIVE_PAY_PERIOD_SCHEMA_VERSION,
     mileageEntries: [],
   };
+}
+
+function validateNormalizedPayPeriod(payPeriod) {
+  const validation = validateActivePayPeriod(payPeriod);
+
+  if (validation.isValid) {
+    return payPeriod;
+  }
+
+  return createEmptyPayPeriod();
 }
 
 function normalizePayPeriod(payPeriod) {
