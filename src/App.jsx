@@ -103,6 +103,13 @@ export default function App() {
 
       {activeTab === TABS.DASHBOARD && (
         <>
+          <section className="data-ownership-notice">
+            <strong>Data ownership reminder</strong>
+            <p>
+              FieldLedger saves data on this browser/device. Use JSON backup to move
+              records between devices or protect your work before clearing data.
+            </p>
+          </section>
           <PayPeriodInfoForm key={`pay-period-info-${refreshCount}`} />
           <ExportActionsDropdown
             onShowTimesheet={() => setShowTimesheetPrintView(true)}
