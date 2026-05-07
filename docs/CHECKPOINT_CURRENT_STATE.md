@@ -2,14 +2,14 @@
 
 ## Current Head
 
-114606f Record corrupted storage tab recovery checks
+7ca8977 Add storage save failure test
 
 ## Recent Commits
 
+7ca8977 Add storage save failure test
+aec0c38 Record JSON import integrity checks
 114606f Record corrupted storage tab recovery checks
 fed150d Update checkpoint after expense recovery fix
-adab208 Fix expense preview render loop after recovery
-03179c1 Update checkpoint after storage validation wiring
 
 ## Confirmed Working State
 
@@ -60,6 +60,7 @@ adab208 Fix expense preview render loop after recovery
 - Expenses recovery render loop was fixed and manually verified.
 - Malformed JSON import was manually verified to show a safe error without crashing.
 - Valid JSON with invalid FieldLedger backup shape was manually verified to show a safe validation warning without changing data.
+- Local JSON storage save failure now has a direct test confirming safe failure return and user warning.
 
 ## Locked Rules
 
