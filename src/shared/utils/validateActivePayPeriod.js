@@ -20,6 +20,7 @@ export function validateActivePayPeriod(payPeriod) {
   validateString(errors, payPeriod.startDate, "startDate");
   validateString(errors, payPeriod.endDate, "endDate");
   validateString(errors, payPeriod.status, "status");
+  validateNumber(errors, payPeriod.schemaVersion, "schemaVersion");
   validateArray(errors, payPeriod.jobs, "jobs");
   validateArray(errors, payPeriod.expenses, "expenses");
   validateArray(errors, payPeriod.mileageEntries, "mileageEntries");
@@ -37,6 +38,12 @@ export function validateActivePayPeriod(payPeriod) {
 function validateString(errors, value, fieldName) {
   if (typeof value !== "string") {
     errors.push(`${fieldName} must be a string.`);
+  }
+}
+
+function validateNumber(errors, value, fieldName) {
+  if (typeof value !== "number") {
+    errors.push(`${fieldName} must be a number.`);
   }
 }
 

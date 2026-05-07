@@ -11,6 +11,7 @@ const validPayPeriod = {
   startDate: "",
   endDate: "",
   status: "open",
+  schemaVersion: 1,
   jobs: [],
   expenses: [],
   mileageEntries: [],
@@ -31,6 +32,7 @@ const invalidPayPeriod = {
   startDate: "",
   endDate: "",
   status: "open",
+  schemaVersion: "bad",
   jobs: "not an array",
   expenses: [],
   mileageEntries: [],
@@ -38,7 +40,7 @@ const invalidPayPeriod = {
 
 assert.deepEqual(validateActivePayPeriod(invalidPayPeriod), {
   isValid: false,
-  errors: ["id must be a string.", "jobs must be an array."],
+  errors: ["id must be a string.", "schemaVersion must be a number.", "jobs must be an array."],
 });
 
 console.log("validateActivePayPeriod tests passed");
