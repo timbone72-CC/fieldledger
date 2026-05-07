@@ -2,15 +2,17 @@
 
 ## Current Head
 
-2b9d85c Rebuild live app after mobile polish
+c744e20 Add trusted-user backup guidance to settings
+
 ## Recent Commits
 
+c744e20 Add trusted-user backup guidance to settings
+05cb726 Update checkpoint after mobile polish
 2b9d85c Rebuild live app after mobile polish
 3ffec3b Compact pay period summary layout
 566c356 Polish mobile export actions
 9650532 Improve mobile layout spacing
-7ad60fc Update checkpoint after live rebuild
-b8d016c Rebuild live app after backup safety reminder
+
 ## Confirmed Working State
 
 - React/Vite app runs locally.
