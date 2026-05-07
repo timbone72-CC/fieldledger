@@ -161,3 +161,34 @@
 .storage-recovery-banner p {
   margin: 0 0 12px;
 }
+
+@media (max-width: 520px) {
+  .app-shell {
+    width: min(100% - 20px, 1100px);
+    padding: 18px 0 32px;
+  }
+
+  .hero-card,
+  .panel {
+    padding: 18px;
+    border-radius: 14px;
+  }
+
+  .tab-bar {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .tab-bar button {
+    width: 100%;
+  }
+
+  .card-actions {
+    justify-items: stretch;
+  }
+
+  .card-actions button,
+  .section-actions button {
+    width: 100%;
+  }
+}
