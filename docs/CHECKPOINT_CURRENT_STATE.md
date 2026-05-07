@@ -2,18 +2,18 @@
 
 ## Current Head
 
-8f50141 Rebuild live app after print CSS cleanup
+54d06b2 Protect schema version in JSON backup test
 
 ## Recent Commits
 
+54d06b2 Protect schema version in JSON backup test
+da8a370 Validate active pay period schema version
+bb23595 Update checkpoint after print CSS live rebuild
 8f50141 Rebuild live app after print CSS cleanup
 16bac19 Remove duplicate compact print table styles
 591abff Record compact print density verification
 960bf15 Record compact timesheet print verification
 c9c6e86 Record full report mileage print verification
-ef1dbb8 Record CSV mileage export verification
-948c58e Record live phone print verification
-3d0875e Update checkpoint after live printable layout rebuild
 
 ## Confirmed Working State
 
