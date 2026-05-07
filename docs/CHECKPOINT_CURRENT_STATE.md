@@ -57,6 +57,8 @@ fe39951 Validate normalized active pay period storage
 - Latest build passed with Vite and rebuilt GitHub Pages assets.
 - Live Print Timesheet now opens the spreadsheet-style timesheet view instead of the full report cards.
 - Browser data reset was recovered successfully by importing a JSON backup.
+- Corrupted storage recovery was manually checked on Jobs, Expenses, and Mileage tabs.
+- Expenses recovery render loop was fixed and manually verified.
 
 ## Locked Rules
 
