@@ -5,6 +5,9 @@ import { loadPhotoBlob } from "../../shared/storage/photoBlobStorage.js";
 export default function SavedExpensesList({ onExpenseDeleted }) {
   const payPeriod = loadActivePayPeriod();
   const expenses = Array.isArray(payPeriod.expenses) ? payPeriod.expenses : [];
+  const expensePreviewKey = expenses
+    .map((expense) => `${expense.id}:${expense.receiptPhotoId || ""}`)
+    .join("|");
   const [selectedExpenseIds, setSelectedExpenseIds] = useState([]);
   const [previewUrls, setPreviewUrls] = useState({});
 
@@ -37,7 +40,7 @@ export default function SavedExpensesList({ onExpenseDeleted }) {
       active = false;
       Object.values(urls).forEach((url) => URL.revokeObjectURL(url));
     };
-  }, [expenses]);
+  }, [expensePreviewKey]);
 
   function editSelectedExpense() {
     const selectedExpenseId = selectedExpenseIds[0];
