@@ -66,6 +66,7 @@ aec0c38 Record JSON import integrity checks
 - Missing IndexedDB photo blob records now have a direct integrity test confirming safe null return without crash.
 - Missing ticket photo blob was manually verified in browser: saved job stayed visible, preview disappeared safely, and the app did not crash.
 - Missing receipt photo blob was manually verified in browser: saved expense stayed visible, preview disappeared safely, and the app did not crash.
+- Summary/export/report cross-check passed: summary shows earnings, expenses, net, mileage, and tax; CSV remains job/timesheet-only; print/report includes mileage; JSON backup preserves jobs, expenses, mileage, and photo IDs.
 
 ## Locked Rules
 
