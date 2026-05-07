@@ -2,15 +2,14 @@
 
 ## Current Head
 
-adab208 Fix expense preview render loop after recovery
+114606f Record corrupted storage tab recovery checks
 
 ## Recent Commits
 
+114606f Record corrupted storage tab recovery checks
+fed150d Update checkpoint after expense recovery fix
 adab208 Fix expense preview render loop after recovery
 03179c1 Update checkpoint after storage validation wiring
-fe39951 Validate normalized active pay period storage
-2fae11f Update checkpoint after validation utility
-82e532c Add active pay period validation utility
 
 ## Confirmed Working State
 
@@ -59,6 +58,8 @@ fe39951 Validate normalized active pay period storage
 - Browser data reset was recovered successfully by importing a JSON backup.
 - Corrupted storage recovery was manually checked on Jobs, Expenses, and Mileage tabs.
 - Expenses recovery render loop was fixed and manually verified.
+- Malformed JSON import was manually verified to show a safe error without crashing.
+- Valid JSON with invalid FieldLedger backup shape was manually verified to show a safe validation warning without changing data.
 
 ## Locked Rules
 
