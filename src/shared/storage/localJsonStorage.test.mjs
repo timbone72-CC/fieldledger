@@ -3,7 +3,12 @@ import { loadJson, saveJson } from "./localJsonStorage.js";
 
 const storage = new Map();
 
+let latestAlertMessage = "";
+
 global.window = {
+  alert(message) {
+    latestAlertMessage = message;
+  },
   localStorage: {
     getItem(key) {
       return storage.has(key) ? storage.get(key) : null;
@@ -34,5 +39,17 @@ const loadedSavedValue = loadJson("good-json", null);
 
 assert.equal(saveResult, true);
 assert.deepEqual(loadedSavedValue, savedValue);
+
+global.window.localStorage.setItem = () => {
+  throw new Error("Storage blocked");
+};
+
+const failedSaveResult = saveJson("blocked-json", { label: "Blocked Save" });
+
+assert.equal(failedSaveResult, false);
+assert.equal(
+  latestAlertMessage,
+  "FieldLedger could not save this data. Your browser storage may be full or blocked."
+);
 
 console.log("localJsonStorage tests passed");
