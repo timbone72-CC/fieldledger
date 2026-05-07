@@ -2,18 +2,18 @@
 
 ## Current Head
 
-8b7de47 Add data ownership reminder
+ffb05d0 Add PWA PNG install icons
 
 ## Recent Commits
 
-8b7de47 Add data ownership reminder
-3a8c476 Update checkpoint after backup validation hardening
-dd2c34f Harden JSON backup record validation
-8770afd Improve import and clear failure feedback
-f782ad2 Remove reload from import and clear flows
-59b2739 Update checkpoint after edit UX cleanup
-24cdca8 Clean up edit and delete wording
-6655c02 Improve mileage edit mode UX
+ffb05d0 Add PWA PNG install icons
+5398382 Add PWA install foundation
+ae1b58f Add PWA manifest
+4f6c086 Add PWA release plan
+3f89b3a Record real field-condition validation
+ab130d4 Rename printable report heading
+d53de49 Remove duplicate mobile export menu style
+a43240f Record trusted-user workflow validation
 
 ## Confirmed Working State
 
@@ -182,3 +182,13 @@ Result:
 - App remained usable in actual field workflow
 - Trusted-user V1 confidence increased
 
+
+## PWA Release Status
+
+- FieldLedger now supports installable PWA behavior on supported mobile browsers.
+- GitHub Pages deployment successfully passed standalone install testing.
+- Android install behavior verified after adding proper 192x192 and 512x512 PNG manifest icons.
+- Installed app now launches without browser chrome/address bar.
+- JSON backup export still works from installed app mode.
+- CSV export still works from installed app mode.
+- MVP remains offline-first, local-first, AI-free, and backend-free.
