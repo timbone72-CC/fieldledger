@@ -2,18 +2,18 @@
 
 ## Current Head
 
-f27cb92 Extract JSON backup import validation
+24cdca8 Clean up edit and delete wording
 
 ## Recent Commits
 
+24cdca8 Clean up edit and delete wording
+6655c02 Improve mileage edit mode UX
+05e1e6b Update checkpoint after import validation hardening
 f27cb92 Extract JSON backup import validation
 615bfe1 Test local JSON remove failure handling
 49d712d Update checkpoint after schema version hardening
 54d06b2 Protect schema version in JSON backup test
 da8a370 Validate active pay period schema version
-bb23595 Update checkpoint after print CSS live rebuild
-8f50141 Rebuild live app after print CSS cleanup
-16bac19 Remove duplicate compact print table styles
 
 ## Confirmed Working State
 
