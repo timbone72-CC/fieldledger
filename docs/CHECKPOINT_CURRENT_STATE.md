@@ -2,17 +2,15 @@
 
 ## Current Head
 
-b8d016c Rebuild live app after backup safety reminder
-
+2b9d85c Rebuild live app after mobile polish
 ## Recent Commits
 
+2b9d85c Rebuild live app after mobile polish
+3ffec3b Compact pay period summary layout
+566c356 Polish mobile export actions
+9650532 Improve mobile layout spacing
+7ad60fc Update checkpoint after live rebuild
 b8d016c Rebuild live app after backup safety reminder
-3360af5 Update checkpoint after backup safety reminder
-962524e Add export backup data safety reminder
-b3ec553 Record summary export report cross-check
-18f2c55 Record missing receipt photo preview check
-092b407 Record missing ticket photo preview check
-
 ## Confirmed Working State
 
 - React/Vite app runs locally.
@@ -69,6 +67,7 @@ b3ec553 Record summary export report cross-check
 - Summary/export/report cross-check passed: summary shows earnings, expenses, net, mileage, and tax; CSV remains job/timesheet-only; print/report includes mileage; JSON backup preserves jobs, expenses, mileage, and photo IDs.
 - Export / Backup menu now warns that FieldLedger data is saved in this browser and recommends downloading a JSON backup before clearing browser data, switching devices, or importing a replacement backup.
 - Latest production build passed and GitHub Pages docs assets were rebuilt after the backup safety reminder.
+- Mobile layout polish verified on live phone app: improved tab spacing, export/backup panel usability, and compact pay period summary layout.
 
 ## Locked Rules
 
