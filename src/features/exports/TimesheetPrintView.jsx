@@ -10,7 +10,7 @@ export default function TimesheetPrintView() {
 
   return (
     <section className="timesheet-print-view">
-      <h2>Timesheet</h2>
+      <h2>Pay Period Report</h2>
 
       <table className="timesheet-print-table">
         <thead>
