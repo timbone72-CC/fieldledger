@@ -2,16 +2,16 @@
 
 ## Current Head
 
-d059423 Add photo blob missing record test
+962524e Add export backup data safety reminder
 
 ## Recent Commits
 
+962524e Add export backup data safety reminder
+b3ec553 Record summary export report cross-check
+18f2c55 Record missing receipt photo preview check
+092b407 Record missing ticket photo preview check
+d3a9f21 Update checkpoint after photo blob integrity test
 d059423 Add photo blob missing record test
-34da513 Update checkpoint after backup round trip test
-4e41575 Strengthen JSON backup round trip test
-b38e17d Update checkpoint after storage failure test
-7ca8977 Add storage save failure test
-aec0c38 Record JSON import integrity checks
 
 ## Confirmed Working State
 
@@ -67,6 +67,7 @@ aec0c38 Record JSON import integrity checks
 - Missing ticket photo blob was manually verified in browser: saved job stayed visible, preview disappeared safely, and the app did not crash.
 - Missing receipt photo blob was manually verified in browser: saved expense stayed visible, preview disappeared safely, and the app did not crash.
 - Summary/export/report cross-check passed: summary shows earnings, expenses, net, mileage, and tax; CSV remains job/timesheet-only; print/report includes mileage; JSON backup preserves jobs, expenses, mileage, and photo IDs.
+- Export / Backup menu now warns that FieldLedger data is saved in this browser and recommends downloading a JSON backup before clearing browser data, switching devices, or importing a replacement backup.
 
 ## Locked Rules
 
