@@ -2,10 +2,12 @@
 
 ## Current Head
 
-4e41575 Strengthen JSON backup round trip test
+d059423 Add photo blob missing record test
 
 ## Recent Commits
 
+d059423 Add photo blob missing record test
+34da513 Update checkpoint after backup round trip test
 4e41575 Strengthen JSON backup round trip test
 b38e17d Update checkpoint after storage failure test
 7ca8977 Add storage save failure test
@@ -61,6 +63,7 @@ aec0c38 Record JSON import integrity checks
 - Malformed JSON import was manually verified to show a safe error without crashing.
 - Valid JSON with invalid FieldLedger backup shape was manually verified to show a safe validation warning without changing data.
 - Local JSON storage save failure now has a direct test confirming safe failure return and user warning.
+- Missing IndexedDB photo blob records now have a direct integrity test confirming safe null return without crash.
 
 ## Locked Rules
 
