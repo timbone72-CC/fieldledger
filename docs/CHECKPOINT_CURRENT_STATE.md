@@ -2,15 +2,19 @@
 
 ## Current Head
 
-8b4d40f Protect printable timesheet columns
+581e7fd Improve printable timesheet layout density
+
 ## Recent Commits
 
-8b4d40f Protect printable timesheet columns
+581e7fd Improve printable timesheet layout density
+9c9c304 Update checkpoint after printable column protection
+72807cd Protect printable timesheet columns
+9223cc3 Update checkpoint after mobile export stacking
 65a4292 Improve mobile export menu stacking
 c9de8d6 Update checkpoint after export menu polish
 a13d12f Improve export menu readability
 1336025 Update checkpoint after version visibility
-d032bc5 Show app version info in settings
+
 ## Confirmed Working State
 
 - React/Vite app runs locally.
