@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { loadJson, saveJson } from "./localJsonStorage.js";
+import { loadJson, removeJson, saveJson } from "./localJsonStorage.js";
 
 const storage = new Map();
 
@@ -50,6 +50,19 @@ assert.equal(failedSaveResult, false);
 assert.equal(
   latestAlertMessage,
   "FieldLedger could not save this data. Your browser storage may be full or blocked."
+);
+
+
+global.window.localStorage.removeItem = () => {
+  throw new Error("Storage remove blocked");
+};
+
+const failedRemoveResult = removeJson("good-json");
+
+assert.equal(failedRemoveResult, false);
+assert.equal(
+  latestAlertMessage,
+  "FieldLedger could not remove this data. Your browser storage may be blocked."
 );
 
 console.log("localJsonStorage tests passed");
