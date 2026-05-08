@@ -2,18 +2,18 @@
 
 ## Current Head
 
-8a9c5a5 Rebuild live app for release candidate
+fc1e482 Rebuild live app after receipt photo update
 
 ## Recent Commits
 
-8a9c5a5 Rebuild live app for release candidate
-a4703d9 Add dismissible quick start card
-b0fa83e Show recovery notice for invalid pay period data
-f75923e Polish PWA manifest metadata
-5a25312 Update checkpoint after PWA contrast validation
-314367c Fix panel heading contrast in dark mode
-cb75575 Remove stale live assets after contrast fix
-f29d038 Fix card text contrast in dark mode
+fc1e482 Rebuild live app after receipt photo update
+7cf8b80 Add named receipt photos for expenses
+4107c49 Fix in-app camera photo previews
+b846bf9 Complete in-app camera capture for jobs and expenses
+e8e6b33 Update built service worker cache version
+8221f0e Add in-app mobile camera capture flow
+6565727 Improve mobile camera photo capture flow
+0d019cb Update checkpoint after release candidate rebuild
 
 ## Confirmed Working State
 
