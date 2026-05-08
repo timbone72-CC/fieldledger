@@ -2,18 +2,18 @@
 
 ## Current Head
 
-3b24e18 Test PWA update with hero wording
+314367c Fix panel heading contrast in dark mode
 
 ## Recent Commits
 
+314367c Fix panel heading contrast in dark mode
+cb75575 Remove stale live assets after contrast fix
+f29d038 Fix card text contrast in dark mode
+3ee822b Update checkpoint after PWA update validation
 3b24e18 Test PWA update with hero wording
 ff45cb8 Improve PWA update behavior
 1648f7f Improve hero title contrast
 8147175 Update checkpoint after PWA install validation
-ffb05d0 Add PWA PNG install icons
-5398382 Add PWA install foundation
-ae1b58f Add PWA manifest
-4f6c086 Add PWA release plan
 
 ## Confirmed Working State
 
@@ -184,6 +184,8 @@ Result:
 
 
 ## PWA Release Status
+
+- Mobile/PWA contrast issue fixed: white cards now force readable dark text, panel headings force dark heading color, stale built assets were removed, and live GitHub Pages served the corrected CSS.
 
 - PWA update behavior verified: after service worker update, installed phone app picked up a deployed wording change after a few minutes without clearing site data.
 
