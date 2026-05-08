@@ -2,18 +2,18 @@
 
 ## Current Head
 
-05e0e61 Rebuild live app after compact expense previews
+dbeacfe Rebuild live app after job preview cleanup
 
 ## Recent Commits
 
+dbeacfe Rebuild live app after job preview cleanup
+473393d Compact saved job ticket preview
+f7fccbf Update checkpoint after compact expense previews
 05e0e61 Rebuild live app after compact expense previews
 674eb62 Compact saved expense receipt previews
 94db6b3 Update checkpoint after receipt photo expansion
 fc1e482 Rebuild live app after receipt photo update
 7cf8b80 Add named receipt photos for expenses
-4107c49 Fix in-app camera photo previews
-b846bf9 Complete in-app camera capture for jobs and expenses
-e8e6b33 Update built service worker cache version
 
 ## Confirmed Working State
 
