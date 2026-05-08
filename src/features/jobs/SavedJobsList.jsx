@@ -86,22 +86,34 @@ export default function SavedJobsList({ onJobDeleted }) {
               <span>{formatJobLabel(job)}</span>
               <strong>${Number(job.totalPay || 0).toFixed(2)}</strong>
 
-              {job.ticketPhotoName && (
-                <p className="helper">Attached Photo: {job.ticketPhotoName}</p>
-              )}
-
-              {previewUrls[job.id] && (
-                <img
-                  src={previewUrls[job.id]}
-                  alt="Ticket preview"
+              {(job.ticketPhotoName || previewUrls[job.id]) && (
+                <div
+                  className="helper"
                   style={{
-                    display: "block",
-                    maxWidth: "120px",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.5rem",
                     marginTop: "0.5rem",
-                    borderRadius: "0.5rem",
-                    border: "1px solid #d8d4ef",
                   }}
-                />
+                >
+                  {previewUrls[job.id] && (
+                    <img
+                      src={previewUrls[job.id]}
+                      alt="Ticket preview"
+                      style={{
+                        width: "42px",
+                        height: "42px",
+                        objectFit: "cover",
+                        borderRadius: "0.5rem",
+                        border: "1px solid #d8d4ef",
+                      }}
+                    />
+                  )}
+                  <span>
+                    Attached Photo
+                    {job.ticketPhotoName ? `: ${job.ticketPhotoName}` : ""}
+                  </span>
+                </div>
               )}
 
               <div className="card-actions">
