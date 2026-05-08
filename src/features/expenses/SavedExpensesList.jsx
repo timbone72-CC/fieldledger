@@ -152,22 +152,26 @@ export default function SavedExpensesList({ onExpenseDeleted }) {
                   <span>{formatExpenseLabel(expense)}</span>
                   <strong>${Number(expense.amount || 0).toFixed(2)}</strong>
 
-                  {previewUrls[expense.id]?.map((photo) => (
-                    <div key={photo.id} style={{ marginTop: "0.75rem" }}>
+                  {previewUrls[expense.id]?.[0] && (
+                    <div style={{ marginTop: "0.75rem" }}>
                       <img
-                        src={photo.url}
-                        alt={photo.name}
+                        src={previewUrls[expense.id][0].url}
+                        alt={previewUrls[expense.id][0].name}
                         style={{
                           display: "block",
-                          maxWidth: "120px",
+                          width: "48px",
+                          height: "48px",
+                          objectFit: "cover",
                           borderRadius: "0.5rem",
                           border: "1px solid #d8d4ef",
                         }}
                       />
 
-                      <p className="helper">{photo.name}</p>
+                      <p className="helper">
+                        {previewUrls[expense.id].length} receipt photo(s)
+                      </p>
                     </div>
-                  ))}
+                  )}
                 </div>
               </label>
             ))}
