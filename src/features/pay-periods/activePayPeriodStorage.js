@@ -39,6 +39,17 @@ function validateNormalizedPayPeriod(payPeriod) {
     return payPeriod;
   }
 
+  if (typeof window.dispatchEvent === "function" && typeof window.CustomEvent === "function") {
+    window.dispatchEvent(
+      new window.CustomEvent("fieldledger:storage-recovery", {
+        detail: {
+          message:
+            "FieldLedger found saved pay-period data with an invalid structure and loaded a safe blank version instead. If you have a backup JSON file, use Import JSON to restore it.",
+        },
+      })
+    );
+  }
+
   return createEmptyPayPeriod();
 }
 
