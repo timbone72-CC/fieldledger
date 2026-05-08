@@ -2,18 +2,18 @@
 
 ## Current Head
 
-314367c Fix panel heading contrast in dark mode
+8a9c5a5 Rebuild live app for release candidate
 
 ## Recent Commits
 
+8a9c5a5 Rebuild live app for release candidate
+a4703d9 Add dismissible quick start card
+b0fa83e Show recovery notice for invalid pay period data
+f75923e Polish PWA manifest metadata
+5a25312 Update checkpoint after PWA contrast validation
 314367c Fix panel heading contrast in dark mode
 cb75575 Remove stale live assets after contrast fix
 f29d038 Fix card text contrast in dark mode
-3ee822b Update checkpoint after PWA update validation
-3b24e18 Test PWA update with hero wording
-ff45cb8 Improve PWA update behavior
-1648f7f Improve hero title contrast
-8147175 Update checkpoint after PWA install validation
 
 ## Confirmed Working State
 
