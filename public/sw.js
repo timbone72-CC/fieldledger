@@ -1,9 +1,11 @@
-const CACHE_NAME = "fieldledger-v1";
+const CACHE_NAME = "fieldledger-v2";
 
 const APP_SHELL = [
   "/fieldledger/",
   "/fieldledger/manifest.webmanifest",
-  "/fieldledger/favicon.svg"
+  "/fieldledger/favicon.svg",
+  "/fieldledger/icon-192.png",
+  "/fieldledger/icon-512.png"
 ];
 
 self.addEventListener("install", (event) => {
@@ -35,14 +37,25 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
+  if (!event.request.url.startsWith(self.location.origin)) {
+    return;
+  }
+
   event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      return (
-        cachedResponse ||
-        fetch(event.request).catch(() => {
-          return caches.match("/fieldledger/");
-        })
-      );
-    })
+    fetch(event.request)
+      .then((networkResponse) => {
+        const responseClone = networkResponse.clone();
+
+        caches.open(CACHE_NAME).then((cache) => {
+          cache.put(event.request, responseClone);
+        });
+
+        return networkResponse;
+      })
+      .catch(() => {
+        return caches.match(event.request).then((cachedResponse) => {
+          return cachedResponse || caches.match("/fieldledger/");
+        });
+      })
   );
 });
