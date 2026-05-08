@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { loadActivePayPeriod, saveActivePayPeriod } from "../pay-periods/activePayPeriodStorage.js";
 import { calculateJobPay } from "../../shared/utils/calculateJobPay.js";
 import { DEFAULT_HOURLY_RATE, JOB_TYPES, TIMESHEET_COMPANIES } from "../../shared/constants/fieldLedgerDefaults.js";
@@ -20,6 +20,7 @@ function calculateDefaultBuckingHours(jobsCompleted, buckingState) {
 }
 
 export default function JobEntryForm({ onJobSaved }) {
+  const ticketPhotoInputRef = useRef(null);
   const [editingJobId, setEditingJobId] = useState("");
   const [jobType, setJobType] = useState(JOB_TYPES.BUCKING);
   const [buckingState, setBuckingState] = useState(BUCKING_STATES.TEXAS);
@@ -56,6 +57,9 @@ export default function JobEntryForm({ onJobSaved }) {
       setHourlyRateSnapshot(job.hourlyRateSnapshot ?? loadSettings().hourlyRate ?? DEFAULT_HOURLY_RATE);
       setTicketPhotoId(job.ticketPhotoId || "");
       setTicketPhotoFile(null);
+      if (ticketPhotoInputRef.current) {
+        ticketPhotoInputRef.current.value = "";
+      }
       setDate(job.date || "");
       setCompany(job.company || "");
       setRigNameOrNumber(job.rigNameOrNumber || "");
@@ -124,6 +128,9 @@ export default function JobEntryForm({ onJobSaved }) {
     setTicketPhotoId("");
     setTicketPhotoFile(null);
     setTicketPhotoPreviewUrl("");
+    if (ticketPhotoInputRef.current) {
+      ticketPhotoInputRef.current.value = "";
+    }
     setDate("");
     setCompany("");
     setRigNameOrNumber("");
@@ -426,8 +433,10 @@ export default function JobEntryForm({ onJobSaved }) {
       <label className="field">
         Ticket Photo
         <input
+          ref={ticketPhotoInputRef}
           type="file"
           accept="image/*"
+          capture="environment"
           onChange={(event) => {
             setTicketPhotoFile(event.target.files?.[0] || null);
           }}

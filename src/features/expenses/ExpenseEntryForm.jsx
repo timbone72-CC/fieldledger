@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { loadActivePayPeriod, saveActivePayPeriod } from "../pay-periods/activePayPeriodStorage.js";
 import { EXPENSE_CATEGORIES } from "../../shared/constants/fieldLedgerDefaults.js";
 import { deletePhotoBlob, loadPhotoBlob, savePhotoBlob } from "../../shared/storage/photoBlobStorage.js";
 
 export default function ExpenseEntryForm({ onExpenseSaved }) {
+  const receiptPhotoInputRef = useRef(null);
   const [editingExpenseId, setEditingExpenseId] = useState("");
   const [date, setDate] = useState("");
   const [vendor, setVendor] = useState("");
@@ -31,6 +32,9 @@ export default function ExpenseEntryForm({ onExpenseSaved }) {
       setNotes(expense.notes || "");
       setReceiptPhotoId(expense.receiptPhotoId || "");
       setReceiptPhotoFile(null);
+      if (receiptPhotoInputRef.current) {
+        receiptPhotoInputRef.current.value = "";
+      }
       setSaveMessage("Editing saved expense. Make changes, then save.");
     }
 
@@ -84,6 +88,9 @@ export default function ExpenseEntryForm({ onExpenseSaved }) {
     setReceiptPhotoId("");
     setReceiptPhotoFile(null);
     setReceiptPhotoPreviewUrl("");
+    if (receiptPhotoInputRef.current) {
+      receiptPhotoInputRef.current.value = "";
+    }
     setSaveMessage(message);
   }
 
@@ -238,8 +245,10 @@ export default function ExpenseEntryForm({ onExpenseSaved }) {
       <label className="field">
         Receipt Photo
         <input
+          ref={receiptPhotoInputRef}
           type="file"
           accept="image/*"
+          capture="environment"
           onChange={(event) => {
             setReceiptPhotoFile(event.target.files?.[0] || null);
           }}
