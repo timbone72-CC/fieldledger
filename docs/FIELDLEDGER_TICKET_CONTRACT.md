@@ -28,6 +28,7 @@ rigNameOrNumber
 fieldTicketNumber
 transportation
 ticketPhotoId
+ticketPhotoName
 notes
 createdAt
 updatedAt

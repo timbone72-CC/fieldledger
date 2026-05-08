@@ -31,6 +31,7 @@ export default function JobEntryForm({ onJobSaved }) {
   const [additionalHours, setAdditionalHours] = useState("");
   const [hourlyRateSnapshot, setHourlyRateSnapshot] = useState(loadSettings().hourlyRate);
   const [ticketPhotoId, setTicketPhotoId] = useState("");
+  const [ticketPhotoName, setTicketPhotoName] = useState("");
   const [ticketPhotoFile, setTicketPhotoFile] = useState(null);
   const [ticketPhotoPreviewUrl, setTicketPhotoPreviewUrl] = useState("");
   const [saveMessage, setSaveMessage] = useState("");
@@ -57,6 +58,7 @@ export default function JobEntryForm({ onJobSaved }) {
       setAdditionalHours(job.jobType === JOB_TYPES.TORQUE_TURN ? String(job.additionalHours || "") : "");
       setHourlyRateSnapshot(job.hourlyRateSnapshot ?? loadSettings().hourlyRate ?? DEFAULT_HOURLY_RATE);
       setTicketPhotoId(job.ticketPhotoId || "");
+      setTicketPhotoName(job.ticketPhotoName || "");
       setTicketPhotoFile(null);
       if (ticketPhotoInputRef.current) {
         ticketPhotoInputRef.current.value = "";
@@ -143,6 +145,7 @@ export default function JobEntryForm({ onJobSaved }) {
     setBaseJobPay("");
     setAdditionalHours("");
     setTicketPhotoId("");
+    setTicketPhotoName("");
     setTicketPhotoFile(null);
     setTicketPhotoPreviewUrl("");
     if (ticketPhotoInputRef.current) {
@@ -205,6 +208,7 @@ export default function JobEntryForm({ onJobSaved }) {
       id: editingJobId || crypto.randomUUID(),
       payPeriodId: payPeriod.id,
       ticketPhotoId: nextTicketPhotoId,
+      ticketPhotoName,
       jobType,
       buckingState: jobType === JOB_TYPES.BUCKING ? buckingState : "",
       jobsCompleted: jobsCompletedValue,
@@ -272,6 +276,7 @@ export default function JobEntryForm({ onJobSaved }) {
     }
 
     setTicketPhotoId("");
+    setTicketPhotoName("");
     setTicketPhotoFile(null);
     setTicketPhotoPreviewUrl("");
     setSaveMessage("Ticket photo removed. Save job changes to keep this update.");
@@ -458,6 +463,16 @@ export default function JobEntryForm({ onJobSaved }) {
       />
 
       <label className="field">
+        Ticket Photo Name
+        <input
+          type="text"
+          value={ticketPhotoName}
+          onChange={(event) => setTicketPhotoName(event.target.value)}
+          placeholder="Example: Scan Vision Ticket 12345"
+        />
+      </label>
+
+      <label className="field">
         Upload Ticket Photo
         <input
           ref={ticketPhotoInputRef}
@@ -470,33 +485,39 @@ export default function JobEntryForm({ onJobSaved }) {
         />
       </label>
 
-      {ticketPhotoId && !ticketPhotoFile && (
-        <p className="helper">Ticket photo already attached.</p>
-      )}
+      {(ticketPhotoId || ticketPhotoFile || ticketPhotoPreviewUrl) && (
+        <div className="attached-photo-preview">
+          <h3>Attached Photo</h3>
 
-      {ticketPhotoPreviewUrl && (
-        <img
-          src={ticketPhotoPreviewUrl}
-          alt="Attached ticket preview"
-          style={{
-            display: "block",
-            maxWidth: "240px",
-            maxHeight: "240px",
-            marginTop: "0.75rem",
-            borderRadius: "0.75rem",
-            border: "1px solid #d8d4ef",
-          }}
-        />
-      )}
+          {ticketPhotoFile && (
+            <p className="helper">Photo captured. Review it before saving.</p>
+          )}
 
-      {(ticketPhotoId || ticketPhotoFile) && (
-        <button type="button" onClick={removeTicketPhoto}>
-          Remove Ticket Photo
-        </button>
-      )}
+          {ticketPhotoId && !ticketPhotoFile && (
+            <p className="helper">Saved ticket photo.</p>
+          )}
 
-      {ticketPhotoFile && (
-        <p className="helper">Selected ticket photo: {ticketPhotoFile.name}</p>
+          {ticketPhotoPreviewUrl && (
+            <img
+              src={ticketPhotoPreviewUrl}
+              alt="Attached ticket preview"
+              style={{
+                display: "block",
+                maxWidth: "240px",
+                maxHeight: "240px",
+                margin: "0.75rem auto 0",
+                borderRadius: "0.75rem",
+                border: "1px solid #d8d4ef",
+              }}
+            />
+          )}
+
+          <p className="helper">{ticketPhotoName || ticketPhotoFile?.name || "Unnamed ticket photo"}</p>
+
+          <button type="button" onClick={removeTicketPhoto}>
+            Remove Photo
+          </button>
+        </div>
       )}
 
       <div className="result-card">

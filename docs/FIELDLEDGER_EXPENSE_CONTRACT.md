@@ -26,7 +26,15 @@ Each expense entry must support:
 - vendor
 - category
 - amount
-- receiptPhotoId when photo support exists
+- receiptPhotos when photo support exists
+
+Each receipt photo entry must support:
+
+- id
+- name
+
+Expense entries must also support:
+
 - notes
 - createdAt
 - updatedAt
@@ -61,7 +69,7 @@ The user must be able to review and edit:
 - category
 - amount
 - notes
-- receipt photo when photo support exists
+- receipt photos when photo support exists
 
 before saving the expense.
 

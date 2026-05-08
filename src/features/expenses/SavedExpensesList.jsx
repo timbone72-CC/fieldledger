@@ -6,7 +6,11 @@ export default function SavedExpensesList({ onExpenseDeleted }) {
   const payPeriod = loadActivePayPeriod();
   const expenses = Array.isArray(payPeriod.expenses) ? payPeriod.expenses : [];
   const expensePreviewKey = expenses
-    .map((expense) => `${expense.id}:${expense.receiptPhotoId || ""}`)
+    .map((expense) => {
+      const receiptPhotos = getExpenseReceiptPhotos(expense);
+
+      return `${expense.id}:${receiptPhotos.map((photo) => photo.id).join(",")}`;
+    })
     .join("|");
   const [selectedExpenseIds, setSelectedExpenseIds] = useState([]);
   const [previewUrls, setPreviewUrls] = useState({});
@@ -17,15 +21,28 @@ export default function SavedExpensesList({ onExpenseDeleted }) {
 
     async function loadPreviews() {
       for (const expense of expenses) {
-        if (!expense.receiptPhotoId) continue;
+        const receiptPhotos = getExpenseReceiptPhotos(expense);
 
-        try {
-          const record = await loadPhotoBlob(expense.receiptPhotoId);
-          if (record?.blob) {
-            urls[expense.id] = URL.createObjectURL(record.blob);
+        if (receiptPhotos.length === 0) {
+          continue;
+        }
+
+        urls[expense.id] = [];
+
+        for (const receiptPhoto of receiptPhotos) {
+          try {
+            const record = await loadPhotoBlob(receiptPhoto.id);
+
+            if (record?.blob) {
+              urls[expense.id].push({
+                id: receiptPhoto.id,
+                name: receiptPhoto.name || "Receipt photo",
+                url: URL.createObjectURL(record.blob),
+              });
+            }
+          } catch {
+            // ignore broken preview
           }
-        } catch {
-          // ignore broken preview
         }
       }
 
@@ -38,7 +55,9 @@ export default function SavedExpensesList({ onExpenseDeleted }) {
 
     return () => {
       active = false;
-      Object.values(urls).forEach((url) => URL.revokeObjectURL(url));
+      Object.values(urls).forEach((photoList) => {
+        photoList.forEach((photo) => URL.revokeObjectURL(photo.url));
+      });
     };
   }, [expensePreviewKey]);
 
@@ -133,19 +152,22 @@ export default function SavedExpensesList({ onExpenseDeleted }) {
                   <span>{formatExpenseLabel(expense)}</span>
                   <strong>${Number(expense.amount || 0).toFixed(2)}</strong>
 
-                  {previewUrls[expense.id] && (
-                    <img
-                      src={previewUrls[expense.id]}
-                      alt="Receipt preview"
-                      style={{
-                        display: "block",
-                        maxWidth: "120px",
-                        marginTop: "0.5rem",
-                        borderRadius: "0.5rem",
-                        border: "1px solid #d8d4ef",
-                      }}
-                    />
-                  )}
+                  {previewUrls[expense.id]?.map((photo) => (
+                    <div key={photo.id} style={{ marginTop: "0.75rem" }}>
+                      <img
+                        src={photo.url}
+                        alt={photo.name}
+                        style={{
+                          display: "block",
+                          maxWidth: "120px",
+                          borderRadius: "0.5rem",
+                          border: "1px solid #d8d4ef",
+                        }}
+                      />
+
+                      <p className="helper">{photo.name}</p>
+                    </div>
+                  ))}
                 </div>
               </label>
             ))}
@@ -161,4 +183,22 @@ function formatExpenseLabel(expense) {
   const category = expense.category || "Other";
 
   return `${vendor} — ${category}`;
+}
+
+
+function getExpenseReceiptPhotos(expense) {
+  if (Array.isArray(expense.receiptPhotos)) {
+    return expense.receiptPhotos.filter((photo) => photo?.id);
+  }
+
+  if (expense.receiptPhotoId) {
+    return [
+      {
+        id: expense.receiptPhotoId,
+        name: expense.receiptPhotoName || "Receipt photo",
+      },
+    ];
+  }
+
+  return [];
 }

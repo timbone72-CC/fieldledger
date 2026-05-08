@@ -12,9 +12,7 @@ export default function ExpenseEntryForm({ onExpenseSaved }) {
   const [category, setCategory] = useState(EXPENSE_CATEGORIES[0]);
   const [amount, setAmount] = useState("");
   const [notes, setNotes] = useState("");
-  const [receiptPhotoId, setReceiptPhotoId] = useState("");
-  const [receiptPhotoFile, setReceiptPhotoFile] = useState(null);
-  const [receiptPhotoPreviewUrl, setReceiptPhotoPreviewUrl] = useState("");
+  const [receiptPhotos, setReceiptPhotos] = useState([]);
   const [saveMessage, setSaveMessage] = useState("");
 
   useEffect(() => {
@@ -31,8 +29,7 @@ export default function ExpenseEntryForm({ onExpenseSaved }) {
       setCategory(expense.category || EXPENSE_CATEGORIES[0]);
       setAmount(String(expense.amount || ""));
       setNotes(expense.notes || "");
-      setReceiptPhotoId(expense.receiptPhotoId || "");
-      setReceiptPhotoFile(null);
+      setReceiptPhotos(normalizeReceiptPhotos(expense));
       if (receiptPhotoInputRef.current) {
         receiptPhotoInputRef.current.value = "";
       }
@@ -47,66 +44,133 @@ export default function ExpenseEntryForm({ onExpenseSaved }) {
   }, []);
 
   useEffect(() => {
-    let previewUrl = "";
+    let active = true;
+    const createdPreviewUrls = [];
 
-    async function loadReceiptPhotoPreview() {
-      if (!receiptPhotoId || receiptPhotoFile) {
-        setReceiptPhotoPreviewUrl("");
-        return;
-      }
+    async function loadSavedReceiptPhotoPreviews() {
+      const nextReceiptPhotos = [];
 
-      try {
-        const photoRecord = await loadPhotoBlob(receiptPhotoId);
-
-        if (!photoRecord?.blob) {
-          setReceiptPhotoPreviewUrl("");
-          return;
+      for (const receiptPhoto of receiptPhotos) {
+        if (receiptPhoto.file || receiptPhoto.previewUrl || !receiptPhoto.id) {
+          nextReceiptPhotos.push(receiptPhoto);
+          continue;
         }
 
-        previewUrl = URL.createObjectURL(photoRecord.blob);
-        setReceiptPhotoPreviewUrl(previewUrl);
-      } catch {
-        setReceiptPhotoPreviewUrl("");
+        try {
+          const photoRecord = await loadPhotoBlob(receiptPhoto.id);
+
+          if (!photoRecord?.blob) {
+            nextReceiptPhotos.push(receiptPhoto);
+            continue;
+          }
+
+          const previewUrl = URL.createObjectURL(photoRecord.blob);
+          createdPreviewUrls.push(previewUrl);
+          nextReceiptPhotos.push({
+            ...receiptPhoto,
+            previewUrl,
+          });
+        } catch {
+          nextReceiptPhotos.push(receiptPhoto);
+        }
+      }
+
+      if (active) {
+        setReceiptPhotos(nextReceiptPhotos);
       }
     }
 
-    loadReceiptPhotoPreview();
+    loadSavedReceiptPhotoPreviews();
 
     return () => {
-      if (previewUrl) {
-        URL.revokeObjectURL(previewUrl);
-      }
+      active = false;
+      createdPreviewUrls.forEach((previewUrl) => URL.revokeObjectURL(previewUrl));
     };
-  }, [receiptPhotoId, receiptPhotoFile]);
-
-
-  useEffect(() => {
-    if (!receiptPhotoFile) {
-      return;
-    }
-
-    const previewUrl = URL.createObjectURL(receiptPhotoFile);
-    setReceiptPhotoPreviewUrl(previewUrl);
-
-    return () => {
-      URL.revokeObjectURL(previewUrl);
-    };
-  }, [receiptPhotoFile]);
+  }, [receiptPhotos.map((receiptPhoto) => receiptPhoto.id || receiptPhoto.localId).join("|")]);
 
   function resetForm(message) {
+    receiptPhotos.forEach((receiptPhoto) => {
+      if (receiptPhoto.previewUrl && receiptPhoto.file) {
+        URL.revokeObjectURL(receiptPhoto.previewUrl);
+      }
+    });
+
     setEditingExpenseId("");
     setDate("");
     setVendor("");
     setCategory(EXPENSE_CATEGORIES[0]);
     setAmount("");
     setNotes("");
-    setReceiptPhotoId("");
-    setReceiptPhotoFile(null);
-    setReceiptPhotoPreviewUrl("");
+    setReceiptPhotos([]);
     if (receiptPhotoInputRef.current) {
       receiptPhotoInputRef.current.value = "";
     }
     setSaveMessage(message);
+  }
+
+  function addReceiptPhotoFiles(files) {
+    const nextPhotos = Array.from(files || []).map((file) => ({
+      localId: crypto.randomUUID(),
+      id: "",
+      name: file.name || "Receipt photo",
+      file,
+      previewUrl: URL.createObjectURL(file),
+    }));
+
+    if (nextPhotos.length === 0) {
+      return;
+    }
+
+    setReceiptPhotos((currentPhotos) => [...currentPhotos, ...nextPhotos]);
+    setSaveMessage("Receipt photo added. Review and name it before saving.");
+  }
+
+  function updateReceiptPhotoName(photoKey, name) {
+    setReceiptPhotos((currentPhotos) =>
+      currentPhotos.map((receiptPhoto) => {
+        if (getReceiptPhotoKey(receiptPhoto) !== photoKey) {
+          return receiptPhoto;
+        }
+
+        return {
+          ...receiptPhoto,
+          name,
+        };
+      }),
+    );
+  }
+
+  async function removeReceiptPhoto(photoKey) {
+    const receiptPhoto = receiptPhotos.find(
+      (currentPhoto) => getReceiptPhotoKey(currentPhoto) === photoKey,
+    );
+
+    if (!receiptPhoto) {
+      return;
+    }
+
+    const confirmed = window.confirm("Remove this receipt photo from the expense?");
+
+    if (!confirmed) {
+      return;
+    }
+
+    if (receiptPhoto.id) {
+      try {
+        await deletePhotoBlob(receiptPhoto.id);
+      } catch {
+        setSaveMessage("Receipt photo reference was removed, but the stored photo could not be deleted.");
+      }
+    }
+
+    if (receiptPhoto.previewUrl && receiptPhoto.file) {
+      URL.revokeObjectURL(receiptPhoto.previewUrl);
+    }
+
+    setReceiptPhotos((currentPhotos) =>
+      currentPhotos.filter((currentPhoto) => getReceiptPhotoKey(currentPhoto) !== photoKey),
+    );
+    setSaveMessage("Receipt photo removed. Save expense changes to keep this update.");
   }
 
   async function saveExpense() {
@@ -119,21 +183,30 @@ export default function ExpenseEntryForm({ onExpenseSaved }) {
       return;
     }
 
-    let nextReceiptPhotoId = receiptPhotoId;
+    let nextReceiptPhotos = [];
 
-    if (receiptPhotoFile) {
-      try {
-        nextReceiptPhotoId = await savePhotoBlob(receiptPhotoFile);
-      } catch {
-        setSaveMessage("Receipt photo could not be saved. Expense was not saved.");
-        return;
-      }
+    try {
+      nextReceiptPhotos = await Promise.all(
+        receiptPhotos.map(async (receiptPhoto) => {
+          const id = receiptPhoto.file
+            ? await savePhotoBlob(receiptPhoto.file)
+            : receiptPhoto.id;
+
+          return {
+            id,
+            name: receiptPhoto.name || receiptPhoto.file?.name || "Receipt photo",
+          };
+        }),
+      );
+    } catch {
+      setSaveMessage("One or more receipt photos could not be saved. Expense was not saved.");
+      return;
     }
 
     const expense = {
       id: editingExpenseId || crypto.randomUUID(),
       payPeriodId: payPeriod.id,
-      receiptPhotoId: nextReceiptPhotoId,
+      receiptPhotos: nextReceiptPhotos,
       date,
       vendor,
       category,
@@ -177,31 +250,6 @@ export default function ExpenseEntryForm({ onExpenseSaved }) {
     if (typeof onExpenseSaved === "function") {
       onExpenseSaved();
     }
-  }
-
-  async function removeReceiptPhoto() {
-    if (!receiptPhotoId) {
-      setReceiptPhotoFile(null);
-      setReceiptPhotoPreviewUrl("");
-      return;
-    }
-
-    const confirmed = window.confirm("Remove this receipt photo from the saved expense?");
-
-    if (!confirmed) {
-      return;
-    }
-
-    try {
-      await deletePhotoBlob(receiptPhotoId);
-    } catch {
-      setSaveMessage("Receipt photo reference was removed, but the stored photo could not be deleted.");
-    }
-
-    setReceiptPhotoId("");
-    setReceiptPhotoFile(null);
-    setReceiptPhotoPreviewUrl("");
-    setSaveMessage("Receipt photo removed. Save expense changes to keep this update.");
   }
 
   function cancelEdit() {
@@ -260,7 +308,7 @@ export default function ExpenseEntryForm({ onExpenseSaved }) {
       <CameraCapture
         label="Take Receipt Photo"
         onPhotoCaptured={(photoFile) => {
-          setReceiptPhotoFile(photoFile);
+          addReceiptPhotoFiles([photoFile]);
 
           if (receiptPhotoInputRef.current) {
             receiptPhotoInputRef.current.value = "";
@@ -269,45 +317,65 @@ export default function ExpenseEntryForm({ onExpenseSaved }) {
       />
 
       <label className="field">
-        Upload Receipt Photo
+        Upload Receipt Photos
         <input
           ref={receiptPhotoInputRef}
           type="file"
           accept="image/*"
           capture="environment"
+          multiple
           onChange={(event) => {
-            setReceiptPhotoFile(event.target.files?.[0] || null);
+            addReceiptPhotoFiles(event.target.files);
+
+            if (receiptPhotoInputRef.current) {
+              receiptPhotoInputRef.current.value = "";
+            }
           }}
         />
       </label>
 
-      {receiptPhotoId && !receiptPhotoFile && (
-        <p className="helper">Receipt photo already attached.</p>
-      )}
+      {receiptPhotos.length > 0 && (
+        <div className="attached-photo-preview">
+          <h3>Attached Photos</h3>
+          <p className="helper">Review and name each receipt photo before saving.</p>
 
-      {receiptPhotoPreviewUrl && (
-        <img
-          src={receiptPhotoPreviewUrl}
-          alt="Attached receipt preview"
-          style={{
-            display: "block",
-            maxWidth: "240px",
-            maxHeight: "240px",
-            marginTop: "0.75rem",
-            borderRadius: "0.75rem",
-            border: "1px solid #d8d4ef",
-          }}
-        />
-      )}
+          {receiptPhotos.map((receiptPhoto) => {
+            const photoKey = getReceiptPhotoKey(receiptPhoto);
 
-      {(receiptPhotoId || receiptPhotoFile) && (
-        <button type="button" onClick={removeReceiptPhoto}>
-          Remove Receipt Photo
-        </button>
-      )}
+            return (
+              <div className="result-card" key={photoKey}>
+                {receiptPhoto.previewUrl && (
+                  <img
+                    src={receiptPhoto.previewUrl}
+                    alt="Attached receipt preview"
+                    style={{
+                      display: "block",
+                      maxWidth: "240px",
+                      maxHeight: "240px",
+                      margin: "0.75rem auto 0",
+                      borderRadius: "0.75rem",
+                      border: "1px solid #d8d4ef",
+                    }}
+                  />
+                )}
 
-      {receiptPhotoFile && (
-        <p className="helper">Selected receipt photo: {receiptPhotoFile.name}</p>
+                <label className="field">
+                  Receipt Photo Name
+                  <input
+                    type="text"
+                    value={receiptPhoto.name}
+                    onChange={(event) => updateReceiptPhotoName(photoKey, event.target.value)}
+                    placeholder="Example: Fuel receipt, Hotel receipt, Tool receipt"
+                  />
+                </label>
+
+                <button type="button" onClick={() => removeReceiptPhoto(photoKey)}>
+                  Remove Photo
+                </button>
+              </div>
+            );
+          })}
+        </div>
       )}
 
       <label className="field">
@@ -333,4 +401,36 @@ export default function ExpenseEntryForm({ onExpenseSaved }) {
       {saveMessage && <p className="helper">{saveMessage}</p>}
     </section>
   );
+}
+
+function normalizeReceiptPhotos(expense) {
+  if (Array.isArray(expense.receiptPhotos)) {
+    return expense.receiptPhotos
+      .filter((receiptPhoto) => receiptPhoto?.id)
+      .map((receiptPhoto) => ({
+        localId: crypto.randomUUID(),
+        id: receiptPhoto.id,
+        name: receiptPhoto.name || "Receipt photo",
+        file: null,
+        previewUrl: "",
+      }));
+  }
+
+  if (expense.receiptPhotoId) {
+    return [
+      {
+        localId: crypto.randomUUID(),
+        id: expense.receiptPhotoId,
+        name: expense.receiptPhotoName || "Receipt photo",
+        file: null,
+        previewUrl: "",
+      },
+    ];
+  }
+
+  return [];
+}
+
+function getReceiptPhotoKey(receiptPhoto) {
+  return receiptPhoto.id || receiptPhoto.localId;
 }

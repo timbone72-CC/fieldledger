@@ -86,6 +86,10 @@ export default function SavedJobsList({ onJobDeleted }) {
               <span>{formatJobLabel(job)}</span>
               <strong>${Number(job.totalPay || 0).toFixed(2)}</strong>
 
+              {job.ticketPhotoName && (
+                <p className="helper">Attached Photo: {job.ticketPhotoName}</p>
+              )}
+
               {previewUrls[job.id] && (
                 <img
                   src={previewUrls[job.id]}
