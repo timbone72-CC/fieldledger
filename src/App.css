@@ -166,6 +166,37 @@
   margin: 0 0 12px;
 }
 
+
+.quick-start-card {
+  margin: 0 0 18px;
+  padding: 16px;
+  border-radius: 14px;
+  background: #f4f0ff;
+  border: 1px solid #d8cafc;
+  color: #24163f;
+}
+
+.quick-start-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.quick-start-card strong {
+  display: block;
+}
+
+.quick-start-card ol {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.quick-start-card li + li {
+  margin-top: 6px;
+}
+
 @media (max-width: 700px) {
   .app-shell {
     width: min(100% - 20px, 1100px);
