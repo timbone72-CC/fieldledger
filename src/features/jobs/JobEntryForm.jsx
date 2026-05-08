@@ -4,6 +4,7 @@ import { calculateJobPay } from "../../shared/utils/calculateJobPay.js";
 import { DEFAULT_HOURLY_RATE, JOB_TYPES, TIMESHEET_COMPANIES } from "../../shared/constants/fieldLedgerDefaults.js";
 import { deletePhotoBlob, loadPhotoBlob, savePhotoBlob } from "../../shared/storage/photoBlobStorage.js";
 import { loadSettings } from "../settings/settingsStorage.js";
+import CameraCapture from "../../shared/components/CameraCapture.jsx";
 
 const BUCKING_STATES = {
   TEXAS: "Texas",
@@ -430,8 +431,18 @@ export default function JobEntryForm({ onJobSaved }) {
         </>
       )}
 
+      <CameraCapture
+        label="Take Ticket Photo"
+        onPhotoCaptured={(photoFile) => {
+          setTicketPhotoFile(photoFile);
+          if (ticketPhotoInputRef.current) {
+            ticketPhotoInputRef.current.value = "";
+          }
+        }}
+      />
+
       <label className="field">
-        Ticket Photo
+        Upload Ticket Photo
         <input
           ref={ticketPhotoInputRef}
           type="file"
