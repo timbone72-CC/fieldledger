@@ -1,4 +1,4 @@
-const CACHE_NAME = "fieldledger-v2";
+const CACHE_NAME = "fieldledger-v3-camera";
 
 const APP_SHELL = [
   "/fieldledger/",
