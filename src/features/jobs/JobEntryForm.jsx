@@ -88,14 +88,25 @@ export default function JobEntryForm({ onJobSaved }) {
 
   useEffect(() => {
     let previewUrl = "";
+    let cancelled = false;
 
     async function loadTicketPhotoPreview() {
-      if (!ticketPhotoId || ticketPhotoFile) {
-        setTicketPhotoPreviewUrl("");
-        return;
-      }
-
       try {
+        if (ticketPhotoFile) {
+          previewUrl = URL.createObjectURL(ticketPhotoFile);
+
+          if (!cancelled) {
+            setTicketPhotoPreviewUrl(previewUrl);
+          }
+
+          return;
+        }
+
+        if (!ticketPhotoId) {
+          setTicketPhotoPreviewUrl("");
+          return;
+        }
+
         const photoRecord = await loadPhotoBlob(ticketPhotoId);
 
         if (!photoRecord?.blob) {
@@ -104,7 +115,10 @@ export default function JobEntryForm({ onJobSaved }) {
         }
 
         previewUrl = URL.createObjectURL(photoRecord.blob);
-        setTicketPhotoPreviewUrl(previewUrl);
+
+        if (!cancelled) {
+          setTicketPhotoPreviewUrl(previewUrl);
+        }
       } catch {
         setTicketPhotoPreviewUrl("");
       }
@@ -113,25 +127,13 @@ export default function JobEntryForm({ onJobSaved }) {
     loadTicketPhotoPreview();
 
     return () => {
+      cancelled = true;
+
       if (previewUrl) {
         URL.revokeObjectURL(previewUrl);
       }
     };
   }, [ticketPhotoId, ticketPhotoFile]);
-
-
-  useEffect(() => {
-    if (!ticketPhotoFile) {
-      return;
-    }
-
-    const previewUrl = URL.createObjectURL(ticketPhotoFile);
-    setTicketPhotoPreviewUrl(previewUrl);
-
-    return () => {
-      URL.revokeObjectURL(previewUrl);
-    };
-  }, [ticketPhotoFile]);
 
   function resetForm(message) {
     setEditingJobId("");
