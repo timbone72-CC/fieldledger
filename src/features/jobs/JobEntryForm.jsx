@@ -119,6 +119,20 @@ export default function JobEntryForm({ onJobSaved }) {
     };
   }, [ticketPhotoId, ticketPhotoFile]);
 
+
+  useEffect(() => {
+    if (!ticketPhotoFile) {
+      return;
+    }
+
+    const previewUrl = URL.createObjectURL(ticketPhotoFile);
+    setTicketPhotoPreviewUrl(previewUrl);
+
+    return () => {
+      URL.revokeObjectURL(previewUrl);
+    };
+  }, [ticketPhotoFile]);
+
   function resetForm(message) {
     setEditingJobId("");
     setBuckingState(BUCKING_STATES.TEXAS);

@@ -1,10 +1,17 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function CameraCapture({ label = "Take Photo", onPhotoCaptured }) {
   const videoRef = useRef(null);
   const streamRef = useRef(null);
   const [cameraOpen, setCameraOpen] = useState(false);
   const [message, setMessage] = useState("");
+  const [cameraReady, setCameraReady] = useState(false);
+
+  useEffect(() => {
+    if (cameraOpen && videoRef.current && streamRef.current) {
+      videoRef.current.srcObject = streamRef.current;
+    }
+  }, [cameraOpen]);
 
   async function startCamera() {
     setMessage("");
@@ -22,10 +29,6 @@ export default function CameraCapture({ label = "Take Photo", onPhotoCaptured })
 
       streamRef.current = stream;
       setCameraOpen(true);
-
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream;
-      }
     } catch {
       setMessage("Camera could not be opened. Check browser camera permission.");
     }
@@ -38,6 +41,7 @@ export default function CameraCapture({ label = "Take Photo", onPhotoCaptured })
     }
 
     setCameraOpen(false);
+    setCameraReady(false);
 
     if (videoRef.current) {
       videoRef.current.srcObject = null;
@@ -47,8 +51,8 @@ export default function CameraCapture({ label = "Take Photo", onPhotoCaptured })
   async function capturePhoto() {
     const video = videoRef.current;
 
-    if (!video) {
-      setMessage("Camera preview is not ready.");
+    if (!video || !cameraReady || video.videoWidth === 0 || video.videoHeight === 0) {
+      setMessage("Camera preview is still loading. Try again in a second.");
       return;
     }
 
@@ -93,6 +97,10 @@ export default function CameraCapture({ label = "Take Photo", onPhotoCaptured })
             autoPlay
             playsInline
             muted
+            onLoadedMetadata={() => {
+              setCameraReady(true);
+              videoRef.current?.play();
+            }}
             style={{
               display: "block",
               width: "100%",
@@ -102,8 +110,8 @@ export default function CameraCapture({ label = "Take Photo", onPhotoCaptured })
             }}
           />
 
-          <button type="button" onClick={capturePhoto}>
-            Capture Photo
+          <button type="button" onClick={capturePhoto} disabled={!cameraReady}>
+            {cameraReady ? "Capture Photo" : "Loading Camera..."}
           </button>
 
           <button type="button" onClick={stopCamera}>

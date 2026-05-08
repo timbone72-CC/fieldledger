@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { loadActivePayPeriod, saveActivePayPeriod } from "../pay-periods/activePayPeriodStorage.js";
 import { EXPENSE_CATEGORIES } from "../../shared/constants/fieldLedgerDefaults.js";
 import { deletePhotoBlob, loadPhotoBlob, savePhotoBlob } from "../../shared/storage/photoBlobStorage.js";
+import CameraCapture from "../../shared/components/CameraCapture.jsx";
 
 export default function ExpenseEntryForm({ onExpenseSaved }) {
   const receiptPhotoInputRef = useRef(null);
@@ -77,6 +78,20 @@ export default function ExpenseEntryForm({ onExpenseSaved }) {
       }
     };
   }, [receiptPhotoId, receiptPhotoFile]);
+
+
+  useEffect(() => {
+    if (!receiptPhotoFile) {
+      return;
+    }
+
+    const previewUrl = URL.createObjectURL(receiptPhotoFile);
+    setReceiptPhotoPreviewUrl(previewUrl);
+
+    return () => {
+      URL.revokeObjectURL(previewUrl);
+    };
+  }, [receiptPhotoFile]);
 
   function resetForm(message) {
     setEditingExpenseId("");
@@ -242,8 +257,19 @@ export default function ExpenseEntryForm({ onExpenseSaved }) {
         />
       </label>
 
+      <CameraCapture
+        label="Take Receipt Photo"
+        onPhotoCaptured={(photoFile) => {
+          setReceiptPhotoFile(photoFile);
+
+          if (receiptPhotoInputRef.current) {
+            receiptPhotoInputRef.current.value = "";
+          }
+        }}
+      />
+
       <label className="field">
-        Receipt Photo
+        Upload Receipt Photo
         <input
           ref={receiptPhotoInputRef}
           type="file"
