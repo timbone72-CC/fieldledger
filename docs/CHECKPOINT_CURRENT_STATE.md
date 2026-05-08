@@ -2,18 +2,18 @@
 
 ## Current Head
 
-ffb05d0 Add PWA PNG install icons
+3b24e18 Test PWA update with hero wording
 
 ## Recent Commits
 
+3b24e18 Test PWA update with hero wording
+ff45cb8 Improve PWA update behavior
+1648f7f Improve hero title contrast
+8147175 Update checkpoint after PWA install validation
 ffb05d0 Add PWA PNG install icons
 5398382 Add PWA install foundation
 ae1b58f Add PWA manifest
 4f6c086 Add PWA release plan
-3f89b3a Record real field-condition validation
-ab130d4 Rename printable report heading
-d53de49 Remove duplicate mobile export menu style
-a43240f Record trusted-user workflow validation
 
 ## Confirmed Working State
 
@@ -184,6 +184,8 @@ Result:
 
 
 ## PWA Release Status
+
+- PWA update behavior verified: after service worker update, installed phone app picked up a deployed wording change after a few minutes without clearing site data.
 
 - FieldLedger now supports installable PWA behavior on supported mobile browsers.
 - GitHub Pages deployment successfully passed standalone install testing.
