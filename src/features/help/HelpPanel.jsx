@@ -14,6 +14,7 @@ export default function HelpPanel() {
           <li><a href="#help-getting-started">Getting Started</a></li>
           <li><a href="#help-data-reminder">Important Data Reminder</a></li>
           <li><a href="#help-product-scope">Current Product Scope</a></li>
+          <li><a href="#help-update-app">Keeping FieldLedger Updated</a></li>
           <li><a href="#help-future-ideas">Future Ideas</a></li>
           <li><a href="#help-feedback">Feedback</a></li>
         </ul>
@@ -63,6 +64,24 @@ export default function HelpPanel() {
           <li>No AI or OCR required</li>
           <li>Manual-review-first workflow</li>
         </ul>
+      </section>
+
+      <section id="help-update-app">
+        <h3>Keeping FieldLedger Updated</h3>
+
+        <p>
+          Sometimes the installed app may keep older files cached after a deployment
+          or visible update.
+        </p>
+
+        <p>
+          If the app still looks outdated after an update, open Settings and tap
+          <strong> Update App</strong>.
+        </p>
+
+        <p>
+          Your saved records stay on this device during the update process.
+        </p>
       </section>
 
       <section id="help-future-ideas">
