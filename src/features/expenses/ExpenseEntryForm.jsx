@@ -322,7 +322,6 @@ export default function ExpenseEntryForm({ onExpenseSaved }) {
           ref={receiptPhotoInputRef}
           type="file"
           accept="image/*"
-          capture="environment"
           multiple
           onChange={(event) => {
             addReceiptPhotoFiles(event.target.files);

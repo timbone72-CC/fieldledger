@@ -505,7 +505,6 @@ export default function JobEntryForm({ onJobSaved }) {
           ref={ticketPhotoInputRef}
           type="file"
           accept="image/*"
-          capture="environment"
           onChange={(event) => {
             setTicketPhotoFile(event.target.files?.[0] || null);
           }}
