@@ -4,6 +4,7 @@ import { calculateJobPay } from "../../shared/utils/calculateJobPay.js";
 import { DEFAULT_HOURLY_RATE, JOB_TYPES, TIMESHEET_COMPANIES } from "../../shared/constants/fieldLedgerDefaults.js";
 import { deletePhotoBlob, loadPhotoBlob, savePhotoBlob } from "../../shared/storage/photoBlobStorage.js";
 import { loadSettings } from "../settings/settingsStorage.js";
+import { loadJobSuggestions, rememberJobSuggestions } from "../../shared/storage/jobSuggestionStorage.js";
 import CameraCapture from "../../shared/components/CameraCapture.jsx";
 
 const BUCKING_STATES = {
@@ -45,9 +46,12 @@ export default function JobEntryForm({ onJobSaved }) {
     ? loadActivePayPeriod().jobs
     : [];
 
+  const jobSuggestions = loadJobSuggestions();
+
   const companyOptions = Array.from(
     new Set([
       ...TIMESHEET_COMPANIES,
+      ...jobSuggestions.companies,
       ...savedJobs.map((job) => job.company),
     ]
       .map((value) => value?.trim())
@@ -55,11 +59,12 @@ export default function JobEntryForm({ onJobSaved }) {
   ).sort();
 
   const rigOptions = Array.from(
-    new Set(
-      savedJobs
-        .map((job) => job.rigNameOrNumber?.trim())
-        .filter(Boolean),
-    ),
+    new Set([
+      ...jobSuggestions.rigs,
+      ...savedJobs.map((job) => job.rigNameOrNumber),
+    ]
+      .map((value) => value?.trim())
+      .filter(Boolean)),
   ).sort();
 
   useEffect(() => {
@@ -269,6 +274,8 @@ export default function JobEntryForm({ onJobSaved }) {
       setSaveMessage("Job could not be saved.");
       return;
     }
+
+    rememberJobSuggestions(job);
 
     resetForm(editingJobId ? "Job updated." : "Job saved.");
 
