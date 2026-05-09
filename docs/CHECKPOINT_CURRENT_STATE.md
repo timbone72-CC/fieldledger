@@ -2,18 +2,18 @@
 
 ## Current Head
 
-065c4b8 Rebuild live app after CSV metadata export
+820ea86 Rebuild live app after help update note
 
 ## Recent Commits
 
-065c4b8 Rebuild live app after CSV metadata export
-75b9594 Add pay period metadata to CSV export
-f3455fc Lock workflow expansion phase
-9e7442b Update checkpoint after ownership warning
-694dd89 Rebuild live app after ownership warning
-504b941 Clarify dashboard data ownership warning
-0acd8f6 Remove completed stale assets TODO
-afb5fba Remove stale generated live assets
+820ea86 Rebuild live app after help update note
+89e8469 Document update app workflow in help
+c276f48 Rebuild live app after mobile layout fix
+150601e Fix mobile saved job card overflow
+f26a026 Rebuild live app after update button
+c40c36e Add settings update app button
+ec56099 Improve help workflow navigation
+a61f4fb Add help tab for workflow guidance
 
 ## Confirmed Working State
 
