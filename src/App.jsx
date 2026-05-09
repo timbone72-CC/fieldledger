@@ -124,8 +124,19 @@ export default function App() {
           <section className="data-ownership-notice">
             <strong>Data ownership reminder</strong>
             <p>
-              FieldLedger saves data on this browser/device. Use JSON backup to move
-              records between devices or protect your work before clearing data.
+              FieldLedger stores records locally on this browser/device. Your phone and
+              computer do not automatically share data.
+            </p>
+
+            <p>
+              Use JSON Backup regularly to protect your records before clearing browser
+              data, switching devices, reinstalling the app, or importing a replacement
+              backup.
+            </p>
+
+            <p>
+              Deleting browser/site data without a backup can permanently erase your
+              saved records.
             </p>
           </section>
           <PayPeriodInfoForm key={`pay-period-info-${refreshCount}`} />
