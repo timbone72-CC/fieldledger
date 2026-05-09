@@ -29,6 +29,30 @@ export default function SettingsPanel() {
     setSaveMessage("Settings saved.");
   }
 
+  async function updateApp() {
+    try {
+      if ("serviceWorker" in navigator) {
+        const registrations = await navigator.serviceWorker.getRegistrations();
+
+        await Promise.all(
+          registrations.map((registration) => registration.unregister()),
+        );
+      }
+
+      if ("caches" in window) {
+        const cacheNames = await window.caches.keys();
+
+        await Promise.all(
+          cacheNames
+            .filter((cacheName) => cacheName.startsWith("fieldledger-"))
+            .map((cacheName) => window.caches.delete(cacheName)),
+        );
+      }
+    } finally {
+      window.location.reload();
+    }
+  }
+
   return (
     <section className="panel">
       <h2>Settings</h2>
@@ -102,6 +126,16 @@ export default function SettingsPanel() {
 
       <button type="button" onClick={saveUserSettings}>
         Save Settings
+      </button>
+
+      <div className="helper">
+        <strong>Update App:</strong>
+        <br />
+        Reload FieldLedger and refresh the app cache. Your saved records stay on this device.
+      </div>
+
+      <button type="button" onClick={updateApp}>
+        Update App
       </button>
 
       {saveMessage && <p className="helper">{saveMessage}</p>}
