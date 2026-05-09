@@ -2,18 +2,18 @@
 
 ## Current Head
 
-07c6045 Fix backup validation for receipt photo arrays
+3134ece Normalize numeric CSV fallbacks
 
 ## Recent Commits
 
-07c6045 Fix backup validation for receipt photo arrays
-38faa4a Lock next reliability target
-b29b6c9 Update checkpoint current head
-8b41eaa Update checkpoint after help and update workflow
-820ea86 Rebuild live app after help update note
-89e8469 Document update app workflow in help
-c276f48 Rebuild live app after mobile layout fix
-150601e Fix mobile saved job card overflow
+3134ece Normalize numeric CSV fallbacks
+d5ad6b9 Restore canonical CSV export fixture
+0ca1667 Preserve zero values in CSV export
+06cd525 Make CSV export schema testable
+a777a1e Expand Sheets integration governance contract
+07a1ad8 Add Sheets integration governance contract
+c569bca Rebuild live app after backup validation fix
+fa7c183 Update checkpoint after backup validation fix
 
 ## Confirmed Working State
 
@@ -56,6 +56,7 @@ c276f48 Rebuild live app after mobile layout fix
 - Core calculation tests pass.
 - JSON backup round-trip integrity test passes with jobs, expenses, mileage, ticketPhotoId, and receiptPhotoId preserved.
 - CSV export integrity test passes.
+- CSV export schema is now parsed by test coverage, preserves numeric zero values, and keeps Torque Turn Day Rate / Sheets-compatible Hours Worked semantics locked.
 - Printable report integrity test passes.
 - Latest build passed with Vite and rebuilt GitHub Pages assets.
 - Live Print Timesheet now opens the spreadsheet-style timesheet view instead of the full report cards.
