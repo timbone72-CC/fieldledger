@@ -2,18 +2,18 @@
 
 ## Current Head
 
-473ffdc Polish printable report layout
+694dd89 Rebuild live app after ownership warning
 
 ## Recent Commits
 
+694dd89 Rebuild live app after ownership warning
+504b941 Clarify dashboard data ownership warning
+0acd8f6 Remove completed stale assets TODO
+afb5fba Remove stale generated live assets
+3311d79 Remove completed printable report TODO
+a2fcfbf Remove completed rig suggestion TODO
+2a56425 Update checkpoint after printable report polish
 473ffdc Polish printable report layout
-df29bd3 Update checkpoint after roadmap contract
-209f9b1 Add product roadmap contract
-f6eb648 Update checkpoint after remembered suggestions
-3c508a2 Rebuild live app after remembered suggestions
-a880df0 Remember job suggestions after deletion
-b901b30 Rebuild live app after suggestion cleanup
-e3523c5 Clean saved job suggestion values
 
 ## Confirmed Working State
 
