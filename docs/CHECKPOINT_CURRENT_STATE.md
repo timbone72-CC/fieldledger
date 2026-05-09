@@ -2,10 +2,11 @@
 
 ## Current Head
 
-820ea86 Rebuild live app after help update note
+8b41eaa Update checkpoint after help and update workflow
 
 ## Recent Commits
 
+8b41eaa Update checkpoint after help and update workflow
 820ea86 Rebuild live app after help update note
 89e8469 Document update app workflow in help
 c276f48 Rebuild live app after mobile layout fix
@@ -13,7 +14,6 @@ c276f48 Rebuild live app after mobile layout fix
 f26a026 Rebuild live app after update button
 c40c36e Add settings update app button
 ec56099 Improve help workflow navigation
-a61f4fb Add help tab for workflow guidance
 
 ## Confirmed Working State
 
