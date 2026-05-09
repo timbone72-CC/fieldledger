@@ -10,6 +10,7 @@ import SavedMileageList from "./features/mileage/SavedMileageList.jsx";
 import PayPeriodInfoForm from "./features/pay-periods/PayPeriodInfoForm.jsx";
 import PayPeriodSummaryPanel from "./features/pay-periods/PayPeriodSummaryPanel.jsx";
 import SettingsPanel from "./features/settings/SettingsPanel.jsx";
+import HelpPanel from "./features/help/HelpPanel.jsx";
 import TimesheetPrintView from "./features/exports/TimesheetPrintView.jsx";
 
 const TABS = {
@@ -18,6 +19,7 @@ const TABS = {
   EXPENSES: "expenses",
   MILEAGE: "mileage",
   SETTINGS: "settings",
+  HELP: "help",
 };
 
 export default function App() {
@@ -117,6 +119,17 @@ export default function App() {
         >
           Settings
         </button>
+        <button
+          type="button"
+          className={activeTab === TABS.HELP ? "active" : ""}
+          onClick={() =>
+            setActiveTab((currentTab) =>
+              currentTab === TABS.HELP ? TABS.DASHBOARD : TABS.HELP
+            )
+          }
+        >
+          {activeTab === TABS.HELP ? "Help — click again to close" : "Help"}
+        </button>
       </nav>
 
       {activeTab === TABS.DASHBOARD && (
@@ -171,6 +184,8 @@ export default function App() {
       )}
 
       {activeTab === TABS.SETTINGS && <SettingsPanel />}
+
+      {activeTab === TABS.HELP && <HelpPanel />}
     </main>
   );
 }
