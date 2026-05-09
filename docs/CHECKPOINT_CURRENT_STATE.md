@@ -125,11 +125,17 @@ Previous printable full report test passed:
 
 ## Next Recommended Move
 
-Continue integration + integrity cleanup before adding new features.
+Continue Phase 2 from operational stabilization + integration verification.
 
-Next target:
+Approved next target:
 
-- Continue integration + integrity cleanup.
+- Run a real backup/restore confidence drill using a full pay period that includes jobs, expenses, mileage, ticket photo references, and receipt photo references.
+
+Goal:
+
+- Prove the current trusted-user data recovery path still works before adding any new feature work.
+
+Do not restart Help, onboarding wording, Update App workflow, or mobile overflow review unless a real issue appears.
 
 ## Tracked TODO
 
