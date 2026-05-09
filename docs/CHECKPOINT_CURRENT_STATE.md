@@ -134,7 +134,6 @@ Next target:
 ## Tracked TODO
 
 - Review printable report layout against the Legend Energy timesheet.
-- Decide whether Rig Name/Number should use autofill with manual typing like Company.
 - Add future way to manage saved company and rig suggestion lists.
 - Clean old generated docs/assets files if needed after build churn.
 
