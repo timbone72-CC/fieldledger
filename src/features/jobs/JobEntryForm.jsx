@@ -48,16 +48,16 @@ export default function JobEntryForm({ onJobSaved }) {
   const companyOptions = Array.from(
     new Set([
       ...TIMESHEET_COMPANIES,
-      ...savedJobs
-        .map((job) => job.company)
-        .filter(Boolean),
-    ]),
+      ...savedJobs.map((job) => job.company),
+    ]
+      .map((value) => value?.trim())
+      .filter(Boolean)),
   ).sort();
 
   const rigOptions = Array.from(
     new Set(
       savedJobs
-        .map((job) => job.rigNameOrNumber)
+        .map((job) => job.rigNameOrNumber?.trim())
         .filter(Boolean),
     ),
   ).sort();
