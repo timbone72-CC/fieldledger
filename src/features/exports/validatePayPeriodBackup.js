@@ -69,7 +69,13 @@ function isValidExpense(expense) {
     typeof expense === "object" &&
     typeof expense.id === "string" &&
     typeof expense.payPeriodId === "string" &&
-    typeof expense.receiptPhotoId === "string" &&
+    (
+      typeof expense.receiptPhotoId === "string" ||
+      (
+        Array.isArray(expense.receiptPhotos) &&
+        expense.receiptPhotos.every(isValidReceiptPhoto)
+      )
+    ) &&
     typeof expense.date === "string" &&
     typeof expense.vendor === "string" &&
     typeof expense.category === "string" &&
@@ -80,6 +86,18 @@ function isValidExpense(expense) {
     (
       typeof expense.createdAt === "string" ||
       typeof expense.createdAt === "undefined"
+    )
+  );
+}
+
+function isValidReceiptPhoto(photo) {
+  return (
+    photo &&
+    typeof photo === "object" &&
+    typeof photo.id === "string" &&
+    (
+      typeof photo.name === "string" ||
+      typeof photo.name === "undefined"
     )
   );
 }

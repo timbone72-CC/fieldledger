@@ -89,6 +89,7 @@ ec56099 Improve help workflow navigation
 - Saved records store photo IDs by reference, not image blobs.
 - Export visible fields must mimic the submitted Legend Energy timesheet first.
 - Extra FieldLedger-only data should stay hidden or secondary in the timesheet export.
+- Data Shape Change Rule: any saved record structure change must update or verify every reader/writer of that structure, including save, display, edit/delete, export, import validation, restore, tests, and checkpoint/contract notes.
 
 ## Latest Manual Browser Test
 

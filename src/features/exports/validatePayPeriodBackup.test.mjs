@@ -30,6 +30,27 @@ const validBackup = {
 
 assert.equal(isValidPayPeriodBackup(validBackup), true);
 
+assert.equal(
+  isValidPayPeriodBackup({
+    ...validBackup,
+    expenses: [
+      {
+        id: "expense-1",
+        payPeriodId: "active",
+        receiptPhotos: [{ id: "receipt-photo-1", name: "Fuel receipt" }],
+        date: "2026-05-07",
+        vendor: "Pilot",
+        category: "Fuel",
+        amount: 50,
+        notes: "",
+        createdAt: "2026-05-07T12:00:00.000Z",
+        updatedAt: "2026-05-07T12:00:00.000Z",
+      },
+    ],
+  }),
+  true,
+);
+
 /**
  * 2. Invalid Backup
  */
