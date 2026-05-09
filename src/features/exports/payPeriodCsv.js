@@ -34,7 +34,7 @@ export function buildPayPeriodCsv(payPeriod) {
       job.company || "",
       job.rigNameOrNumber || "",
       job.fieldTicketNumber || "",
-      job.baseJobPay || "",
+      job.baseJobPay ?? "",
       getHoursWorkedForTimesheet(job),
       job.transportation ?? "",
       job.totalPay || 0,
