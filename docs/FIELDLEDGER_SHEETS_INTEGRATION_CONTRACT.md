@@ -217,3 +217,204 @@ This contract works together with:
 - CHECKPOINT_CURRENT_STATE.md
 
 If operational workflow behavior conflicts with historical notes or assumptions, the active contracts control the system behavior.
+
+## 18. CSV Schema Version 1
+
+Current CSV schema version:
+
+- csvSchemaVersion: 1
+- consumer: Google Sheets RawData tab
+- purpose: Legend-style timesheet import
+
+The CSV header row must preserve this exact column order:
+
+| Index | Column Name | Type | Required | Semantic Meaning |
+| --- | --- | --- | --- | --- |
+| 1 | Date | date/string | yes | Job work date exported from FieldLedger. |
+| 2 | Company | string | yes | Company/customer name for the job. |
+| 3 | Rig Name/Number | string | yes | Rig name or rig number for the job. |
+| 4 | Field Ticket Number | string | yes | Field ticket identifier from the job ticket. |
+| 5 | Day Rate | number/blank | conditional | Torque Turn base job pay/day-rate value when applicable; blank or zero when not applicable. |
+| 6 | Hours Worked | number/blank | conditional | Bucking hours worked or Torque Turn additional/hour-compatible value expected by the Sheets workflow. |
+| 7 | Transportation | number/blank | optional | Transportation value for operational timesheet reporting; not user earnings. |
+| 8 | Total | number | yes | FieldLedger-calculated job total for the row. |
+
+This schema is intentionally job-row focused.
+
+Mileage is not part of CSV Schema Version 1.
+
+Expenses are not part of CSV Schema Version 1.
+
+JSON backup remains the full local-record backup path.
+
+## 19. CSV Versioning and Compatibility Policy
+
+CSV schema changes must be versioned.
+
+The current supported schema is:
+
+- CSV Schema Version 1
+
+A non-breaking CSV change may include:
+
+- adding optional metadata outside the locked job-row columns
+- improving filename wording
+- improving export button wording
+- improving internal code without changing exported column names, order, or meaning
+
+A breaking CSV change includes:
+
+- renaming a locked column
+- removing a locked column
+- reordering locked columns
+- changing the meaning of a locked column
+- changing job type names consumed by Sheets
+- changing Bucking export semantics
+- changing Torque Turn export semantics
+- changing whether Transportation is treated as earnings
+
+Breaking CSV changes require:
+
+- contract update before implementation
+- schema version bump
+- migration note
+- RawData compatibility check
+- helper-sheet compatibility check
+- Timesheet compatibility check
+- checkpoint update after verification
+
+No breaking CSV change may be treated as app-only work.
+
+## 20. Backward Compatibility Rule
+
+CSV Schema Version 1 must remain supported until a replacement schema is documented and verified.
+
+If CSV Schema Version 2 is introduced, the contract must document:
+
+- why Version 2 exists
+- what changed from Version 1
+- whether Version 1 remains supported
+- how Google Sheets must migrate
+- validation evidence for the new workflow
+
+FieldLedger must not remove or break CSV Schema Version 1 support without a documented migration path.
+
+## 21. Required Paired-System Evidence
+
+A paired-system change must leave clear evidence of what was verified.
+
+Evidence may include:
+
+- exported CSV sample name or date
+- RawData import result
+- helper-sheet refresh result
+- Timesheet row population result
+- Bucking sample validation result
+- Torque Turn sample validation result
+- total/parity validation result
+- print/export validation result
+- related test command output
+- related commit hash after completion
+
+Validation evidence must be specific enough that a later audit can understand what was checked.
+
+Generic notes such as "Sheets worked" or "export passed" are not enough.
+
+## 22. Required Checkpoint Fields for Paired-System Changes
+
+When a paired-system change is completed, CHECKPOINT_CURRENT_STATE.md must include a paired-system validation note with:
+
+- CSV schema version validated
+- FieldLedger export behavior validated
+- RawData import compatibility
+- helper-sheet compatibility
+- Timesheet output compatibility
+- Bucking sample result
+- Torque Turn sample result
+- totals/parity result
+- breaking-change status
+- migration note, if applicable
+
+Checkpoint updates must be based on verified behavior, not assumptions.
+
+## 23. Current Governance Status
+
+This contract defines the current FieldLedger-to-Google-Sheets operational boundary.
+
+Current protected CSV schema:
+
+- CSV Schema Version 1
+
+Current protected downstream workflow:
+
+- FieldLedger CSV export
+- Google Sheets RawData import
+- helper-sheet processing
+- Timesheet output rows 12–38
+
+Until a later contract update changes this, FieldLedger and Google Sheets must stay compatible with this workflow.
+
+## 24. Cross-Contract Synchronization Rule
+
+Changes to this contract must trigger consistency review for:
+
+- FIELDLEDGER_EXPORT_CONTRACT.md
+- FIELDLEDGER_PAY_CONTRACT.md
+- FIELDLEDGER_PRODUCT_ROADMAP_CONTRACT.md
+- CHECKPOINT_CURRENT_STATE.md
+
+No paired-system governance change is complete until related contracts and checkpoint expectations are reviewed for consistency.
+
+## 25. CSV Canonical Value Rules
+
+CSV Schema Version 1 must preserve these canonical export behaviors.
+
+### Bucking Jobs
+
+- Day Rate:
+  - must export as blank
+- Hours Worked:
+  - must export actual Bucking hoursWorked value
+- Transportation:
+  - must export numeric transportation value or blank if unused
+
+### Torque Turn Jobs
+
+- Day Rate:
+  - must export Torque Turn baseJobPay value
+- Hours Worked:
+  - must export the Sheets-compatible Torque Turn hours value defined by the paired workflow
+- Transportation:
+  - must export numeric transportation value or blank if unused
+
+### Blank vs Zero Rule
+
+Blank values and zero values are not interchangeable.
+
+If a field is intentionally unused for a job type, the export behavior must remain contract-consistent so Google Sheets formulas do not drift.
+
+## 26. Template Identity Rule
+
+Paired-system validation must record the Google Sheets template identity used during validation.
+
+Validation evidence should include:
+
+- spreadsheet name or template identifier
+- validation date
+- CSV schema version
+- related commit hash when applicable
+
+Timesheet row validation without template identity context is incomplete.
+
+## 27. Machine-Verifiable Validation Rule
+
+Paired-system validation must include:
+
+- one parsed CSV schema validation
+- one Bucking export validation sample
+- one Torque Turn export validation sample
+- one RawData import validation
+- one helper-sheet validation
+- one Timesheet validation
+
+Validation evidence must be reproducible by a later audit when possible.
