@@ -2,18 +2,18 @@
 
 ## Current Head
 
-b1a97b0 Rebuild live app after job suggestions
+00a6881 Rebuild live app after photo picker fix
 
 ## Recent Commits
 
+00a6881 Rebuild live app after photo picker fix
+9c48862 Prefer photo picker over camera capture
+1d1c79e Update checkpoint after job suggestions
 b1a97b0 Rebuild live app after job suggestions
 871e699 Add saved job company and rig suggestions
 32f48fd Update checkpoint after job preview cleanup
 dbeacfe Rebuild live app after job preview cleanup
 473393d Compact saved job ticket preview
-f7fccbf Update checkpoint after compact expense previews
-05e0e61 Rebuild live app after compact expense previews
-674eb62 Compact saved expense receipt previews
 
 ## Confirmed Working State
 
