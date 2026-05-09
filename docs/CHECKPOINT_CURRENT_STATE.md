@@ -2,18 +2,18 @@
 
 ## Current Head
 
-3c508a2 Rebuild live app after remembered suggestions
+209f9b1 Add product roadmap contract
 
 ## Recent Commits
 
+209f9b1 Add product roadmap contract
+f6eb648 Update checkpoint after remembered suggestions
 3c508a2 Rebuild live app after remembered suggestions
 a880df0 Remember job suggestions after deletion
 b901b30 Rebuild live app after suggestion cleanup
 e3523c5 Clean saved job suggestion values
 b022f49 Update checkpoint after photo picker fix
 00a6881 Rebuild live app after photo picker fix
-9c48862 Prefer photo picker over camera capture
-1d1c79e Update checkpoint after job suggestions
 
 ## Confirmed Working State
 
