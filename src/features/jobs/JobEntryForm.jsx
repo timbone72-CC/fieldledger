@@ -41,6 +41,27 @@ export default function JobEntryForm({ onJobSaved }) {
   const [fieldTicketNumber, setFieldTicketNumber] = useState("");
   const [transportation, setTransportation] = useState("");
 
+  const savedJobs = Array.isArray(loadActivePayPeriod().jobs)
+    ? loadActivePayPeriod().jobs
+    : [];
+
+  const companyOptions = Array.from(
+    new Set([
+      ...TIMESHEET_COMPANIES,
+      ...savedJobs
+        .map((job) => job.company)
+        .filter(Boolean),
+    ]),
+  ).sort();
+
+  const rigOptions = Array.from(
+    new Set(
+      savedJobs
+        .map((job) => job.rigNameOrNumber)
+        .filter(Boolean),
+    ),
+  ).sort();
+
   useEffect(() => {
     function loadJobForEditing(event) {
       const job = event.detail?.job;
@@ -330,7 +351,7 @@ export default function JobEntryForm({ onJobSaved }) {
           placeholder="Select or type company"
         />
         <datalist id="timesheet-company-options">
-          {TIMESHEET_COMPANIES.map((companyOption) => (
+          {companyOptions.map((companyOption) => (
             <option key={companyOption} value={companyOption} />
           ))}
         </datalist>
@@ -340,10 +361,16 @@ export default function JobEntryForm({ onJobSaved }) {
         Rig Name/Number
         <input
           type="text"
+          list="rig-name-options"
           value={rigNameOrNumber}
           onChange={(event) => setRigNameOrNumber(event.target.value)}
-          placeholder="Example: Scan Vision"
+          placeholder="Select or type rig"
         />
+        <datalist id="rig-name-options">
+          {rigOptions.map((rigOption) => (
+            <option key={rigOption} value={rigOption} />
+          ))}
+        </datalist>
       </label>
 
       <label className="field">
