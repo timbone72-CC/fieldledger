@@ -8,7 +8,18 @@ export default function HelpPanel() {
         expenses, mileage, receipts, and pay-period reporting.
       </p>
 
-      <section>
+      <nav className="help-contents" aria-label="Help guide contents">
+        <strong>Guide contents</strong>
+        <ul>
+          <li><a href="#help-getting-started">Getting Started</a></li>
+          <li><a href="#help-data-reminder">Important Data Reminder</a></li>
+          <li><a href="#help-product-scope">Current Product Scope</a></li>
+          <li><a href="#help-future-ideas">Future Ideas</a></li>
+          <li><a href="#help-feedback">Feedback</a></li>
+        </ul>
+      </nav>
+
+      <section id="help-getting-started">
         <h3>Getting Started</h3>
 
         <ol>
@@ -19,7 +30,7 @@ export default function HelpPanel() {
         </ol>
       </section>
 
-      <section>
+      <section id="help-data-reminder">
         <h3>Important Data Reminder</h3>
 
         <p>
@@ -42,7 +53,7 @@ export default function HelpPanel() {
         </ul>
       </section>
 
-      <section>
+      <section id="help-product-scope">
         <h3>Current Product Scope</h3>
 
         <ul>
@@ -54,13 +65,32 @@ export default function HelpPanel() {
         </ul>
       </section>
 
-      <section>
+      <section id="help-future-ideas">
         <h3>Future Ideas</h3>
 
         <ul>
           <li>Clickable contextual help tips</li>
           <li>Expanded onboarding walkthroughs</li>
           <li>Google Sheets setup guide</li>
+        </ul>
+      </section>
+
+      <section id="help-feedback">
+        <h3>Feedback</h3>
+
+        <p>
+          Found a bug, confusing workflow, or something that could be easier?
+        </p>
+
+        <p>
+          During the trusted-user phase, please text the app owner with:
+        </p>
+
+        <ul>
+          <li>bug reports</li>
+          <li>workflow confusion</li>
+          <li>feature ideas</li>
+          <li>export/report issues</li>
         </ul>
       </section>
     </section>

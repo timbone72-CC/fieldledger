@@ -27,7 +27,6 @@ export default function App() {
   const [refreshCount, setRefreshCount] = useState(0);
   const [showTimesheetPrintView, setShowTimesheetPrintView] = useState(false);
   const [storageRecoveryMessage, setStorageRecoveryMessage] = useState("");
-  const [showQuickStart, setShowQuickStart] = useState(true);
 
   useEffect(() => {
     function handleStorageRecovery(event) {
@@ -55,23 +54,6 @@ export default function App() {
           subtract expenses, and export a clean pay-period report.
         </p>
       </section>
-
-      {showQuickStart && (
-        <section className="quick-start-card">
-          <div className="quick-start-header">
-            <strong>Quick start</strong>
-            <button type="button" onClick={() => setShowQuickStart(false)}>
-              Dismiss
-            </button>
-          </div>
-          <ol>
-            <li>Create or review your pay period dates.</li>
-            <li>Add jobs, expenses, and mileage entries.</li>
-            <li>Use JSON Backup regularly to protect your records.</li>
-            <li>Export or print your pay-period report when ready.</li>
-          </ol>
-        </section>
-      )}
 
       {storageRecoveryMessage && (
         <section className="storage-recovery-banner" role="alert">
