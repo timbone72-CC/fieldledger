@@ -134,7 +134,6 @@ Next target:
 ## Tracked TODO
 
 - Add future way to manage saved company and rig suggestion lists.
-- Clean old generated docs/assets files if needed after build churn.
 
 ## Trusted-User Workflow Validation
 
