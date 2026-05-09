@@ -309,7 +309,16 @@
   font-size: 1.2rem;
 }
 /* 15. Printable Timesheet Layout */
+@page {
+  margin: 0.35in;
+}
+
 @media print {
+  body {
+    background: #fff;
+    color: #000;
+  }
+
   .timesheet-print-view {
     width: 100%;
     max-width: 100%;
@@ -327,6 +336,15 @@
   .timesheet-print-table {
     width: 100%;
     border-collapse: collapse;
+    page-break-inside: auto;
+  }
+
+  .timesheet-print-table thead {
+    display: table-header-group;
+  }
+
+  .timesheet-print-table tr {
+    page-break-inside: avoid;
   }
 
   .timesheet-print-table th,
