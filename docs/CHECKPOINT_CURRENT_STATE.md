@@ -2,18 +2,18 @@
 
 ## Current Head
 
-694dd89 Rebuild live app after ownership warning
+065c4b8 Rebuild live app after CSV metadata export
 
 ## Recent Commits
 
+065c4b8 Rebuild live app after CSV metadata export
+75b9594 Add pay period metadata to CSV export
+f3455fc Lock workflow expansion phase
+9e7442b Update checkpoint after ownership warning
 694dd89 Rebuild live app after ownership warning
 504b941 Clarify dashboard data ownership warning
 0acd8f6 Remove completed stale assets TODO
 afb5fba Remove stale generated live assets
-3311d79 Remove completed printable report TODO
-a2fcfbf Remove completed rig suggestion TODO
-2a56425 Update checkpoint after printable report polish
-473ffdc Polish printable report layout
 
 ## Confirmed Working State
 
