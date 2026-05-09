@@ -37,7 +37,7 @@ export function buildPayPeriodCsv(payPeriod) {
       job.baseJobPay ?? "",
       getHoursWorkedForTimesheet(job),
       job.transportation ?? "",
-      job.totalPay || 0,
+      job.totalPay ?? 0,
     ]);
   });
 
@@ -49,14 +49,14 @@ export function buildPayPeriodCsv(payPeriod) {
 
 export function getHoursWorkedForTimesheet(job) {
   if (job?.jobType === "torque_turn") {
-    return job.additionalHours || 0;
+    return job.additionalHours ?? 0;
   }
 
-  return job?.hoursWorked || 0;
+  return job?.hoursWorked ?? 0;
 }
 
 export function calculateGrandTotal(jobs) {
-  return jobs.reduce((total, job) => total + Number(job.totalPay || 0), 0);
+  return jobs.reduce((total, job) => total + Number(job.totalPay ?? 0), 0);
 }
 
 export function formatCsvCell(value) {
