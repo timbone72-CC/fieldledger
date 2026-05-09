@@ -2,18 +2,18 @@
 
 ## Current Head
 
-8b41eaa Update checkpoint after help and update workflow
+07c6045 Fix backup validation for receipt photo arrays
 
 ## Recent Commits
 
+07c6045 Fix backup validation for receipt photo arrays
+38faa4a Lock next reliability target
+b29b6c9 Update checkpoint current head
 8b41eaa Update checkpoint after help and update workflow
 820ea86 Rebuild live app after help update note
 89e8469 Document update app workflow in help
 c276f48 Rebuild live app after mobile layout fix
 150601e Fix mobile saved job card overflow
-f26a026 Rebuild live app after update button
-c40c36e Add settings update app button
-ec56099 Improve help workflow navigation
 
 ## Confirmed Working State
 
