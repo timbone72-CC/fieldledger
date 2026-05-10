@@ -2,18 +2,18 @@
 
 ## Current Head
 
-201ff17 Document Update App reload exception
+ee99b07 Document generated scheduling event types
 
 ## Recent Commits
 
+ee99b07 Document generated scheduling event types
+2151f48 Document timesheet reminder calendar events
+57ba7e1 Document On Call Rotation event naming
+1f05c57 Document calendar regeneration cleanup behavior
+f77d55d Add trusted user setup checklist
+da6c19a Document trusted user sharing rules
+1533173 Document calendar scheduling architecture
 201ff17 Document Update App reload exception
-af54548 Document Codex repo-wide test audit
-0070c66 Document full export seam validation
-c2144d4 Document backup validation test authority
-b75c201 Document trusted-user CSV import validation
-ede1be5 Update checkpoint after CSV schema alignment
-3134ece Normalize numeric CSV fallbacks
-d5ad6b9 Restore canonical CSV export fixture
 
 ## Confirmed Working State
 
