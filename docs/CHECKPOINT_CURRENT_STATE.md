@@ -58,6 +58,7 @@ fa7c183 Update checkpoint after backup validation fix
 - Job save/delete no longer uses a full page reload.
 - Expense save/delete no longer uses a full page reload.
 - Mileage save/delete no longer uses a full page reload.
+- Settings Update App may intentionally reload after clearing app cache/service worker.
 - Active pay period storage normalizes missing or old data shape fields.
 - Corrupted local JSON storage now warns the user and falls back safely.
 - In-app storage recovery banner now appears instead of disruptive recovery alerts.
