@@ -276,3 +276,44 @@ Users remain responsible for reviewing and maintaining their own records.
 ## 29. Long-Term Product Direction
 
 FieldLedger should continue evolving as a trustworthy local-first field-work record system with optional lightweight connected workflows without sacrificing user ownership, portability, or reliability.
+
+## 30. Calendar Scheduling Roadmap
+
+FieldLedger now recognizes Google Calendar as an approved downstream scheduling display layer through Google Sheets.
+
+Approved architecture:
+
+FieldLedger -> CSV export -> Google Sheets -> Google Calendar
+
+Google Sheets remains the orchestration layer.
+
+Google Calendar remains non-authoritative.
+
+## 31. Approved Future Calendar Features
+
+Approved future roadmap items:
+
+- separate FieldLedger calendar
+- Workweek event generation
+- Payday event generation
+- two-week hitch or pay-period blocks
+- event color coding
+- payday reminders
+- work-period start and end reminders
+- travel-day generation
+- shared family calendar support
+- safe schedule regeneration
+- duplicate prevention
+- event cleanup workflow
+
+These features must preserve user ownership and avoid introducing a backend requirement.
+
+## 32. App Pay-Period Label Alignment
+
+A future FieldLedger app enhancement may auto-suggest the current pay-period label using the same schedule rules as ScheduleConfig.
+
+The label must remain editable by the user before saving.
+
+FieldLedger must not require live Google Sheets or Google Calendar access for the local app to function.
+
+Any future Sheets-to-FieldLedger import path requires a separate contract update before implementation.

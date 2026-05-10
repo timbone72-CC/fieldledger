@@ -2,18 +2,18 @@
 
 ## Current Head
 
-3134ece Normalize numeric CSV fallbacks
+201ff17 Document Update App reload exception
 
 ## Recent Commits
 
+201ff17 Document Update App reload exception
+af54548 Document Codex repo-wide test audit
+0070c66 Document full export seam validation
+c2144d4 Document backup validation test authority
+b75c201 Document trusted-user CSV import validation
+ede1be5 Update checkpoint after CSV schema alignment
 3134ece Normalize numeric CSV fallbacks
 d5ad6b9 Restore canonical CSV export fixture
-0ca1667 Preserve zero values in CSV export
-06cd525 Make CSV export schema testable
-a777a1e Expand Sheets integration governance contract
-07a1ad8 Add Sheets integration governance contract
-c569bca Rebuild live app after backup validation fix
-fa7c183 Update checkpoint after backup validation fix
 
 ## Confirmed Working State
 
@@ -210,3 +210,17 @@ Result:
 - JSON backup export still works from installed app mode.
 - CSV export still works from installed app mode.
 - MVP remains offline-first, local-first, AI-free, and backend-free.
+
+- Google Sheets now functions as an approved scheduling orchestration layer.
+- Google Calendar downstream sync was manually validated through CalendarEvents and Apps Script integration.
+- CalendarEvents now supports generated Workweek and Payday scheduling rows.
+- ScheduleConfig now controls generated two-week work rotations and payday offsets.
+- Duplicate calendar event prevention is operational through stored eventId metadata.
+- Generated scheduling workflow currently supports:
+  - Workweek generation
+  - Payday generation
+  - Two-week rotation scheduling
+  - Bulk Google Calendar sync
+- Approved scheduling architecture is now:
+  FieldLedger -> CSV export -> Google Sheets -> Google Calendar
+- Google Calendar remains a non-authoritative downstream operational display layer.

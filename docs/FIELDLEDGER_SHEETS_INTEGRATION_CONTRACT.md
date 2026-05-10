@@ -418,3 +418,79 @@ Paired-system validation must include:
 - one Timesheet validation
 
 Validation evidence must be reproducible by a later audit when possible.
+
+## 28. Google Calendar Downstream Layer
+
+Google Calendar is an approved downstream operational display layer for FieldLedger scheduling data.
+
+The approved flow is:
+
+FieldLedger -> CSV export -> Google Sheets -> Google Calendar
+
+Google Calendar must not become the source of truth for jobs, expenses, mileage, pay periods, CSV schema, RawData, Timesheet formulas, or FieldLedger app state.
+
+## 29. CalendarEvents Sheet Authority
+
+The CalendarEvents sheet is the approved staging table for calendar sync.
+
+Required columns:
+
+- eventId
+- eventType
+- title
+- startDate
+- endDate
+- notes
+- syncStatus
+
+Rows marked Pending may be synced to Google Calendar.
+
+Rows with an existing eventId must not create duplicate Google Calendar events.
+
+Synced rows should preserve eventId as operational metadata.
+
+## 30. ScheduleConfig Sheet Authority
+
+The ScheduleConfig sheet is the approved control table for generated schedule events.
+
+Approved settings:
+
+- PayPeriodStart
+- PayPeriodDays
+- PaydayOffsetDays
+- PeriodsToCreate
+
+ScheduleConfig may generate Workweek and Payday rows into CalendarEvents.
+
+ScheduleConfig must not mutate FieldLedger local app data.
+
+## 31. Calendar Sync Boundary Rule
+
+Calendar sync is downstream-only.
+
+Approved direction:
+
+Google Sheets -> Google Calendar
+
+Not approved without a future contract update:
+
+Google Calendar -> Google Sheets
+Google Calendar -> FieldLedger
+Google Sheets -> FieldLedger live sync
+
+FieldLedger may later add local pay-period label defaults using the same scheduling rules, but that must remain local and editable unless a future import contract is approved.
+
+## 32. Scheduling Roadmap Boundary
+
+Approved future scheduling enhancements include:
+
+- separate FieldLedger Google Calendar
+- color-coded calendar events
+- reminders and notifications
+- travel-day events
+- shared family calendar support
+- safe regenerate and cleanup workflow
+- optional ScheduleConfig import into FieldLedger
+- local FieldLedger pay-period label defaults
+
+These are planned features, not automatic implementation approval.
