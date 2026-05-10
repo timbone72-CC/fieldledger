@@ -534,5 +534,6 @@ Trusted-user calendar rules:
 - no reverse sync into FieldLedger is allowed
 - calendar sync must not modify FieldLedger app records
 - calendar cleanup/regeneration must remain recoverable
+- generated scheduling events may include On Call Rotation, Timesheet Reminder, Timesheet Due, and Payday
 
 Google Calendar exists as a downstream scheduling/presentation layer only.
