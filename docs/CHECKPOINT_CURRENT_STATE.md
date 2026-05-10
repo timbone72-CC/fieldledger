@@ -17,6 +17,8 @@ fa7c183 Update checkpoint after backup validation fix
 
 ## Confirmed Working State
 
+- Trusted-user validation completed for CSV export/import workflow across devices and Windows file-picker filtering behavior.
+
 - React/Vite app runs locally.
 - Manual pay period info saves locally.
 - Bucking jobs save locally.
