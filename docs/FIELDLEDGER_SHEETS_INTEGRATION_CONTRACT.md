@@ -537,3 +537,11 @@ Trusted-user calendar rules:
 - generated scheduling events may include On Call Rotation, Timesheet Reminder, Timesheet Due, and Payday
 
 Google Calendar exists as a downstream scheduling/presentation layer only.
+
+Dedicated work calendar rule:
+
+- Apps Script calendar sync must target the dedicated calendar named LEG Work Calendar.
+- Apps Script must not use the personal/default Google Calendar for generated FieldLedger work events.
+- The sync function must get or create LEG Work Calendar and abort safely if that calendar cannot be accessed by name.
+- Generated work events may be shared from LEG Work Calendar without exposing personal calendar events.
+- Clearing synced rows from CalendarEvents must not delete Google Calendar events.
