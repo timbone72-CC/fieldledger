@@ -2,18 +2,18 @@
 
 ## Current Head
 
-ee99b07 Document generated scheduling event types
+6b74764 Document dedicated work calendar rule
 
 ## Recent Commits
 
+6b74764 Document dedicated work calendar rule
+2723dea Update checkpoint after scheduling event types
 ee99b07 Document generated scheduling event types
 2151f48 Document timesheet reminder calendar events
 57ba7e1 Document On Call Rotation event naming
 1f05c57 Document calendar regeneration cleanup behavior
 f77d55d Add trusted user setup checklist
 da6c19a Document trusted user sharing rules
-1533173 Document calendar scheduling architecture
-201ff17 Document Update App reload exception
 
 ## Confirmed Working State
 
