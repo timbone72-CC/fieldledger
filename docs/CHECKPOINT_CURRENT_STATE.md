@@ -17,6 +17,8 @@ fa7c183 Update checkpoint after backup validation fix
 
 ## Confirmed Working State
 
+- Full export seam validated: CSV export, JSON backup round trip, backup validation, and timesheet print view tests pass together.
+
 - Corrected verification authority: backup validation test path is `src/features/exports/validatePayPeriodBackup.test.mjs`.
 
 - Trusted-user validation completed for CSV export/import workflow across devices and Windows file-picker filtering behavior.
