@@ -218,6 +218,7 @@ Result:
 - Live ScheduleConfig generation was confirmed across month/year rollover for work periods, payday, Sunday reminder, and Tuesday due events.
 - Duplicate calendar event prevention is operational through stored eventId metadata.
 - Repeated Sync Calendar Events runs were confirmed not to create duplicate events when eventId metadata already exists.
+- Live CalendarEvents cleanup/regeneration was confirmed non-destructive: clearing staging rows did not delete existing LEG Work Calendar events.
 - Generated scheduling workflow currently supports:
   - Workweek generation
   - Payday generation
