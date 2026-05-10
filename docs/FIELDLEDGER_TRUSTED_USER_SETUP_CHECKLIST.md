@@ -26,6 +26,7 @@ Confirm:
 - test CSV import works
 - CalendarEvents staging works
 - ScheduleConfig values are reviewed
+- generated rotation events use the name On Call Rotation
 - duplicate prevention is active
 - event IDs persist after sync
 - calendar cleanup/regeneration path is understood
