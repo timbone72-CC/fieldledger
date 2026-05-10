@@ -217,6 +217,7 @@ Result:
 - ScheduleConfig now controls generated two-week work rotations and payday offsets.
 - Live ScheduleConfig generation was confirmed across month/year rollover for work periods, payday, Sunday reminder, and Tuesday due events.
 - Duplicate calendar event prevention is operational through stored eventId metadata.
+- Repeated Sync Calendar Events runs were confirmed not to create duplicate events when eventId metadata already exists.
 - Generated scheduling workflow currently supports:
   - Workweek generation
   - Payday generation
