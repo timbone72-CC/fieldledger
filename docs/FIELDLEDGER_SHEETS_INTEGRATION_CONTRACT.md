@@ -494,3 +494,45 @@ Approved future scheduling enhancements include:
 - local FieldLedger pay-period label defaults
 
 These are planned features, not automatic implementation approval.
+
+
+## 16. Trusted User Sheet Sharing Rules
+
+Each trusted tester must use their own personal copy of the FieldLedger Google Sheet.
+
+The Google Sheet remains user-controlled.
+
+FieldLedger must not depend on a shared multi-user master sheet.
+
+Trusted-user sheet safety rules:
+
+- RawData remains the CSV import authority
+- Helper sheets remain orchestration-only
+- Timesheet remains formatted output only
+- Users should only edit approved input/config areas
+- Formula regions should be protected where possible
+- Template damage must be recoverable by making a fresh template copy
+- No tester data should depend on another tester's sheet
+
+The Google Sheet remains downstream from FieldLedger exports.
+
+The Google Sheet must not become the authoritative source for FieldLedger app records.
+
+## 17. Trusted User Calendar Rules
+
+Each trusted tester should use a separate dedicated FieldLedger calendar.
+
+Google Calendar remains non-authoritative.
+
+Calendar events may be deleted and regenerated safely.
+
+Trusted-user calendar rules:
+
+- duplicate prevention must remain active
+- CalendarEvents remains event-sync authority
+- event IDs must persist between sync operations
+- no reverse sync into FieldLedger is allowed
+- calendar sync must not modify FieldLedger app records
+- calendar cleanup/regeneration must remain recoverable
+
+Google Calendar exists as a downstream scheduling/presentation layer only.

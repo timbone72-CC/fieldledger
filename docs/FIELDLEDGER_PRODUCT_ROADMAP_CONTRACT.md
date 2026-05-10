@@ -317,3 +317,32 @@ The label must remain editable by the user before saving.
 FieldLedger must not require live Google Sheets or Google Calendar access for the local app to function.
 
 Any future Sheets-to-FieldLedger import path requires a separate contract update before implementation.
+
+
+## Trusted User Release Candidate Phase
+
+Purpose:
+
+Prepare FieldLedger, Google Sheets orchestration, and Google Calendar scheduling for limited trusted-user sharing.
+
+Primary goals:
+
+- safe Google Sheet template workflow
+- safe dedicated FieldLedger calendar workflow
+- duplicate prevention verification
+- regeneration/cleanup verification
+- onboarding/setup clarity
+- user-owned data protection
+- recovery/rebuild instructions
+- trusted-user operational testing
+
+This phase focuses on operational safety and workflow survivability.
+
+This phase does NOT introduce:
+
+- AI
+- OCR
+- backend infrastructure
+- forced login
+- cloud sync
+- paid APIs/services
