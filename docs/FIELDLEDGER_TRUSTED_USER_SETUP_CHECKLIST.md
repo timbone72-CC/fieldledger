@@ -27,6 +27,7 @@ Confirm:
 - CalendarEvents staging works
 - ScheduleConfig values are reviewed
 - generated rotation events use the name On Call Rotation
+- generated timesheet events include Sunday reminder and Tuesday due dates before Friday payday
 - duplicate prevention is active
 - event IDs persist after sync
 - calendar cleanup/regeneration path is understood
