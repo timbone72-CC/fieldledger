@@ -215,6 +215,7 @@ Result:
 - Google Calendar downstream sync was manually validated through CalendarEvents and Apps Script integration.
 - CalendarEvents now supports generated Workweek and Payday scheduling rows.
 - ScheduleConfig now controls generated two-week work rotations and payday offsets.
+- Live ScheduleConfig generation was confirmed across month/year rollover for work periods, payday, Sunday reminder, and Tuesday due events.
 - Duplicate calendar event prevention is operational through stored eventId metadata.
 - Generated scheduling workflow currently supports:
   - Workweek generation
