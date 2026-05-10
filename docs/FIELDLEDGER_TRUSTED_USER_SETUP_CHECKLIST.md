@@ -28,6 +28,7 @@ Confirm:
 - ScheduleConfig values are reviewed
 - generated rotation events use the name On Call Rotation
 - generated timesheet events include Sunday reminder and Tuesday due dates before Friday payday
+- generated timesheet events are validated across month/year boundaries
 - duplicate prevention is active
 - event IDs persist after sync
 - calendar cleanup/regeneration path is understood
