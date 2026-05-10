@@ -50,6 +50,7 @@ Before syncing events:
 - run a small test sync before bulk sync
 - confirm duplicate prevention by syncing the same small set twice
 - confirm events can be deleted/regenerated safely
+- confirm renamed/regenerated events do not silently remove old Calendar events
 
 ## 6. User Instructions To Give Tester
 
@@ -69,6 +70,7 @@ If something breaks:
 
 - make a new Sheet copy from the clean template
 - clear test Calendar events from the dedicated FieldLedger calendar
+- manually remove old renamed events, such as prior Workweek events, before resyncing renamed On Call Rotation events
 - re-import the CSV into RawData
 - regenerate CalendarEvents
 - sync again only after reviewing staged rows
@@ -82,4 +84,5 @@ Trusted-user sharing is ready only when:
 - a small Calendar sync succeeds
 - duplicate prevention is verified
 - cleanup/regeneration is verified
+- old renamed Calendar events are intentionally removed before final trusted-user sharing
 - tester instructions are written clearly
