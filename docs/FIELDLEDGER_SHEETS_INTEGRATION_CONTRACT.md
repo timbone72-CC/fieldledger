@@ -545,3 +545,53 @@ Dedicated work calendar rule:
 - The sync function must get or create LEG Work Calendar and abort safely if that calendar cannot be accessed by name.
 - Generated work events may be shared from LEG Work Calendar without exposing personal calendar events.
 - Clearing synced rows from CalendarEvents must not delete Google Calendar events.
+
+## 33. Timesheet Governed Boundary
+
+The Apps Script v2 Timesheet boundary is locked as:
+
+```text
+header row = 11
+governed entry rows = 12–38
+governed total row = H39
+rows 40+ are not script-owned
+```
+
+The script must not write formulas, validations, totals, or generated values below row 39.
+
+## 34. RepairTimesheetFormulasAndValidation Rule
+
+RepairTimesheetFormulasAndValidation may only repair the governed Timesheet zone.
+
+Allowed repair scope:
+
+```text
+Timesheet rows 12–38
+Timesheet total row H39
+```
+
+It must not clear validations, overwrite formulas, or modify rows 40+.
+
+## 35. CSV Import Failure Safety Rule
+
+Malformed CSV imports must fail safely.
+
+A failed import must not overwrite or clear existing RawData.
+
+CSV headers must match the FieldLedger export schema exactly before RawData is replaced.
+
+## 36. Schedule Generation Idempotency Rule
+
+Repeated schedule generation must not append duplicate pending rows.
+
+If schedule rows already exist for the same governed period/event identity, the script must skip them instead of creating duplicates.
+
+## 37. Calendar Sync Idempotency Rule
+
+Repeated calendar sync must skip already-synced rows.
+
+Rows with existing synced event IDs must not create duplicate Google Calendar events.
+
+LEG Work Calendar remains downstream-only.
+
+Calendar sync must never mutate FieldLedger source data.
