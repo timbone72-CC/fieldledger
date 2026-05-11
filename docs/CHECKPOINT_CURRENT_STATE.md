@@ -2,18 +2,18 @@
 
 ## Current Head
 
-54f86de Document Sheets governance safety rules
+02b7433 Document Sheets script repo handoff gap
 
 ## Recent Commits
 
+02b7433 Document Sheets script repo handoff gap
+3cd2cb3 Update checkpoint after Sheets governance safety rules
 54f86de Document Sheets governance safety rules
 082ddf3 Update checkpoint after trusted user instructions
 aee0b84 Add trusted user testing instructions
 2a7b7b2 Document calendar regeneration recovery verification
 537eb70 Document repeated calendar sync verification
 0fc4b7e Document verified calendar rollover generation
-0de1840 Update checkpoint after calendar rollover checklist
-dcac60b Add calendar rollover validation checklist
 
 ## Confirmed Working State
 
