@@ -2,18 +2,18 @@
 
 ## Current Head
 
-815e77d Harden RawData import recovery
+1b2a0be Reconcile missing calendar events
 
 ## Recent Commits
 
+1b2a0be Reconcile missing calendar events
+a42db57 Update checkpoint after RawData recovery hardening
 815e77d Harden RawData import recovery
 d55404d Clarify governed Timesheet template boundary
 c3ba6ba Update checkpoint after Apps Script import
 26b49e5 Import current Sheets Apps Script source
 5231396 Update checkpoint after Sheets script handoff
 02b7433 Document Sheets script repo handoff gap
-3cd2cb3 Update checkpoint after Sheets governance safety rules
-54f86de Document Sheets governance safety rules
 
 ## Confirmed Working State
 
