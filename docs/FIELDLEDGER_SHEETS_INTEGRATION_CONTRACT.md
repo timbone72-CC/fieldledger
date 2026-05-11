@@ -600,6 +600,10 @@ Repeated calendar sync must skip already-synced rows.
 
 Rows with existing synced event IDs must not create duplicate Google Calendar events.
 
+Rows with stored event IDs must be checked against LEG Work Calendar before being skipped.
+
+If a stored event ID no longer exists in LEG Work Calendar, the row must be marked `Missing calendar event` instead of silently passing as synced.
+
 LEG Work Calendar remains downstream-only.
 
 Calendar sync must never mutate FieldLedger source data.

@@ -1096,6 +1096,12 @@ function syncCalendarEvents() {
       const notes = row[5];
       const syncStatus = String(row[6] || "").trim();
 
+      if (eventId && !calendarEventExists(calendar, eventId)) {
+        sheet.getRange(rowNumber, 7).setValue("Missing calendar event");
+        failedCount += 1;
+        return;
+      }
+
       if (eventId || syncStatus !== "Pending") {
         skippedCount += 1;
         return;
@@ -1140,7 +1146,25 @@ function syncCalendarEvents() {
 
 /**
  * =========================================================
- * 08.04 LEG Work Calendar resolver
+ * 08.04 Calendar event existence check
+ * =========================================================
+ */
+function calendarEventExists(calendar, eventId) {
+  if (!eventId) {
+    return false;
+  }
+
+  try {
+    return calendar.getEventById(eventId) !== null;
+  } catch (error) {
+    logMessage("ERROR", `Calendar event lookup failed for ${eventId}`, error);
+    return false;
+  }
+}
+
+/**
+ * =========================================================
+ * 08.05 LEG Work Calendar resolver
  * =========================================================
  */
 function getLegWorkCalendar() {
