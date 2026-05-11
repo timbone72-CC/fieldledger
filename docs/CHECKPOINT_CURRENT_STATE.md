@@ -2,18 +2,18 @@
 
 ## Current Head
 
-dcac60b Add calendar rollover validation checklist
+aee0b84 Add trusted user testing instructions
 
 ## Recent Commits
 
+aee0b84 Add trusted user testing instructions
+2a7b7b2 Document calendar regeneration recovery verification
+537eb70 Document repeated calendar sync verification
+0fc4b7e Document verified calendar rollover generation
+0de1840 Update checkpoint after calendar rollover checklist
 dcac60b Add calendar rollover validation checklist
 6a3a9f7 Update checkpoint after work calendar rule
 6b74764 Document dedicated work calendar rule
-2723dea Update checkpoint after scheduling event types
-ee99b07 Document generated scheduling event types
-2151f48 Document timesheet reminder calendar events
-57ba7e1 Document On Call Rotation event naming
-1f05c57 Document calendar regeneration cleanup behavior
 
 ## Confirmed Working State
 
