@@ -2,18 +2,18 @@
 
 ## Current Head
 
-aee0b84 Add trusted user testing instructions
+54f86de Document Sheets governance safety rules
 
 ## Recent Commits
 
+54f86de Document Sheets governance safety rules
+082ddf3 Update checkpoint after trusted user instructions
 aee0b84 Add trusted user testing instructions
 2a7b7b2 Document calendar regeneration recovery verification
 537eb70 Document repeated calendar sync verification
 0fc4b7e Document verified calendar rollover generation
 0de1840 Update checkpoint after calendar rollover checklist
 dcac60b Add calendar rollover validation checklist
-6a3a9f7 Update checkpoint after work calendar rule
-6b74764 Document dedicated work calendar rule
 
 ## Confirmed Working State
 
