@@ -25,6 +25,7 @@
  */
 const CONFIG = {
   RAWDATA_SHEET_NAME: "RawData",
+  RAWDATA_BACKUP_SHEET_NAME: "_FieldLedger_RawData_Backup",
   TIMESHEET_SHEET_NAME: "Timesheet",
   COMPANY_HELPER_SHEET_NAME: "List",
   RIG_HELPER_SHEET_NAME: "Rig Name/Number",
@@ -269,6 +270,7 @@ function processCsv(csvText, sheetName = CONFIG.RAWDATA_SHEET_NAME) {
     }
 
     let cleanRows = removeEmptyRows(parsedRows.slice(headerIndex));
+    cleanRows = removeSummaryRows(cleanRows);
     cleanRows = formatDateColumn(cleanRows);
 
     const consistency = validateCsvRowsForImport(cleanRows);
@@ -399,7 +401,26 @@ function removeEmptyRows(rows) {
 
 /**
  * =========================================================
- * 04.07 Strict FieldLedger CSV row validation
+ * 04.07 Removes exported summary rows
+ * =========================================================
+ */
+function removeSummaryRows(rows) {
+  const summaryLabels = ["grand total"];
+
+  return rows.filter((row, index) => {
+    if (index === 0) {
+      return true;
+    }
+
+    const firstCell = String(row[0] || "").trim().toLowerCase();
+
+    return !summaryLabels.includes(firstCell);
+  });
+}
+
+/**
+ * =========================================================
+ * 04.08 Strict FieldLedger CSV row validation
  * =========================================================
  */
 function validateCsvRowsForImport(rows) {
@@ -489,7 +510,7 @@ function validateCsvRowsForImport(rows) {
 
 /**
  * =========================================================
- * 04.08 Formats date column values
+ * 04.09 Formats date column values
  * =========================================================
  */
 function formatDateColumn(rows) {
@@ -527,17 +548,73 @@ function formatDateColumn(rows) {
 
 /**
  * =========================================================
- * 04.09 Replaces sheet contents after validation passes
+ * 04.10 RawData rollback helpers
  * =========================================================
  */
-function replaceSheetContents(sheet, rows) {
-  sheet.clearContents();
-  sheet.getRange(1, 1, rows.length, rows[0].length).setValues(rows);
+function getRawDataBackupSheet() {
+  const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  let backupSheet = spreadsheet.getSheetByName(CONFIG.RAWDATA_BACKUP_SHEET_NAME);
+
+  if (!backupSheet) {
+    backupSheet = spreadsheet.insertSheet(CONFIG.RAWDATA_BACKUP_SHEET_NAME);
+    backupSheet.hideSheet();
+  }
+
+  return backupSheet;
+}
+
+function snapshotSheetContents(sourceSheet, backupSheet) {
+  backupSheet.clearContents();
+
+  if (!sourceSheet || sourceSheet.getLastRow() === 0 || sourceSheet.getLastColumn() === 0) {
+    return;
+  }
+
+  const sourceRange = sourceSheet.getDataRange();
+  const sourceValues = sourceRange.getValues();
+
+  backupSheet
+    .getRange(1, 1, sourceValues.length, sourceValues[0].length)
+    .setValues(sourceValues);
+}
+
+function restoreSheetContentsFromBackup(targetSheet, backupSheet) {
+  targetSheet.clearContents();
+
+  if (!backupSheet || backupSheet.getLastRow() === 0 || backupSheet.getLastColumn() === 0) {
+    return;
+  }
+
+  const backupRange = backupSheet.getDataRange();
+  const backupValues = backupRange.getValues();
+
+  targetSheet
+    .getRange(1, 1, backupValues.length, backupValues[0].length)
+    .setValues(backupValues);
 }
 
 /**
  * =========================================================
- * 04.10 Formats imported RawData
+ * 04.11 Replaces sheet contents after validation passes
+ * =========================================================
+ */
+function replaceSheetContents(sheet, rows) {
+  const backupSheet = getRawDataBackupSheet();
+
+  snapshotSheetContents(sheet, backupSheet);
+
+  try {
+    sheet.clearContents();
+    sheet.getRange(1, 1, rows.length, rows[0].length).setValues(rows);
+  } catch (error) {
+    restoreSheetContentsFromBackup(sheet, backupSheet);
+    throw error;
+  }
+}
+
+/**
+ * =========================================================
+ * 04.12 Formats imported RawData
  * =========================================================
  */
 function formatImportedRawDataSheet(sheet, rows) {
