@@ -496,7 +496,7 @@ Approved future scheduling enhancements include:
 These are planned features, not automatic implementation approval.
 
 
-## 16. Trusted User Sheet Sharing Rules
+## 33. Trusted User Sheet Sharing Rules
 
 Each trusted tester must use their own personal copy of the FieldLedger Google Sheet.
 
@@ -518,7 +518,7 @@ The Google Sheet remains downstream from FieldLedger exports.
 
 The Google Sheet must not become the authoritative source for FieldLedger app records.
 
-## 17. Trusted User Calendar Rules
+## 34. Trusted User Calendar Rules
 
 Each trusted tester should use a separate dedicated FieldLedger calendar.
 
@@ -546,7 +546,15 @@ Dedicated work calendar rule:
 - Generated work events may be shared from LEG Work Calendar without exposing personal calendar events.
 - Clearing synced rows from CalendarEvents must not delete Google Calendar events.
 
-## 33. Timesheet Governed Boundary
+## 35. Timesheet Governed Boundary
+
+This fixed boundary is intentional.
+
+Rows 12-38 map to the governed Legend Energy template layout and are not dynamically resized.
+
+Dynamic expansion or shrinking of the Timesheet repair area is not allowed unless the template contract itself changes first.
+
+Rows 40 and below are outside repair-script authority unless explicitly governed by a future contract revision.
 
 The Apps Script v2 Timesheet boundary is locked as:
 
@@ -559,7 +567,7 @@ rows 40+ are not script-owned
 
 The script must not write formulas, validations, totals, or generated values below row 39.
 
-## 34. RepairTimesheetFormulasAndValidation Rule
+## 36. RepairTimesheetFormulasAndValidation Rule
 
 RepairTimesheetFormulasAndValidation may only repair the governed Timesheet zone.
 
@@ -572,7 +580,7 @@ Timesheet total row H39
 
 It must not clear validations, overwrite formulas, or modify rows 40+.
 
-## 35. CSV Import Failure Safety Rule
+## 37. CSV Import Failure Safety Rule
 
 Malformed CSV imports must fail safely.
 
@@ -580,13 +588,13 @@ A failed import must not overwrite or clear existing RawData.
 
 CSV headers must match the FieldLedger export schema exactly before RawData is replaced.
 
-## 36. Schedule Generation Idempotency Rule
+## 38. Schedule Generation Idempotency Rule
 
 Repeated schedule generation must not append duplicate pending rows.
 
 If schedule rows already exist for the same governed period/event identity, the script must skip them instead of creating duplicates.
 
-## 37. Calendar Sync Idempotency Rule
+## 39. Calendar Sync Idempotency Rule
 
 Repeated calendar sync must skip already-synced rows.
 
