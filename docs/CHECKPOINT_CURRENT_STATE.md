@@ -2,18 +2,18 @@
 
 ## Current Head
 
-e650da3 Clarify RawData downstream reconciliation authority
+5c1c756 Document malformed CSV import drill
 
 ## Recent Commits
 
+- 5c1c756 Document malformed CSV import drill
+- 0a60b9d Update checkpoint after RawData authority clarification
 - e650da3 Clarify RawData downstream reconciliation authority
 - d6dfe3b Update checkpoint after CSV rollback contract clarification
 - 116fe2a Clarify CSV import rollback safety
 - dfc2ffc Update checkpoint after full calendar recovery proof
 - 634200e Document full calendar recovery live proof
 - a36257b Update checkpoint after calendar missing event recovery
-- 9871be8 Document calendar missing event recovery verification
-- 70e0c4e Fix calendar sync missing event recovery
 
 ## Confirmed Working State
 
