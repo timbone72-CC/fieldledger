@@ -2,10 +2,11 @@
 
 ## Current Head
 
-29804d6 Update Sheets script handoff
+15accdd Update checkpoint after Sheets handoff refresh
 
 ## Recent Commits
 
+15accdd Update checkpoint after Sheets handoff refresh
 29804d6 Update Sheets script handoff
 3396c35 Update checkpoint after calendar reconciliation
 1b2a0be Reconcile missing calendar events
@@ -13,9 +14,10 @@ a42db57 Update checkpoint after RawData recovery hardening
 815e77d Harden RawData import recovery
 d55404d Clarify governed Timesheet template boundary
 c3ba6ba Update checkpoint after Apps Script import
-26b49e5 Import current Sheets Apps Script source
 
 ## Confirmed Working State
+
+- Manual malformed-CSV failure drill verified: invalid CSV headers fail safely and existing RawData survives unchanged.
 
 - Codex findings-only repo-wide test audit completed: all 11 discovered `*.test.mjs` files passed, no files changed, no fixes applied.
 
