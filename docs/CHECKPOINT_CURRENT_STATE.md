@@ -2,18 +2,18 @@
 
 ## Current Head
 
-1b2a0be Reconcile missing calendar events
+29804d6 Update Sheets script handoff
 
 ## Recent Commits
 
+29804d6 Update Sheets script handoff
+3396c35 Update checkpoint after calendar reconciliation
 1b2a0be Reconcile missing calendar events
 a42db57 Update checkpoint after RawData recovery hardening
 815e77d Harden RawData import recovery
 d55404d Clarify governed Timesheet template boundary
 c3ba6ba Update checkpoint after Apps Script import
 26b49e5 Import current Sheets Apps Script source
-5231396 Update checkpoint after Sheets script handoff
-02b7433 Document Sheets script repo handoff gap
 
 ## Confirmed Working State
 
