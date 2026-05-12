@@ -1178,7 +1178,7 @@ function calendarEventAlreadyExists(calendar, title, startDate, endDate) {
     });
   } catch (error) {
     logMessage("ERROR", `Calendar duplicate lookup failed for ${title}`, error);
-    return false;
+    throw new Error(`Calendar duplicate lookup failed: ${String(error.message || error)}`);
   }
 }
 
