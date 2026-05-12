@@ -834,21 +834,14 @@ function hideGrandTotalRows() {
     return;
   }
 
-  const lastRow = sheet.getLastRow();
+  const grandTotalRow = CONFIG.GRAND_TOTAL_ROW;
+  const cellValue = String(sheet.getRange(grandTotalRow, 1).getValue() || "")
+    .trim()
+    .toLowerCase();
 
-  if (lastRow < 1) {
-    return;
+  if (cellValue.indexOf("grand total") === 0) {
+    sheet.hideRows(grandTotalRow, 1);
   }
-
-  const values = sheet.getRange(1, 1, lastRow, 1).getValues();
-
-  values.forEach((row, index) => {
-    const cellValue = String(row[0] || "").trim().toLowerCase();
-
-    if (cellValue.indexOf("grand total") === 0) {
-      sheet.hideRows(index + 1, 1);
-    }
-  });
 }
 
 /**
