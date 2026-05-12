@@ -2,18 +2,18 @@
 
 ## Current Head
 
-15accdd Update checkpoint after Sheets handoff refresh
+3dbd5f2 Clarify calendar reconciliation proof boundary
 
 ## Recent Commits
 
+3dbd5f2 Clarify calendar reconciliation proof boundary
+ded7f12 Document malformed CSV failure drill
 15accdd Update checkpoint after Sheets handoff refresh
 29804d6 Update Sheets script handoff
 3396c35 Update checkpoint after calendar reconciliation
 1b2a0be Reconcile missing calendar events
 a42db57 Update checkpoint after RawData recovery hardening
 815e77d Harden RawData import recovery
-d55404d Clarify governed Timesheet template boundary
-c3ba6ba Update checkpoint after Apps Script import
 
 ## Confirmed Working State
 
