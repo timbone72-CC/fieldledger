@@ -74,6 +74,10 @@ Current manual checks:
 - Confirm RawData updates.
 - Confirm _FieldLedger_RawData_Backup is created and hidden.
 - Confirm exported Grand Total rows do not break import.
+- Import a malformed CSV and confirm:
+  - import fails safely
+  - RawData remains unchanged
+  - failure message states RawData was not changed
 - Run schedule generation twice and confirm duplicates are skipped.
 - Run calendar sync and confirm already-synced rows do not duplicate events.
 - If testing deleted events, confirm stale event IDs are marked Missing calendar event.
