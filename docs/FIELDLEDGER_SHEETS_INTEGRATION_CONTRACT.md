@@ -604,6 +604,8 @@ Rows with stored event IDs must be checked against LEG Work Calendar before bein
 
 If a stored event ID no longer exists in LEG Work Calendar, the row must be marked `Missing calendar event` instead of silently passing as synced.
 
+Calendar reconciliation behavior is implemented and historically supported by prior verification evidence, but destructive recovery verification remains required before the behavior is considered fully verified.
+
 LEG Work Calendar remains downstream-only.
 
 Calendar sync must never mutate FieldLedger source data.
