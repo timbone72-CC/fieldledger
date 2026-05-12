@@ -602,7 +602,23 @@ If replacement fails after validation, the previous RawData contents must be res
 
 Failure messages must make clear that RawData was not changed.
 
-## 38. Schedule Generation Idempotency Rule
+## 38. Downstream Reconciliation Partial-Failure Rule
+
+RawData rollback protection applies to RawData replacement only.
+
+After RawData is successfully replaced, helper-sheet refresh, Timesheet repair, Grand Total hiding, schedule generation, and calendar sync are downstream reconciliation steps.
+
+If a downstream reconciliation step fails after RawData has already been replaced, the failure must not be described as a RawData rollback event.
+
+The operator must treat the imported RawData as the current downstream import layer and rerun or repair the failed reconciliation step explicitly.
+
+Failure handling must clearly distinguish between:
+
+- failed import before RawData replacement
+- failed RawData replacement with backup restoration
+- failed downstream reconciliation after RawData replacement
+
+## 39. Schedule Generation Idempotency Rule
 
 Repeated schedule generation must not append duplicate pending rows.
 
@@ -617,7 +633,7 @@ Current duplicate prevention identity is:
 
 Duplicate prevention must occur before CalendarEvents rows are appended.
 
-## 39. Calendar Sync Idempotency Rule
+## 40. Calendar Sync Idempotency Rule
 
 Repeated calendar sync must skip already-synced rows.
 
