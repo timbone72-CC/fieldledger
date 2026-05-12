@@ -588,6 +588,14 @@ A failed import must not overwrite or clear existing RawData.
 
 CSV headers must match the FieldLedger export schema exactly before RawData is replaced.
 
+CSV data rows must pass strict validation before RawData is replaced.
+
+RawData replacement must be protected by a backup snapshot and rollback path.
+
+If replacement fails after validation, the previous RawData contents must be restored from backup.
+
+Failure messages must make clear that RawData was not changed.
+
 ## 38. Schedule Generation Idempotency Rule
 
 Repeated schedule generation must not append duplicate pending rows.
