@@ -354,6 +354,12 @@ Current protected downstream workflow:
 
 Until a later contract update changes this, FieldLedger and Google Sheets must stay compatible with this workflow.
 
+RawData is the authoritative imported data layer.
+
+Helper-sheet processing, Timesheet formula repair, and Grand Total row hiding are downstream reconciliation steps.
+
+Downstream reconciliation steps must not be treated as the source of truth.
+
 ## 24. Cross-Contract Synchronization Rule
 
 Changes to this contract must trigger consistency review for:
