@@ -664,6 +664,8 @@ If a stored event ID no longer exists in LEG Work Calendar, the row must be mark
 
 Missing calendar events must not be silently recreated during normal sync.
 
+Before creating a new Google Calendar event from a Pending CalendarEvents row, sync must check LEG Work Calendar for an existing visible event with the same governed identity (title, start date, and end date). If a matching visible event already exists without a stored event ID, normal sync must not create another event.
+
 Operator recovery must be explicit: a restore action may clear the stale event ID, mark the row `Pending`, and then allow the normal sync flow to recreate the downstream calendar event with a new event ID.
 
 Calendar reconciliation destructive recovery has been live-verified: deleting a synced LEG Work Calendar event and rerunning sync marked the row `Missing calendar event`; running `Restore Missing Calendar Events` reset only that row to `Pending`; rerunning sync recreated only the missing event; already-synced valid events were skipped and not duplicated.
