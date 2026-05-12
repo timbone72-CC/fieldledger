@@ -2,18 +2,18 @@
 
 ## Current Head
 
-9871be8 Document calendar missing event recovery verification
+634200e Document full calendar recovery live proof
 
 ## Recent Commits
 
+- 634200e Document full calendar recovery live proof
+- a36257b Update checkpoint after calendar missing event recovery
 - 9871be8 Document calendar missing event recovery verification
 - 70e0c4e Fix calendar sync missing event recovery
 - a546d4e Update checkpoint after calendar proof boundary
 - 3dbd5f2 Clarify calendar reconciliation proof boundary
 - ded7f12 Document malformed CSV failure drill
 - 15accdd Update checkpoint after Sheets handoff refresh
-- 29804d6 Update Sheets script handoff
-- 3396c35 Update checkpoint after calendar reconciliation
 
 ## Confirmed Working State
 
