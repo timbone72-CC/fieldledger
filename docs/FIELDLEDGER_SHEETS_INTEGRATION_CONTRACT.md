@@ -470,6 +470,15 @@ ScheduleConfig may generate Workweek and Payday rows into CalendarEvents.
 
 ScheduleConfig must not mutate FieldLedger local app data.
 
+ScheduleConfig validation must reject:
+
+- invalid or missing dates
+- non-numeric values
+- zero or negative pay-period lengths
+- zero or negative PeriodsToCreate values
+
+Decimal and unusually large values are currently not contract-governed and require future hardening if operational issues appear.
+
 ## 31. Calendar Sync Boundary Rule
 
 Calendar sync is downstream-only.
