@@ -670,6 +670,8 @@ Operator recovery must be explicit: a restore action may clear the stale event I
 
 Calendar reconciliation destructive recovery has been live-verified: deleting a synced LEG Work Calendar event and rerunning sync marked the row `Missing calendar event`; running `Restore Missing Calendar Events` reset only that row to `Pending`; rerunning sync recreated only the missing event; already-synced valid events were skipped and not duplicated.
 
+Calendar duplicate recovery has been live-verified: a manually-created matching visible event in LEG Work Calendar prevented a Pending CalendarEvents row from creating another duplicate event; sync completed with no new duplicate event and no failed rows.
+
 LEG Work Calendar remains downstream-only.
 
 Calendar sync must never mutate FieldLedger source data.
