@@ -2,18 +2,18 @@
 
 ## Current Head
 
-116fe2a Clarify CSV import rollback safety
+e650da3 Clarify RawData downstream reconciliation authority
 
 ## Recent Commits
 
+- e650da3 Clarify RawData downstream reconciliation authority
+- d6dfe3b Update checkpoint after CSV rollback contract clarification
 - 116fe2a Clarify CSV import rollback safety
 - dfc2ffc Update checkpoint after full calendar recovery proof
 - 634200e Document full calendar recovery live proof
 - a36257b Update checkpoint after calendar missing event recovery
 - 9871be8 Document calendar missing event recovery verification
 - 70e0c4e Fix calendar sync missing event recovery
-- a546d4e Update checkpoint after calendar proof boundary
-- 3dbd5f2 Clarify calendar reconciliation proof boundary
 
 ## Confirmed Working State
 
