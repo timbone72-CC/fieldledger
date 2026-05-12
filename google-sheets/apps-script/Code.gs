@@ -88,6 +88,7 @@ function onOpen() {
     .addSeparator()
     .addItem("📅 Generate Schedule Events", "generateScheduleEvents")
     .addItem("🔁 Sync Calendar Events", "syncCalendarEvents")
+    .addItem("♻️ Restore Missing Calendar Events", "restoreMissingCalendarEvents")
     .addSeparator()
     .addItem("🔍 View Debug Logs", "viewDebugLogs")
     .addToUi();
@@ -1049,10 +1050,9 @@ function normalizeDateKey(value) {
  * LEG Work Calendar
  *
  * 08.03 Safety:
- * - aborts if duplicate LEG calendars exist
- * - syncs only Pending rows without eventId
- * - writes row-level failure messages
- * - keeps Google Calendar downstream-only
+ * Repeated sync skips already-synced valid events.
+ * Missing/deleted downstream events are marked for explicit operator recovery.
+ * Calendar sync remains downstream-only.
  * =========================================================
  */
 function syncCalendarEvents() {
@@ -1096,7 +1096,7 @@ function syncCalendarEvents() {
       const notes = row[5];
       const syncStatus = String(row[6] || "").trim();
 
-      if (eventId && !calendarEventExists(calendar, eventId)) {
+      if (eventId && !calendarEventExists(calendar, eventId, title, startDate, endDate)) {
         sheet.getRange(rowNumber, 7).setValue("Missing calendar event");
         failedCount += 1;
         return;
@@ -1140,7 +1140,11 @@ function syncCalendarEvents() {
   });
 
   showAlert(
-    `Calendar sync complete.\n\nSynced: ${syncedCount}\nSkipped: ${skippedCount}\nFailed: ${failedCount}`
+    `Calendar sync complete.
+
+Synced: ${syncedCount}
+Skipped: ${skippedCount}
+Failed: ${failedCount}`
   );
 }
 
@@ -1148,14 +1152,35 @@ function syncCalendarEvents() {
  * =========================================================
  * 08.04 Calendar event existence check
  * =========================================================
+ *
+ * 08.04.01 Purpose:
+ * Confirms that a stored event ID still resolves to a visible event on LEG Work Calendar.
+ *
+ * 08.04.02 Safety:
+ * getEventById alone is not trusted because deleted/tombstoned events may still resolve.
+ * =========================================================
  */
-function calendarEventExists(calendar, eventId) {
-  if (!eventId) {
+function calendarEventExists(calendar, eventId, title, startDate, endDate) {
+  if (!eventId || !title || !startDate) {
     return false;
   }
 
   try {
-    return calendar.getEventById(eventId) !== null;
+    const event = calendar.getEventById(eventId);
+
+    if (!event) {
+      return false;
+    }
+
+    const lookupStartDate = new Date(startDate);
+    const lookupEndDate = new Date(endDate || startDate);
+    lookupEndDate.setDate(lookupEndDate.getDate() + 1);
+
+    const visibleEvents = calendar.getEvents(lookupStartDate, lookupEndDate, {
+      search: String(title)
+    });
+
+    return visibleEvents.some((visibleEvent) => visibleEvent.getId() === eventId);
   } catch (error) {
     logMessage("ERROR", `Calendar event lookup failed for ${eventId}`, error);
     return false;
@@ -1164,7 +1189,69 @@ function calendarEventExists(calendar, eventId) {
 
 /**
  * =========================================================
- * 08.05 LEG Work Calendar resolver
+ * 08.05 Restore missing calendar events
+ * =========================================================
+ *
+ * 08.05.01 Source:
+ * CalendarEvents rows marked Missing calendar event
+ *
+ * 08.05.02 Recovery:
+ * Clears stale event IDs and resets rows to Pending so normal sync can recreate them.
+ *
+ * 08.05.03 Safety:
+ * Restore is explicit operator recovery. Missing events are not silently recreated.
+ * =========================================================
+ */
+function restoreMissingCalendarEvents() {
+  const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  const sheet = spreadsheet.getSheetByName(CONFIG.CALENDAR_EVENTS_SHEET_NAME);
+
+  if (!sheet) {
+    showAlert('Sheet "CalendarEvents" was not found.');
+    return;
+  }
+
+  const lastRow = sheet.getLastRow();
+
+  if (lastRow < 2) {
+    showAlert("No calendar events found to restore.");
+    return;
+  }
+
+  const values = sheet.getRange(2, 1, lastRow - 1, 7).getValues();
+  let restoredCount = 0;
+
+  values.forEach((row, index) => {
+    const rowNumber = index + 2;
+    const syncStatus = String(row[6] || "").trim();
+
+    if (syncStatus === "Missing calendar event") {
+      sheet.getRange(rowNumber, 1).clearContent();
+      sheet.getRange(rowNumber, 7).setValue("Pending");
+      restoredCount += 1;
+    }
+  });
+
+  showAlert(
+    `Missing calendar event restore complete.
+
+Rows reset to Pending: ${restoredCount}
+
+Run Sync Calendar Events to recreate them.`
+  );
+}
+
+/**
+ * =========================================================
+ * 08.06 LEG Work Calendar resolver
+ * =========================================================
+ *
+ * 08.06.01 Target calendar:
+ * LEG Work Calendar
+ *
+ * 08.06.02 Safety:
+ * Aborts if duplicate calendars with the governed name exist.
+ * Creates the governed calendar only when it is missing.
  * =========================================================
  */
 function getLegWorkCalendar() {
