@@ -2,18 +2,18 @@
 
 ## Current Head
 
-634200e Document full calendar recovery live proof
+116fe2a Clarify CSV import rollback safety
 
 ## Recent Commits
 
+- 116fe2a Clarify CSV import rollback safety
+- dfc2ffc Update checkpoint after full calendar recovery proof
 - 634200e Document full calendar recovery live proof
 - a36257b Update checkpoint after calendar missing event recovery
 - 9871be8 Document calendar missing event recovery verification
 - 70e0c4e Fix calendar sync missing event recovery
 - a546d4e Update checkpoint after calendar proof boundary
 - 3dbd5f2 Clarify calendar reconciliation proof boundary
-- ded7f12 Document malformed CSV failure drill
-- 15accdd Update checkpoint after Sheets handoff refresh
 
 ## Confirmed Working State
 
