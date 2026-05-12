@@ -2,18 +2,18 @@
 
 ## Current Head
 
-6275b76 Document Timesheet repair verification drill
+b8c789e Clarify schedule duplicate identity
 
 ## Recent Commits
 
+- b8c789e Clarify schedule duplicate identity
+- 434513a Update checkpoint after Timesheet repair drill
 - 6275b76 Document Timesheet repair verification drill
 - 2774c50 Update checkpoint after malformed CSV drill
 - 5c1c756 Document malformed CSV import drill
 - 0a60b9d Update checkpoint after RawData authority clarification
 - e650da3 Clarify RawData downstream reconciliation authority
 - d6dfe3b Update checkpoint after CSV rollback contract clarification
-- 116fe2a Clarify CSV import rollback safety
-- dfc2ffc Update checkpoint after full calendar recovery proof
 
 ## Confirmed Working State
 
