@@ -86,7 +86,34 @@ Current manual checks:
 - Run calendar sync and confirm already-synced rows do not duplicate events.
 - If testing deleted events, confirm stale event IDs are marked Missing calendar event.
 
-## 8. Current Decision
+## 8. Schedule Generation Verification Drill
+
+Purpose:
+
+Verify schedule generation is repeatable and does not append duplicate pending calendar rows.
+
+Manual test steps:
+
+1. Use a test Sheet copy.
+2. Confirm ScheduleConfig has the intended governed schedule settings.
+3. Run schedule generation once.
+4. Record the number of rows added to CalendarEvents.
+5. Run schedule generation a second time with the same ScheduleConfig.
+6. Confirm no duplicate rows are appended.
+
+Expected result:
+
+- First run creates the expected pending schedule rows.
+- Second run skips matching existing rows.
+- Duplicate identity is based on event type, title, start date, and end date.
+- CalendarEvents does not gain duplicate pending rows for the same governed event identity.
+
+Failure result:
+
+- If the second run appends duplicate rows, schedule duplicate prevention has failed.
+- Do not sync those duplicate rows to LEG Work Calendar until the duplicate cause is fixed.
+
+## 9. Current Decision
 
 Apps Script is now repo-controlled for audit and patching.
 
