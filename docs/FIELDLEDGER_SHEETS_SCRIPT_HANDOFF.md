@@ -78,6 +78,10 @@ Current manual checks:
   - import fails safely
   - RawData remains unchanged
   - failure message states RawData was not changed
+- Run Timesheet repair and confirm:
+  - formulas are restored only in rows 12–38
+  - H39 is restored as the governed total row
+  - rows 40 and below are not modified
 - Run schedule generation twice and confirm duplicates are skipped.
 - Run calendar sync and confirm already-synced rows do not duplicate events.
 - If testing deleted events, confirm stale event IDs are marked Missing calendar event.
