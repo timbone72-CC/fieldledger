@@ -2,18 +2,18 @@
 
 ## Current Head
 
-327af0b Clarify calendar manual duplicate boundary
+322cbd2 Prevent duplicate visible calendar events
 
 ## Recent Commits
 
+- 322cbd2 Prevent duplicate visible calendar events
+- cbb8ee4 Update checkpoint after calendar duplicate boundary
 - 327af0b Clarify calendar manual duplicate boundary
 - 1f2ea32 Update checkpoint after CalendarEvents validation
 - 1caadce Clarify CalendarEvents row validation
 - a2cb011 Update checkpoint after ScheduleConfig validation
 - 561791c Clarify ScheduleConfig validation boundary
 - 67dce9e Update checkpoint after reconciliation boundary
-- 16990e6 Clarify downstream reconciliation failure boundary
-- d8e43a5 Update checkpoint after calendar sync drill
 
 ## Confirmed Working State
 
