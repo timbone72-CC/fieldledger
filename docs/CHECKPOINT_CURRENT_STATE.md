@@ -2,18 +2,18 @@
 
 ## Current Head
 
-3dbd5f2 Clarify calendar reconciliation proof boundary
+9871be8 Document calendar missing event recovery verification
 
 ## Recent Commits
 
-3dbd5f2 Clarify calendar reconciliation proof boundary
-ded7f12 Document malformed CSV failure drill
-15accdd Update checkpoint after Sheets handoff refresh
-29804d6 Update Sheets script handoff
-3396c35 Update checkpoint after calendar reconciliation
-1b2a0be Reconcile missing calendar events
-a42db57 Update checkpoint after RawData recovery hardening
-815e77d Harden RawData import recovery
+- 9871be8 Document calendar missing event recovery verification
+- 70e0c4e Fix calendar sync missing event recovery
+- a546d4e Update checkpoint after calendar proof boundary
+- 3dbd5f2 Clarify calendar reconciliation proof boundary
+- ded7f12 Document malformed CSV failure drill
+- 15accdd Update checkpoint after Sheets handoff refresh
+- 29804d6 Update Sheets script handoff
+- 3396c35 Update checkpoint after calendar reconciliation
 
 ## Confirmed Working State
 
