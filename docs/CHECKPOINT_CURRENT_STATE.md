@@ -2,18 +2,18 @@
 
 ## Current Head
 
-16990e6 Clarify downstream reconciliation failure boundary
+561791c Clarify ScheduleConfig validation boundary
 
 ## Recent Commits
 
+- 561791c Clarify ScheduleConfig validation boundary
+- 67dce9e Update checkpoint after reconciliation boundary
 - 16990e6 Clarify downstream reconciliation failure boundary
 - d8e43a5 Update checkpoint after calendar sync drill
 - 056b0ec Document calendar sync reconciliation drill
 - 1f8fab2 Update checkpoint after schedule drill documentation
 - f14f9e3 Document schedule generation verification drill
 - cce785e Update checkpoint after schedule duplicate identity
-- b8c789e Clarify schedule duplicate identity
-- 434513a Update checkpoint after Timesheet repair drill
 
 ## Confirmed Working State
 
