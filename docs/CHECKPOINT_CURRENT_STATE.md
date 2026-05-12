@@ -2,18 +2,18 @@
 
 ## Current Head
 
-322cbd2 Prevent duplicate visible calendar events
+762daa5 Document calendar duplicate guard verification
 
 ## Recent Commits
 
+- 762daa5 Document calendar duplicate guard verification
+- 38ff496 Limit Grand Total hiding to governed row
+- 404ef98 Update checkpoint after duplicate calendar guard
 - 322cbd2 Prevent duplicate visible calendar events
 - cbb8ee4 Update checkpoint after calendar duplicate boundary
 - 327af0b Clarify calendar manual duplicate boundary
 - 1f2ea32 Update checkpoint after CalendarEvents validation
 - 1caadce Clarify CalendarEvents row validation
-- a2cb011 Update checkpoint after ScheduleConfig validation
-- 561791c Clarify ScheduleConfig validation boundary
-- 67dce9e Update checkpoint after reconciliation boundary
 
 ## Confirmed Working State
 
