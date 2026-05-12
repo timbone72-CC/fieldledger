@@ -1117,6 +1117,12 @@ function syncCalendarEvents() {
       const calendarEndDate = new Date(endDate || startDate);
       calendarEndDate.setDate(calendarEndDate.getDate() + 1);
 
+      if (calendarEventAlreadyExists(calendar, title, calendarStartDate, calendarEndDate)) {
+        sheet.getRange(rowNumber, 7).setValue("Duplicate calendar event found");
+        skippedCount += 1;
+        return;
+      }
+
       const event = calendar.createAllDayEvent(
         String(title),
         calendarStartDate,
@@ -1150,13 +1156,48 @@ Failed: ${failedCount}`
 
 /**
  * =========================================================
- * 08.04 Calendar event existence check
+ * 08.04 Calendar visible duplicate check
  * =========================================================
  *
  * 08.04.01 Purpose:
- * Confirms that a stored event ID still resolves to a visible event on LEG Work Calendar.
+ * Prevents Pending CalendarEvents rows from creating duplicate visible events.
  *
  * 08.04.02 Safety:
+ * Matching is limited to governed identity: title, start date, and end date.
+ * =========================================================
+ */
+function calendarEventAlreadyExists(calendar, title, startDate, endDate) {
+  if (!title || !startDate) {
+    return false;
+  }
+
+  try {
+    const visibleEvents = calendar.getEvents(startDate, endDate, {
+      search: String(title)
+    });
+
+    return visibleEvents.some((visibleEvent) => {
+      return (
+        visibleEvent.getTitle() === String(title) &&
+        normalizeDateKey(visibleEvent.getStartTime()) === normalizeDateKey(startDate) &&
+        normalizeDateKey(visibleEvent.getEndTime()) === normalizeDateKey(endDate)
+      );
+    });
+  } catch (error) {
+    logMessage("ERROR", `Calendar duplicate lookup failed for ${title}`, error);
+    return false;
+  }
+}
+
+/**
+ * =========================================================
+ * 08.05 Calendar event existence check
+ * =========================================================
+ *
+ * 08.05.01 Purpose:
+ * Confirms that a stored event ID still resolves to a visible event on LEG Work Calendar.
+ *
+ * 08.05.02 Safety:
  * getEventById alone is not trusted because deleted/tombstoned events may still resolve.
  * =========================================================
  */
@@ -1189,16 +1230,16 @@ function calendarEventExists(calendar, eventId, title, startDate, endDate) {
 
 /**
  * =========================================================
- * 08.05 Restore missing calendar events
+ * 08.06 Restore missing calendar events
  * =========================================================
  *
- * 08.05.01 Source:
+ * 08.06.01 Source:
  * CalendarEvents rows marked Missing calendar event
  *
- * 08.05.02 Recovery:
+ * 08.06.02 Recovery:
  * Clears stale event IDs and resets rows to Pending so normal sync can recreate them.
  *
- * 08.05.03 Safety:
+ * 08.06.03 Safety:
  * Restore is explicit operator recovery. Missing events are not silently recreated.
  * =========================================================
  */
@@ -1243,13 +1284,13 @@ Run Sync Calendar Events to recreate them.`
 
 /**
  * =========================================================
- * 08.06 LEG Work Calendar resolver
+ * 08.07 LEG Work Calendar resolver
  * =========================================================
  *
- * 08.06.01 Target calendar:
+ * 08.07.01 Target calendar:
  * LEG Work Calendar
  *
- * 08.06.02 Safety:
+ * 08.07.02 Safety:
  * Aborts if duplicate calendars with the governed name exist.
  * Creates the governed calendar only when it is missing.
  * =========================================================
