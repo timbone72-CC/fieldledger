@@ -604,7 +604,11 @@ Rows with stored event IDs must be checked against LEG Work Calendar before bein
 
 If a stored event ID no longer exists in LEG Work Calendar, the row must be marked `Missing calendar event` instead of silently passing as synced.
 
-Calendar reconciliation behavior is implemented and historically supported by prior verification evidence, but destructive recovery verification remains required before the behavior is considered fully verified.
+Missing calendar events must not be silently recreated during normal sync.
+
+Operator recovery must be explicit: a restore action may clear the stale event ID, mark the row `Pending`, and then allow the normal sync flow to recreate the downstream calendar event with a new event ID.
+
+Calendar reconciliation destructive recovery has been live-verified: deleting a synced LEG Work Calendar event and rerunning sync marked the row `Missing calendar event`.
 
 LEG Work Calendar remains downstream-only.
 
