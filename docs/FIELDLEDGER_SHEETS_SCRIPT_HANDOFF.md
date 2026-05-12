@@ -113,7 +113,39 @@ Failure result:
 - If the second run appends duplicate rows, schedule duplicate prevention has failed.
 - Do not sync those duplicate rows to LEG Work Calendar until the duplicate cause is fixed.
 
-## 9. Current Decision
+## 9. Calendar Sync Reconciliation Verification Drill
+
+Purpose:
+
+Verify calendar sync only creates missing downstream events, skips valid synced rows, and flags stale event IDs.
+
+Manual test steps:
+
+1. Use a test Sheet copy connected to LEG Work Calendar.
+2. Confirm CalendarEvents contains pending rows from schedule generation.
+3. Run calendar sync once.
+4. Confirm pending rows receive calendar event IDs.
+5. Run calendar sync a second time.
+6. Confirm already-synced rows do not create duplicate LEG Work Calendar events.
+7. Delete one synced event from LEG Work Calendar.
+8. Run calendar sync again.
+9. Confirm the deleted event row is marked Missing calendar event instead of silently duplicating or ignoring the missing event.
+
+Expected result:
+
+- First sync creates only missing downstream calendar events.
+- Second sync skips rows with valid existing event IDs.
+- Deleted/stale event IDs are detected and marked Missing calendar event.
+- Calendar sync does not mutate FieldLedger source data.
+- Calendar sync remains downstream-only.
+
+Failure result:
+
+- If duplicate LEG Work Calendar events are created, stop and inspect sync identity handling.
+- If missing events are ignored, stale event recovery has failed.
+- If FieldLedger app data is changed, the downstream-only boundary has been violated.
+
+## 10. Current Decision
 
 Apps Script is now repo-controlled for audit and patching.
 
