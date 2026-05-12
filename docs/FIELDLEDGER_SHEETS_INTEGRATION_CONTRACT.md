@@ -455,6 +455,16 @@ Rows with an existing eventId must not create duplicate Google Calendar events.
 
 Synced rows should preserve eventId as operational metadata.
 
+CalendarEvents row validation must require:
+
+- title
+- startDate
+- syncStatus
+
+Rows missing required sync fields must not create Google Calendar events.
+
+Malformed rows must be marked with an explicit failure status rather than silently skipped when the row is intended to sync.
+
 ## 30. ScheduleConfig Sheet Authority
 
 The ScheduleConfig sheet is the approved control table for generated schedule events.
