@@ -608,6 +608,15 @@ Repeated schedule generation must not append duplicate pending rows.
 
 If schedule rows already exist for the same governed period/event identity, the script must skip them instead of creating duplicates.
 
+Current duplicate prevention identity is:
+
+- event type
+- event title
+- start date
+- end date
+
+Duplicate prevention must occur before CalendarEvents rows are appended.
+
 ## 39. Calendar Sync Idempotency Rule
 
 Repeated calendar sync must skip already-synced rows.
