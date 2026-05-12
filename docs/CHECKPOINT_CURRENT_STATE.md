@@ -2,18 +2,18 @@
 
 ## Current Head
 
-f14f9e3 Document schedule generation verification drill
+056b0ec Document calendar sync reconciliation drill
 
 ## Recent Commits
 
+- 056b0ec Document calendar sync reconciliation drill
+- 1f8fab2 Update checkpoint after schedule drill documentation
 - f14f9e3 Document schedule generation verification drill
 - cce785e Update checkpoint after schedule duplicate identity
 - b8c789e Clarify schedule duplicate identity
 - 434513a Update checkpoint after Timesheet repair drill
 - 6275b76 Document Timesheet repair verification drill
 - 2774c50 Update checkpoint after malformed CSV drill
-- 5c1c756 Document malformed CSV import drill
-- 0a60b9d Update checkpoint after RawData authority clarification
 
 ## Confirmed Working State
 
