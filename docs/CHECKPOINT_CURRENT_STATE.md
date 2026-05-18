@@ -2,18 +2,18 @@
 
 ## Current Head
 
-762daa5 Document calendar duplicate guard verification
+5c86e12 Clarify trusted user received materials
 
 ## Recent Commits
 
+- 5c86e12 Clarify trusted user received materials
+- bf953f5 Clarify trusted user share package
+- a0bfe0a Fail closed on calendar duplicate lookup errors
+- 5af7f39 Document Sheets reconciliation audit plan
+- 36911e1 Update checkpoint after calendar verification + timesheet drift fix
 - 762daa5 Document calendar duplicate guard verification
 - 38ff496 Limit Grand Total hiding to governed row
 - 404ef98 Update checkpoint after duplicate calendar guard
-- 322cbd2 Prevent duplicate visible calendar events
-- cbb8ee4 Update checkpoint after calendar duplicate boundary
-- 327af0b Clarify calendar manual duplicate boundary
-- 1f2ea32 Update checkpoint after CalendarEvents validation
-- 1caadce Clarify CalendarEvents row validation
 
 ## Confirmed Working State
 
@@ -84,6 +84,8 @@
 - Export / Backup menu now warns that FieldLedger data is saved in this browser and recommends downloading a JSON backup before clearing browser data, switching devices, or importing a replacement backup.
 - Latest production build passed and GitHub Pages docs assets were rebuilt after the backup safety reminder.
 - Mobile layout polish verified on live phone app: improved tab spacing, export/backup panel usability, and compact pay period summary layout.
+- Trusted-user setup checklist now includes a Share Package section defining exactly what each tester should receive and what must not be shared.
+- Trusted-user instructions now include a What You Should Receive section so tester-facing guidance matches the setup checklist.
 
 ## Locked Rules
 
