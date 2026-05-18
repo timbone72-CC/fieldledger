@@ -2,10 +2,11 @@
 
 ## Current Head
 
-34a30e2 Rebuild live assets after backup wording clarification
+57cf1d8 Update checkpoint after backup wording rebuild
 
 ## Recent Commits
 
+- 57cf1d8 Update checkpoint after backup wording rebuild
 - 34a30e2 Rebuild live assets after backup wording clarification
 - b7e9734 Clarify manual backup versus clear safety backup
 - b7b4396 Update checkpoint after trusted user evidence checklist
@@ -13,7 +14,6 @@
 - 4c705e6 Update checkpoint after trusted user docs alignment
 - 5c86e12 Clarify trusted user received materials
 - bf953f5 Clarify trusted user share package
-- a0bfe0a Fail closed on calendar duplicate lookup errors
 
 ## Confirmed Working State
 
@@ -45,6 +45,7 @@
 - JSON import now requires mileageEntries in valid backups.
 - JSON import now validates required mileage entry fields before restore.
 - JSON backup/import was manually verified with jobs, expenses, and mileage still present.
+- Trusted-user recovery drill passed: after Clear Pay Period auto-downloaded a safety backup and cleared data, JSON import restored Bucking 168, Torque Turn 1596, Expense 50, Mileage 100 miles, Gross 1764, and Net 1714.
 - Printable full report now includes a Mileage Summary section.
 - Printable timesheet now includes row-level mileage details and mileage totals.
 - Print Full Report was manually verified in browser print preview.
