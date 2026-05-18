@@ -17,7 +17,24 @@ Each trusted user must use their own:
 
 No trusted user should depend on a shared master sheet or shared calendar.
 
-## 3. Before Sharing
+## 3. Share Package
+
+Each trusted user should receive only the items needed for testing:
+
+- FieldLedger app link
+- their copied Google Sheet link
+- name of their dedicated FieldLedger calendar
+- trusted-user instructions doc
+- reminder to download a JSON backup before testing destructive flows
+
+Do not send:
+
+- the owner's master Sheet
+- shared calendar access to the owner's calendar
+- GitHub tokens or private repo credentials
+- instructions for AI, OCR, backend, login, or cloud sync
+
+## 4. Before Sharing
 
 Confirm:
 
@@ -33,7 +50,7 @@ Confirm:
 - event IDs persist after sync
 - calendar cleanup/regeneration path is understood
 
-## 4. Sheet Safety
+## 5. Sheet Safety
 
 Before giving a tester access:
 
@@ -44,7 +61,7 @@ Before giving a tester access:
 - leave only approved input/config areas editable
 - confirm Timesheet output still works after import
 
-## 5. Calendar Safety
+## 6. Calendar Safety
 
 Before syncing events:
 
@@ -55,7 +72,7 @@ Before syncing events:
 - confirm events can be deleted/regenerated safely
 - confirm renamed/regenerated events do not silently remove old Calendar events
 
-## 6. User Instructions To Give Tester
+## 7. User Instructions To Give Tester
 
 Tell the tester:
 
@@ -67,7 +84,7 @@ Tell the tester:
 - deleting Calendar events does not delete FieldLedger app records
 - tax estimates are planning only, not tax advice
 
-## 7. Recovery Plan
+## 8. Recovery Plan
 
 If something breaks:
 
@@ -78,7 +95,7 @@ If something breaks:
 - regenerate CalendarEvents
 - sync again only after reviewing staged rows
 
-## 8. Definition Of Ready
+## 9. Definition Of Ready
 
 Trusted-user sharing is ready only when:
 
