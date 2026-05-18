@@ -19,7 +19,19 @@ FieldLedger is a work-record app for tracking:
 
 FieldLedger is designed for manual review before saving.
 
-## 3. Important Data Warning
+## 3. What You Should Receive
+
+Before testing, you should receive:
+
+- the FieldLedger app link
+- your copied Google Sheet link
+- the name of your dedicated FieldLedger calendar
+- these trusted-user instructions
+- a reminder to download a JSON backup before testing destructive flows
+
+Do not use the owner's master Sheet or personal/default calendar for testing.
+
+## 4. Important Data Warning
 
 FieldLedger stores app data in the browser used on that device.
 
@@ -27,7 +39,7 @@ Phone data and computer data are separate unless moved with JSON backup/import.
 
 Before clearing browser data, changing phones, or reinstalling the app, download a JSON backup.
 
-## 4. What To Test First
+## 5. What To Test First
 
 Start with a small test pay period.
 
@@ -46,7 +58,7 @@ Then verify:
 - CSV export downloads
 - printable report opens
 
-## 5. Google Sheets Test
+## 6. Google Sheets Test
 
 Import a small FieldLedger CSV into the Google Sheet.
 
@@ -58,7 +70,7 @@ Confirm:
 - formulas still calculate
 - Grand Total rows stay hidden as expected
 
-## 6. Calendar Test
+## 7. Calendar Test
 
 Use the dedicated LEG Work Calendar only.
 
@@ -72,7 +84,7 @@ Confirm:
 - syncing the same rows again does not create duplicates
 - clearing CalendarEvents staging rows does not delete existing LEG Work Calendar events
 
-## 7. Calendar Rollover Test
+## 8. Calendar Rollover Test
 
 Before relying on generated reminders, confirm ScheduleConfig handles:
 
@@ -82,7 +94,7 @@ Before relying on generated reminders, confirm ScheduleConfig handles:
 - Sunday timesheet reminders
 - Tuesday timesheet due events
 
-## 8. What Not To Test Yet
+## 9. What Not To Test Yet
 
 Do not expect:
 
@@ -93,7 +105,7 @@ Do not expect:
 - automatic tax filing
 - paid backend services
 
-## 9. Reporting Problems
+## 10. Reporting Problems
 
 When reporting a problem, include:
 
@@ -104,7 +116,7 @@ When reporting a problem, include:
 - what happened instead
 - whether a JSON backup exists
 
-## 10. Safety Rule
+## 11. Safety Rule
 
 Do not use real critical records as the only copy during testing.
 
