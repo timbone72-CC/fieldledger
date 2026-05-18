@@ -2,18 +2,18 @@
 
 ## Current Head
 
-5accacc Add trusted user paired-system evidence checklist
+34a30e2 Rebuild live assets after backup wording clarification
 
 ## Recent Commits
 
+- 34a30e2 Rebuild live assets after backup wording clarification
+- b7e9734 Clarify manual backup versus clear safety backup
+- b7b4396 Update checkpoint after trusted user evidence checklist
 - 5accacc Add trusted user paired-system evidence checklist
 - 4c705e6 Update checkpoint after trusted user docs alignment
 - 5c86e12 Clarify trusted user received materials
 - bf953f5 Clarify trusted user share package
 - a0bfe0a Fail closed on calendar duplicate lookup errors
-- 5af7f39 Document Sheets reconciliation audit plan
-- 36911e1 Update checkpoint after calendar verification + timesheet drift fix
-- 762daa5 Document calendar duplicate guard verification
 
 ## Confirmed Working State
 
@@ -81,7 +81,9 @@
 - Missing ticket photo blob was manually verified in browser: saved job stayed visible, preview disappeared safely, and the app did not crash.
 - Missing receipt photo blob was manually verified in browser: saved expense stayed visible, preview disappeared safely, and the app did not crash.
 - Summary/export/report cross-check passed: summary shows earnings, expenses, net, mileage, and tax; CSV remains job/timesheet-only; print/report includes mileage; JSON backup preserves jobs, expenses, mileage, and photo IDs.
-- Export / Backup menu now warns that FieldLedger data is saved in this browser and recommends downloading a JSON backup before clearing browser data, switching devices, or importing a replacement backup.
+- Export / Backup menu now clarifies that Download JSON Backup is for manual backup copies, while Clear Pay Period downloads its own safety backup before clearing.
+- Local UI wording was verified after the backup wording clarification.
+- Latest production build passed and GitHub Pages docs assets were rebuilt after the backup wording clarification.
 - Latest production build passed and GitHub Pages docs assets were rebuilt after the backup safety reminder.
 - Mobile layout polish verified on live phone app: improved tab spacing, export/backup panel usability, and compact pay period summary layout.
 - Trusted-user setup checklist now includes a Share Package section defining exactly what each tester should receive and what must not be shared.
