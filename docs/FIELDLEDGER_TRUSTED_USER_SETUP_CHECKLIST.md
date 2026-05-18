@@ -72,7 +72,25 @@ Before syncing events:
 - confirm events can be deleted/regenerated safely
 - confirm renamed/regenerated events do not silently remove old Calendar events
 
-## 7. User Instructions To Give Tester
+## 7. Paired-System Evidence
+
+Before sharing a Sheet copy with a trusted user, record the validation evidence:
+
+- Google Sheets template name or copied Sheet name
+- validation date
+- CSV schema version tested
+- Bucking sample result
+- Torque Turn sample result
+- RawData import result
+- helper-sheet refresh result
+- Timesheet output result
+- CalendarEvents generation result
+- duplicate sync result
+- breaking-change status
+
+Generic notes such as "Sheets worked" are not enough.
+
+## 8. User Instructions To Give Tester
 
 Tell the tester:
 
@@ -84,7 +102,7 @@ Tell the tester:
 - deleting Calendar events does not delete FieldLedger app records
 - tax estimates are planning only, not tax advice
 
-## 8. Recovery Plan
+## 9. Recovery Plan
 
 If something breaks:
 
@@ -95,7 +113,7 @@ If something breaks:
 - regenerate CalendarEvents
 - sync again only after reviewing staged rows
 
-## 9. Definition Of Ready
+## 10. Definition Of Ready
 
 Trusted-user sharing is ready only when:
 
