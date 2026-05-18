@@ -2,18 +2,18 @@
 
 ## Current Head
 
-5c86e12 Clarify trusted user received materials
+5accacc Add trusted user paired-system evidence checklist
 
 ## Recent Commits
 
+- 5accacc Add trusted user paired-system evidence checklist
+- 4c705e6 Update checkpoint after trusted user docs alignment
 - 5c86e12 Clarify trusted user received materials
 - bf953f5 Clarify trusted user share package
 - a0bfe0a Fail closed on calendar duplicate lookup errors
 - 5af7f39 Document Sheets reconciliation audit plan
 - 36911e1 Update checkpoint after calendar verification + timesheet drift fix
 - 762daa5 Document calendar duplicate guard verification
-- 38ff496 Limit Grand Total hiding to governed row
-- 404ef98 Update checkpoint after duplicate calendar guard
 
 ## Confirmed Working State
 
@@ -86,6 +86,7 @@
 - Mobile layout polish verified on live phone app: improved tab spacing, export/backup panel usability, and compact pay period summary layout.
 - Trusted-user setup checklist now includes a Share Package section defining exactly what each tester should receive and what must not be shared.
 - Trusted-user instructions now include a What You Should Receive section so tester-facing guidance matches the setup checklist.
+- Trusted-user setup checklist now requires paired-system validation evidence before sharing a copied Sheet with a tester.
 
 ## Locked Rules
 
