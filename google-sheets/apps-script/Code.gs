@@ -345,13 +345,30 @@ function importFieldLedgerCsv() {
  * =========================================================
  */
 function processCsv(csvText, sheetName = CONFIG.RAWDATA_SHEET_NAME) {
+  return processCsvCore(csvText, sheetName, true);
+}
+
+/**
+ * =========================================================
+ * 04.01a Core CSV processing function
+ * =========================================================
+ *
+ * This core path is safe for both UI menu imports and future
+ * web endpoint imports. UI alerts are optional so web responses
+ * can stay JSON-only.
+ * =========================================================
+ */
+function processCsvCore(csvText, sheetName = CONFIG.RAWDATA_SHEET_NAME, shouldShowAlert = false) {
   logMessage("INFO", `Starting CSV import for ${sheetName}`);
 
   try {
     const inputValidation = validateCsvInput(csvText);
 
     if (!inputValidation.success) {
-      showAlert(inputValidation.message);
+      if (shouldShowAlert) {
+        showAlert(inputValidation.message);
+      }
+
       return inputValidation;
     }
 
@@ -360,7 +377,8 @@ function processCsv(csvText, sheetName = CONFIG.RAWDATA_SHEET_NAME) {
 
     if (headerIndex === -1) {
       return failCsvImport(
-        `Could not find header row starting with "${CONFIG.HEADER_SEARCH_TERM}".`
+        `Could not find header row starting with "${CONFIG.HEADER_SEARCH_TERM}".`,
+        shouldShowAlert
       );
     }
 
@@ -371,13 +389,13 @@ function processCsv(csvText, sheetName = CONFIG.RAWDATA_SHEET_NAME) {
     const consistency = validateCsvRowsForImport(cleanRows);
 
     if (!consistency.success) {
-      return failCsvImport(consistency.message);
+      return failCsvImport(consistency.message, shouldShowAlert);
     }
 
     const sheet = getOrCreateSheet(sheetName);
 
     if (!sheet) {
-      return failCsvImport(`Sheet "${sheetName}" could not be created.`);
+      return failCsvImport(`Sheet "${sheetName}" could not be created.`, shouldShowAlert);
     }
 
     replaceSheetContents(sheet, cleanRows);
@@ -390,7 +408,10 @@ function processCsv(csvText, sheetName = CONFIG.RAWDATA_SHEET_NAME) {
 
     const message = `Successfully imported ${cleanRows.length - 1} data row(s) to "${sheetName}".`;
 
-    showAlert(message);
+    if (shouldShowAlert) {
+      showAlert(message);
+    }
+
     logMessage("INFO", message);
 
     return {
@@ -400,7 +421,10 @@ function processCsv(csvText, sheetName = CONFIG.RAWDATA_SHEET_NAME) {
   } catch (error) {
     const message = `Error processing CSV: ${error.message}`;
     logMessage("ERROR", message, error);
-    showAlert(message);
+
+    if (shouldShowAlert) {
+      showAlert(message);
+    }
 
     return {
       success: false,
@@ -440,9 +464,12 @@ function validateCsvInput(csvText) {
  * 04.03 CSV failure helper
  * =========================================================
  */
-function failCsvImport(message) {
+function failCsvImport(message, shouldShowAlert = true) {
   logMessage("ERROR", message);
-  showAlert(message);
+
+  if (shouldShowAlert) {
+    showAlert(message);
+  }
 
   return {
     success: false,
