@@ -8,8 +8,8 @@
  * Apps Script web endpoint after manual confirmation.
  *
  * 01.02 Safety:
- * This component does not store the import token.
- * The user must provide the web app URL and token before sending.
+ * This component stores only the Trusted Sheet web app URL.
+ * It does not store the import token.
  *
  * 01.03 Boundary:
  * This keeps the existing Download Spreadsheet CSV flow unchanged.
@@ -17,9 +17,26 @@
  */
 
 import { useState } from "react";
+import { STORAGE_KEYS } from "../../shared/constants/storageKeys.js";
 import { loadActivePayPeriod } from "../pay-periods/activePayPeriodStorage.js";
 import { buildPayPeriodCsv } from "./payPeriodCsv.js";
 import { sendPayPeriodCsvToTrustedSheet } from "./sendPayPeriodCsvToTrustedSheet.js";
+
+function loadSavedTrustedSheetWebAppUrl() {
+  try {
+    return window.localStorage.getItem(STORAGE_KEYS.TRUSTED_SHEET_WEB_APP_URL) || "";
+  } catch {
+    return "";
+  }
+}
+
+function saveTrustedSheetWebAppUrl(webAppUrl) {
+  try {
+    window.localStorage.setItem(STORAGE_KEYS.TRUSTED_SHEET_WEB_APP_URL, webAppUrl);
+  } catch {
+    // Sending can continue even if saving the URL fails.
+  }
+}
 
 export default function SendPayPeriodCsvToTrustedSheetButton() {
   const [sendStatus, setSendStatus] = useState("");
@@ -27,14 +44,29 @@ export default function SendPayPeriodCsvToTrustedSheetButton() {
   async function sendCsvToTrustedSheet() {
     setSendStatus("");
 
-    const webAppUrl = window.prompt("Paste the Trusted Sheet web app URL:");
+    const savedWebAppUrl = loadSavedTrustedSheetWebAppUrl();
+    const webAppUrl = window.prompt(
+      "Paste the Trusted Sheet web app URL. This URL can be saved on this device. The token will not be saved.",
+      savedWebAppUrl
+    );
 
     if (!webAppUrl) {
       setSendStatus("Send canceled. No Trusted Sheet web app URL was provided.");
       return;
     }
 
-    const importToken = window.prompt("Paste the Trusted Sheet import token:");
+    const trimmedWebAppUrl = webAppUrl.trim();
+
+    if (!trimmedWebAppUrl) {
+      setSendStatus("Send canceled. No Trusted Sheet web app URL was provided.");
+      return;
+    }
+
+    saveTrustedSheetWebAppUrl(trimmedWebAppUrl);
+
+    const importToken = window.prompt(
+      "Paste the Trusted Sheet import token. For safety, this token is not saved."
+    );
 
     if (!importToken) {
       setSendStatus("Send canceled. No Trusted Sheet import token was provided.");
@@ -56,7 +88,7 @@ export default function SendPayPeriodCsvToTrustedSheetButton() {
     setSendStatus("Sending CSV to Trusted Sheet...");
 
     const result = await sendPayPeriodCsvToTrustedSheet({
-      webAppUrl,
+      webAppUrl: trimmedWebAppUrl,
       importToken,
       csvText,
     });
@@ -69,6 +101,11 @@ export default function SendPayPeriodCsvToTrustedSheetButton() {
       <button type="button" onClick={sendCsvToTrustedSheet}>
         Send to Trusted Sheet
       </button>
+
+      <p className="helper">
+        Sends the current CSV to your trusted Sheet. The Web App URL is saved on
+        this device, but the import token is never saved.
+      </p>
 
       {sendStatus ? <p className="helper">{sendStatus}</p> : null}
     </div>
