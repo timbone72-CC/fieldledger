@@ -16,6 +16,7 @@ cac79f6 Save Trusted Sheet web app URL locally
 - 66d4949 Update checkpoint after web CSV validation
 
 ## Confirmed Working State
+- Live phone Trusted Sheet send validated after correcting the `/exec` Web App URL and using the matching import token.
 
 - Apps Script guarded web RawData import completed, pushed, deployed, and live-tested: correct token plus valid csvText imports to RawData through processCsvCore, wrong tokens are rejected, empty CSV is rejected, malformed CSV does not replace RawData, and Timesheet output was verified from the web-imported row.
 
