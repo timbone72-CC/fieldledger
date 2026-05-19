@@ -2,18 +2,18 @@
 
 ## Current Head
 
-8014b23 Harden Trusted Sheet non-JSON response handling
+cac79f6 Save Trusted Sheet web app URL locally
 
 ## Recent Commits
 
+- cac79f6 Save Trusted Sheet web app URL locally
+- 6486852 Update checkpoint after Trusted Sheet response hardening
 - 8014b23 Harden Trusted Sheet non-JSON response handling
 - 5ec3d1d Update checkpoint after Trusted Sheet send action
 - 77eb995 Add Send to Trusted Sheet action
 - 234ae1c Update checkpoint after guarded web import
 - 898fcd6 Add guarded web RawData import
 - 66d4949 Update checkpoint after web CSV validation
-- a6d0011 Validate web import CSV without RawData write
-- c2a08d3 Update checkpoint after Apps Script import core refactor
 
 ## Confirmed Working State
 
