@@ -2,20 +2,22 @@
 
 ## Current Head
 
-cac79f6 Save Trusted Sheet web app URL locally
+f02dc99 Add Trusted Sheet guidance build assets
 
 ## Recent Commits
 
+- f02dc99 Add Trusted Sheet guidance build assets
+- 5204119 Clarify Trusted Sheet send guidance
+- 654323a Document live phone Trusted Sheet validation
+- f6a83dd Update checkpoint after Trusted Sheet URL polish
 - cac79f6 Save Trusted Sheet web app URL locally
 - 6486852 Update checkpoint after Trusted Sheet response hardening
 - 8014b23 Harden Trusted Sheet non-JSON response handling
 - 5ec3d1d Update checkpoint after Trusted Sheet send action
-- 77eb995 Add Send to Trusted Sheet action
-- 234ae1c Update checkpoint after guarded web import
-- 898fcd6 Add guarded web RawData import
-- 66d4949 Update checkpoint after web CSV validation
 
 ## Confirmed Working State
+- Trusted Sheet send guidance now clarifies that users must use the deployed `/exec` Web App URL, that the import token is never saved, and that phone/laptop/desktop browser data are separate.
+
 - Live phone Trusted Sheet send validated after correcting the `/exec` Web App URL and using the matching import token.
 
 - Apps Script guarded web RawData import completed, pushed, deployed, and live-tested: correct token plus valid csvText imports to RawData through processCsvCore, wrong tokens are rejected, empty CSV is rejected, malformed CSV does not replace RawData, and Timesheet output was verified from the web-imported row.
