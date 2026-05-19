@@ -131,9 +131,11 @@ function parseFieldLedgerWebImportBody(bodyText) {
     const pairs = bodyText.split("&");
 
     pairs.forEach(function(pair) {
-      const parts = pair.split("=");
-      const key = decodeURIComponent(parts[0] || "");
-      const value = decodeURIComponent((parts[1] || "").replace(/\+/g, " "));
+      const separatorIndex = pair.indexOf("=");
+      const rawKey = separatorIndex === -1 ? pair : pair.slice(0, separatorIndex);
+      const rawValue = separatorIndex === -1 ? "" : pair.slice(separatorIndex + 1);
+      const key = decodeURIComponent(rawKey || "");
+      const value = decodeURIComponent((rawValue || "").replace(/\+/g, " "));
 
       if (key) {
         parsed[key] = value;
@@ -149,10 +151,11 @@ function parseFieldLedgerWebImportBody(bodyText) {
  * 03.03 FieldLedger web import receiver
  * =========================================================
  *
- * First safe receiver slice:
+ * Validation-only receiver slice:
  * - accepts POST requests
  * - requires a shared import token
- * - confirms the endpoint is reachable
+ * - validates csvText when provided
+ * - returns JSON
  * - does not write RawData yet
  * =========================================================
  */
@@ -189,9 +192,17 @@ function doPost(event) {
       });
     }
 
+    const csvText = body.csvText || "";
+    const validation = validateCsvTextForWebImport(csvText);
+
+    if (!validation.success) {
+      return createJsonResponse(validation);
+    }
+
     return createJsonResponse({
       success: true,
-      message: "FieldLedger web import receiver is reachable."
+      message: `FieldLedger CSV received and validated. RawData was not changed. ${validation.dataRowCount} data row(s) detected.`,
+      dataRowCount: validation.dataRowCount
     });
   } catch (error) {
     return createJsonResponse({
@@ -456,6 +467,45 @@ function validateCsvInput(csvText) {
   return {
     success: true,
     message: "CSV input is valid."
+  };
+}
+
+/**
+ * =========================================================
+ * 04.02a Web CSV validation without RawData write
+ * =========================================================
+ */
+function validateCsvTextForWebImport(csvText) {
+  const inputValidation = validateCsvInput(csvText);
+
+  if (!inputValidation.success) {
+    return inputValidation;
+  }
+
+  const parsedRows = Utilities.parseCsv(csvText, ",");
+  const headerIndex = findHeaderRowIndex(parsedRows);
+
+  if (headerIndex === -1) {
+    return {
+      success: false,
+      message: `Could not find header row starting with "${CONFIG.HEADER_SEARCH_TERM}". RawData was not changed.`
+    };
+  }
+
+  let cleanRows = removeEmptyRows(parsedRows.slice(headerIndex));
+  cleanRows = removeSummaryRows(cleanRows);
+  cleanRows = formatDateColumn(cleanRows);
+
+  const consistency = validateCsvRowsForImport(cleanRows);
+
+  if (!consistency.success) {
+    return consistency;
+  }
+
+  return {
+    success: true,
+    message: "CSV received and validated. RawData was not changed.",
+    dataRowCount: cleanRows.length - 1
   };
 }
 
