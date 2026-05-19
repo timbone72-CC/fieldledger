@@ -374,3 +374,15 @@
     font-size: 13px;
   }
 }
+
+/* Export / Backup mobile layout override */
+@media (max-width: 700px) {
+  .export-actions-menu {
+    grid-template-columns: 1fr;
+  }
+
+  .export-actions-menu button,
+  .export-actions-menu label {
+    width: 100%;
+  }
+}
