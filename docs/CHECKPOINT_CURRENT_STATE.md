@@ -2,22 +2,22 @@
 
 ## Current Head
 
-a6d0011 Validate web import CSV without RawData write
+898fcd6 Add guarded web RawData import
 
 ## Recent Commits
 
+- 898fcd6 Add guarded web RawData import
+- 66d4949 Update checkpoint after web CSV validation
 - a6d0011 Validate web import CSV without RawData write
 - c2a08d3 Update checkpoint after Apps Script import core refactor
 - a591a4f Extract UI-safe CSV import core
 - 25701d0 Add no-write trusted sheet web receiver
 - cbc12f6 Update checkpoint after trusted user recovery drill
 - 57cf1d8 Update checkpoint after backup wording rebuild
-- 34a30e2 Rebuild live assets after backup wording clarification
-- b7e9734 Clarify manual backup versus clear safety backup
 
 ## Confirmed Working State
 
-- Apps Script web receiver validation-only slice completed and pushed: live deployment now requires csvText after token validation, validates a real FieldLedger CSV, returns JSON with dataRowCount, rejects wrong tokens, and still does not write RawData.
+- Apps Script guarded web RawData import completed, pushed, deployed, and live-tested: correct token plus valid csvText imports to RawData through processCsvCore, wrong tokens are rejected, empty CSV is rejected, malformed CSV does not replace RawData, and Timesheet output was verified from the web-imported row.
 
 - Apps Script CSV import refactor completed and pushed: processCsv now wraps processCsvCore, failCsvImport supports optional UI alerts, live trusted-user web receiver still accepts correct token and rejects wrong token, and no RawData web write has been added yet.
 
