@@ -2,20 +2,22 @@
 
 ## Current Head
 
-a591a4f Extract UI-safe CSV import core
+a6d0011 Validate web import CSV without RawData write
 
 ## Recent Commits
 
+- a6d0011 Validate web import CSV without RawData write
+- c2a08d3 Update checkpoint after Apps Script import core refactor
 - a591a4f Extract UI-safe CSV import core
 - 25701d0 Add no-write trusted sheet web receiver
 - cbc12f6 Update checkpoint after trusted user recovery drill
 - 57cf1d8 Update checkpoint after backup wording rebuild
 - 34a30e2 Rebuild live assets after backup wording clarification
 - b7e9734 Clarify manual backup versus clear safety backup
-- b7b4396 Update checkpoint after trusted user evidence checklist
-- 5accacc Add trusted user paired-system evidence checklist
 
 ## Confirmed Working State
+
+- Apps Script web receiver validation-only slice completed and pushed: live deployment now requires csvText after token validation, validates a real FieldLedger CSV, returns JSON with dataRowCount, rejects wrong tokens, and still does not write RawData.
 
 - Apps Script CSV import refactor completed and pushed: processCsv now wraps processCsvCore, failCsvImport supports optional UI alerts, live trusted-user web receiver still accepts correct token and rejects wrong token, and no RawData web write has been added yet.
 
