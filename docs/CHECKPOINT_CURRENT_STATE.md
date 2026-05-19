@@ -2,22 +2,24 @@
 
 ## Current Head
 
-898fcd6 Add guarded web RawData import
+77eb995 Add Send to Trusted Sheet action
 
 ## Recent Commits
 
+- 77eb995 Add Send to Trusted Sheet action
+- 234ae1c Update checkpoint after guarded web import
 - 898fcd6 Add guarded web RawData import
 - 66d4949 Update checkpoint after web CSV validation
 - a6d0011 Validate web import CSV without RawData write
 - c2a08d3 Update checkpoint after Apps Script import core refactor
 - a591a4f Extract UI-safe CSV import core
 - 25701d0 Add no-write trusted sheet web receiver
-- cbc12f6 Update checkpoint after trusted user recovery drill
-- 57cf1d8 Update checkpoint after backup wording rebuild
 
 ## Confirmed Working State
 
 - Apps Script guarded web RawData import completed, pushed, deployed, and live-tested: correct token plus valid csvText imports to RawData through processCsvCore, wrong tokens are rejected, empty CSV is rejected, malformed CSV does not replace RawData, and Timesheet output was verified from the web-imported row.
+
+- FieldLedger app-side Send to Trusted Sheet action completed, pushed, built into GitHub Pages assets, and browser-tested: the Export / Backup menu now includes Send to Trusted Sheet, the cancel path works safely, the button prompts for URL/token without storing secrets, and a successful send updated the trusted Sheet through the guarded web import path.
 
 - Apps Script CSV import refactor completed and pushed: processCsv now wraps processCsvCore, failCsvImport supports optional UI alerts, live trusted-user web receiver still accepts correct token and rejects wrong token, and no RawData web write has been added yet.
 
