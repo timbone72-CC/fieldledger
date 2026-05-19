@@ -199,11 +199,23 @@ function doPost(event) {
       return createJsonResponse(validation);
     }
 
-    return createJsonResponse({
-      success: true,
-      message: `FieldLedger CSV received and validated. RawData was not changed. ${validation.dataRowCount} data row(s) detected.`,
-      dataRowCount: validation.dataRowCount
-    });
+    const importLock = LockService.getScriptLock();
+
+    try {
+      importLock.waitLock(30000);
+
+      const importResult = processCsvCore(csvText, CONFIG.RAWDATA_SHEET_NAME, false);
+
+      return createJsonResponse({
+        success: importResult.success,
+        message: importResult.success
+          ? `FieldLedger CSV imported to RawData. ${validation.dataRowCount} data row(s) detected.`
+          : importResult.message,
+        dataRowCount: validation.dataRowCount
+      });
+    } finally {
+      importLock.releaseLock();
+    }
   } catch (error) {
     return createJsonResponse({
       success: false,
