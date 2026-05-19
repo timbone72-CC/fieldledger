@@ -109,6 +109,100 @@ function viewDebugLogs() {
 
 /**
  * =========================================================
+ * 03.01 Web app JSON response helper
+ * =========================================================
+ */
+function createJsonResponse(payload) {
+  return ContentService
+    .createTextOutput(JSON.stringify(payload))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+/**
+ * =========================================================
+ * 03.02 FieldLedger web import body parser
+ * =========================================================
+ */
+function parseFieldLedgerWebImportBody(bodyText) {
+  try {
+    return JSON.parse(bodyText);
+  } catch (error) {
+    const parsed = {};
+    const pairs = bodyText.split("&");
+
+    pairs.forEach(function(pair) {
+      const parts = pair.split("=");
+      const key = decodeURIComponent(parts[0] || "");
+      const value = decodeURIComponent((parts[1] || "").replace(/\+/g, " "));
+
+      if (key) {
+        parsed[key] = value;
+      }
+    });
+
+    return parsed;
+  }
+}
+
+/**
+ * =========================================================
+ * 03.03 FieldLedger web import receiver
+ * =========================================================
+ *
+ * First safe receiver slice:
+ * - accepts POST requests
+ * - requires a shared import token
+ * - confirms the endpoint is reachable
+ * - does not write RawData yet
+ * =========================================================
+ */
+function doPost(event) {
+  try {
+    const expectedToken = PropertiesService
+      .getScriptProperties()
+      .getProperty("FIELDLEDGER_IMPORT_TOKEN");
+
+    if (!expectedToken) {
+      return createJsonResponse({
+        success: false,
+        message: "FieldLedger import token is not configured."
+      });
+    }
+
+    const bodyText = event && event.postData && event.postData.contents
+      ? event.postData.contents
+      : "";
+
+    if (!bodyText) {
+      return createJsonResponse({
+        success: false,
+        message: "No request body received."
+      });
+    }
+
+    const body = parseFieldLedgerWebImportBody(bodyText);
+
+    if (body.token !== expectedToken) {
+      return createJsonResponse({
+        success: false,
+        message: "Unauthorized FieldLedger import request."
+      });
+    }
+
+    return createJsonResponse({
+      success: true,
+      message: "FieldLedger web import receiver is reachable."
+    });
+  } catch (error) {
+    return createJsonResponse({
+      success: false,
+      message: `FieldLedger web import receiver failed: ${error.message}`
+    });
+  }
+}
+
+/**
+ * =========================================================
  * 04. CSV import dialog
  * =========================================================
  */
