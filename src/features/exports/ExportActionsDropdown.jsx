@@ -1,4 +1,5 @@
 import DownloadPayPeriodCsvButton from "./DownloadPayPeriodCsvButton.jsx";
+import SendPayPeriodCsvToTrustedSheetButton from "./SendPayPeriodCsvToTrustedSheetButton.jsx";
 import DownloadPayPeriodJsonButton from "./DownloadPayPeriodJsonButton.jsx";
 import ImportPayPeriodJsonButton from "./ImportPayPeriodJsonButton.jsx";
 import PrintPayPeriodReportButton from "./PrintPayPeriodReportButton.jsx";
@@ -42,6 +43,7 @@ export default function ExportActionsDropdown({ onShowTimesheet, onDataChanged }
           <strong>Timesheet / Reports</strong>
         </p>
         <DownloadPayPeriodCsvButton />
+        <SendPayPeriodCsvToTrustedSheetButton />
         <PrintPayPeriodReportButton />
 
         <button type="button" onClick={handlePrintTimesheet}>
