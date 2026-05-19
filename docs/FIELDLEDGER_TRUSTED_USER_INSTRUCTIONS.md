@@ -70,7 +70,27 @@ Confirm:
 - formulas still calculate
 - Grand Total rows stay hidden as expected
 
-## 7. Calendar Test
+## 7. Trusted Sheet Send Test
+
+Use the Export / Backup menu to send the current pay-period CSV to your copied Trusted Sheet.
+
+Confirm:
+
+- the Web App URL uses the deployed Apps Script `/exec` URL
+- the Web App URL may be saved on this device
+- the import token is entered only when sending
+- the import token is not saved
+- phone, laptop, and desktop browser data are separate
+- if this device has no saved jobs, restore a JSON backup before sending
+
+If the send fails, check:
+
+- the Web App URL is the deployed `/exec` URL, not the editor URL
+- the import token matches the copied Trusted Sheet setup
+- the current browser has saved FieldLedger jobs
+- the copied Trusted Sheet is the tester Sheet, not the owner/master Sheet
+
+## 8. Calendar Test
 
 Use the dedicated LEG Work Calendar only.
 
@@ -84,7 +104,7 @@ Confirm:
 - syncing the same rows again does not create duplicates
 - clearing CalendarEvents staging rows does not delete existing LEG Work Calendar events
 
-## 8. Calendar Rollover Test
+## 9. Calendar Rollover Test
 
 Before relying on generated reminders, confirm ScheduleConfig handles:
 
@@ -94,7 +114,7 @@ Before relying on generated reminders, confirm ScheduleConfig handles:
 - Sunday timesheet reminders
 - Tuesday timesheet due events
 
-## 9. What Not To Test Yet
+## 10. What Not To Test Yet
 
 Do not expect:
 
@@ -105,7 +125,7 @@ Do not expect:
 - automatic tax filing
 - paid backend services
 
-## 10. Reporting Problems
+## 11. Reporting Problems
 
 When reporting a problem, include:
 
@@ -116,7 +136,7 @@ When reporting a problem, include:
 - what happened instead
 - whether a JSON backup exists
 
-## 11. Safety Rule
+## 12. Safety Rule
 
 Do not use real critical records as the only copy during testing.
 
