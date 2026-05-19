@@ -2,20 +2,22 @@
 
 ## Current Head
 
-f02dc99 Add Trusted Sheet guidance build assets
+3924a0a Document Trusted Sheet send troubleshooting
 
 ## Recent Commits
 
+- 3924a0a Document Trusted Sheet send troubleshooting
+- fad4e35 Update checkpoint after Trusted Sheet guidance polish
 - f02dc99 Add Trusted Sheet guidance build assets
 - 5204119 Clarify Trusted Sheet send guidance
 - 654323a Document live phone Trusted Sheet validation
 - f6a83dd Update checkpoint after Trusted Sheet URL polish
 - cac79f6 Save Trusted Sheet web app URL locally
 - 6486852 Update checkpoint after Trusted Sheet response hardening
-- 8014b23 Harden Trusted Sheet non-JSON response handling
-- 5ec3d1d Update checkpoint after Trusted Sheet send action
 
 ## Confirmed Working State
+- Trusted-user instructions now include a Trusted Sheet Send Test section covering `/exec` URL use, token-not-saved behavior, separate browser/device data, JSON backup restore before sending from an empty device, and tester Sheet versus owner/master Sheet checks.
+
 - Trusted Sheet send guidance now clarifies that users must use the deployed `/exec` Web App URL, that the import token is never saved, and that phone/laptop/desktop browser data are separate.
 
 - Live phone Trusted Sheet send validated after correcting the `/exec` Web App URL and using the matching import token.
