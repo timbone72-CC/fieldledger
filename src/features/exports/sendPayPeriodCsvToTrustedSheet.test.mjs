@@ -12,12 +12,12 @@ const successfulResult = await sendPayPeriodCsvToTrustedSheet({
     assert.equal(options.body.get("csvText"), "Date,Company\n2026-05-01,Legend Energy");
 
     return {
-      async json() {
-        return {
+      async text() {
+        return JSON.stringify({
           success: true,
           message: "Imported",
           dataRowCount: 1,
-        };
+        });
       },
     };
   },
@@ -55,6 +55,44 @@ const missingCsvResult = await sendPayPeriodCsvToTrustedSheet({
 
 assert.equal(missingCsvResult.success, false);
 assert.equal(missingCsvResult.message, "CSV data is required before sending to Trusted Sheet.");
+
+const nonJsonResponseResult = await sendPayPeriodCsvToTrustedSheet({
+  webAppUrl: "https://example.test/web-app",
+  importToken: "test-token",
+  csvText: "Date,Company",
+  fetchImpl: async () => {
+    return {
+      async text() {
+        return "<!DOCTYPE html><html><body>Not the Apps Script JSON response</body></html>";
+      },
+    };
+  },
+});
+
+assert.equal(nonJsonResponseResult.success, false);
+assert.equal(
+  nonJsonResponseResult.message,
+  "Trusted Sheet send failed: Trusted Sheet did not return JSON. Check that the Web App URL is the deployed Apps Script /exec URL and that access is allowed."
+);
+
+const jsonFallbackFailureResult = await sendPayPeriodCsvToTrustedSheet({
+  webAppUrl: "https://example.test/web-app",
+  importToken: "test-token",
+  csvText: "Date,Company",
+  fetchImpl: async () => {
+    return {
+      async json() {
+        throw new SyntaxError("Unexpected token '<'");
+      },
+    };
+  },
+});
+
+assert.equal(jsonFallbackFailureResult.success, false);
+assert.equal(
+  jsonFallbackFailureResult.message,
+  "Trusted Sheet send failed: Trusted Sheet did not return JSON. Check that the Web App URL is the deployed Apps Script /exec URL and that access is allowed."
+);
 
 const failureResult = await sendPayPeriodCsvToTrustedSheet({
   webAppUrl: "https://example.test/web-app",

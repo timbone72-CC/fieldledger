@@ -16,6 +16,35 @@
  * =========================================================
  */
 
+function buildNonJsonTrustedSheetMessage() {
+  return [
+    "Trusted Sheet did not return JSON.",
+    "Check that the Web App URL is the deployed Apps Script /exec URL and that access is allowed.",
+  ].join(" ");
+}
+
+async function readTrustedSheetJson(response) {
+  if (typeof response?.text === "function") {
+    const responseText = await response.text();
+
+    try {
+      return JSON.parse(responseText);
+    } catch {
+      throw new Error(buildNonJsonTrustedSheetMessage());
+    }
+  }
+
+  if (typeof response?.json === "function") {
+    try {
+      return await response.json();
+    } catch {
+      throw new Error(buildNonJsonTrustedSheetMessage());
+    }
+  }
+
+  throw new Error(buildNonJsonTrustedSheetMessage());
+}
+
 export async function sendPayPeriodCsvToTrustedSheet({
   webAppUrl,
   importToken,
@@ -57,7 +86,7 @@ export async function sendPayPeriodCsvToTrustedSheet({
       body: formBody,
     });
 
-    const result = await response.json();
+    const result = await readTrustedSheetJson(response);
 
     return {
       success: Boolean(result?.success),
