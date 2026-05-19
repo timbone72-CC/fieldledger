@@ -2,18 +2,18 @@
 
 ## Current Head
 
-77eb995 Add Send to Trusted Sheet action
+8014b23 Harden Trusted Sheet non-JSON response handling
 
 ## Recent Commits
 
+- 8014b23 Harden Trusted Sheet non-JSON response handling
+- 5ec3d1d Update checkpoint after Trusted Sheet send action
 - 77eb995 Add Send to Trusted Sheet action
 - 234ae1c Update checkpoint after guarded web import
 - 898fcd6 Add guarded web RawData import
 - 66d4949 Update checkpoint after web CSV validation
 - a6d0011 Validate web import CSV without RawData write
 - c2a08d3 Update checkpoint after Apps Script import core refactor
-- a591a4f Extract UI-safe CSV import core
-- 25701d0 Add no-write trusted sheet web receiver
 
 ## Confirmed Working State
 
