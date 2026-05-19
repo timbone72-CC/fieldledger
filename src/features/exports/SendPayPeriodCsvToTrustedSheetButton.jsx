@@ -46,7 +46,7 @@ export default function SendPayPeriodCsvToTrustedSheetButton() {
 
     const savedWebAppUrl = loadSavedTrustedSheetWebAppUrl();
     const webAppUrl = window.prompt(
-      "Paste the Trusted Sheet web app URL. This URL can be saved on this device. The token will not be saved.",
+      "Paste the Trusted Sheet web app URL. Use the deployed Apps Script /exec URL. This URL can be saved on this device. The token will not be saved.",
       savedWebAppUrl
     );
 
@@ -103,8 +103,14 @@ export default function SendPayPeriodCsvToTrustedSheetButton() {
       </button>
 
       <p className="helper">
-        Sends the current CSV to your trusted Sheet. The Web App URL is saved on
-        this device, but the import token is never saved.
+        Sends the current CSV to your trusted Sheet. Use the deployed Apps Script
+        /exec Web App URL. The Web App URL is saved on this device, but the
+        import token is never saved.
+      </p>
+
+      <p className="helper">
+        Phone, laptop, and desktop browser data are separate. If this device has
+        no saved jobs, restore a JSON backup here before sending.
       </p>
 
       {sendStatus ? <p className="helper">{sendStatus}</p> : null}
