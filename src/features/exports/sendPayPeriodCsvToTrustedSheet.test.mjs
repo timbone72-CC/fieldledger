@@ -2,11 +2,11 @@ import assert from "node:assert/strict";
 import { sendPayPeriodCsvToTrustedSheet } from "./sendPayPeriodCsvToTrustedSheet.js";
 
 const successfulResult = await sendPayPeriodCsvToTrustedSheet({
-  webAppUrl: " https://example.test/web-app ",
+  webAppUrl: " https://script.google.com/macros/s/test-deployment-id/exec ",
   importToken: " test-token ",
   csvText: "Date,Company\n2026-05-01,Legend Energy",
   fetchImpl: async (url, options) => {
-    assert.equal(url, "https://example.test/web-app");
+    assert.equal(url, "https://script.google.com/macros/s/test-deployment-id/exec");
     assert.equal(options.method, "POST");
     assert.equal(options.body.get("token"), "test-token");
     assert.equal(options.body.get("csvText"), "Date,Company\n2026-05-01,Legend Energy");
@@ -38,8 +38,46 @@ const missingUrlResult = await sendPayPeriodCsvToTrustedSheet({
 assert.equal(missingUrlResult.success, false);
 assert.equal(missingUrlResult.message, "Trusted Sheet web app URL is required.");
 
-const missingTokenResult = await sendPayPeriodCsvToTrustedSheet({
+let invalidUrlFetchCalled = false;
+
+const invalidUrlResult = await sendPayPeriodCsvToTrustedSheet({
   webAppUrl: "https://example.test/web-app",
+  importToken: "test-token",
+  csvText: "Date,Company",
+  fetchImpl: async () => {
+    invalidUrlFetchCalled = true;
+    throw new Error("fetch should not be called for invalid Trusted Sheet URLs");
+  },
+});
+
+assert.equal(invalidUrlResult.success, false);
+assert.equal(
+  invalidUrlResult.message,
+  "Trusted Sheet web app URL must be a deployed Google Apps Script /exec URL."
+);
+assert.equal(invalidUrlFetchCalled, false);
+
+let nonExecUrlFetchCalled = false;
+
+const nonExecUrlResult = await sendPayPeriodCsvToTrustedSheet({
+  webAppUrl: "https://script.google.com/macros/s/test-deployment-id/dev",
+  importToken: "test-token",
+  csvText: "Date,Company",
+  fetchImpl: async () => {
+    nonExecUrlFetchCalled = true;
+    throw new Error("fetch should not be called for non-/exec URLs");
+  },
+});
+
+assert.equal(nonExecUrlResult.success, false);
+assert.equal(
+  nonExecUrlResult.message,
+  "Trusted Sheet web app URL must be a deployed Google Apps Script /exec URL."
+);
+assert.equal(nonExecUrlFetchCalled, false);
+
+const missingTokenResult = await sendPayPeriodCsvToTrustedSheet({
+  webAppUrl: "https://script.google.com/macros/s/test-deployment-id/exec",
   importToken: "",
   csvText: "Date,Company",
 });
@@ -48,7 +86,7 @@ assert.equal(missingTokenResult.success, false);
 assert.equal(missingTokenResult.message, "Trusted Sheet import token is required.");
 
 const missingCsvResult = await sendPayPeriodCsvToTrustedSheet({
-  webAppUrl: "https://example.test/web-app",
+  webAppUrl: "https://script.google.com/macros/s/test-deployment-id/exec",
   importToken: "test-token",
   csvText: "",
 });
@@ -57,7 +95,7 @@ assert.equal(missingCsvResult.success, false);
 assert.equal(missingCsvResult.message, "CSV data is required before sending to Trusted Sheet.");
 
 const nonJsonResponseResult = await sendPayPeriodCsvToTrustedSheet({
-  webAppUrl: "https://example.test/web-app",
+  webAppUrl: "https://script.google.com/macros/s/test-deployment-id/exec",
   importToken: "test-token",
   csvText: "Date,Company",
   fetchImpl: async () => {
@@ -76,7 +114,7 @@ assert.equal(
 );
 
 const jsonFallbackFailureResult = await sendPayPeriodCsvToTrustedSheet({
-  webAppUrl: "https://example.test/web-app",
+  webAppUrl: "https://script.google.com/macros/s/test-deployment-id/exec",
   importToken: "test-token",
   csvText: "Date,Company",
   fetchImpl: async () => {
@@ -95,7 +133,7 @@ assert.equal(
 );
 
 const failureResult = await sendPayPeriodCsvToTrustedSheet({
-  webAppUrl: "https://example.test/web-app",
+  webAppUrl: "https://script.google.com/macros/s/test-deployment-id/exec",
   importToken: "test-token",
   csvText: "Date,Company",
   fetchImpl: async () => {

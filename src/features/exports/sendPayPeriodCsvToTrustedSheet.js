@@ -23,6 +23,20 @@ function buildNonJsonTrustedSheetMessage() {
   ].join(" ");
 }
 
+function isValidTrustedSheetWebAppUrl(webAppUrl) {
+  try {
+    const parsedUrl = new URL(webAppUrl);
+
+    return (
+      parsedUrl.protocol === "https:" &&
+      parsedUrl.hostname === "script.google.com" &&
+      parsedUrl.pathname.endsWith("/exec")
+    );
+  } catch {
+    return false;
+  }
+}
+
 async function readTrustedSheetJson(response) {
   if (typeof response?.text === "function") {
     const responseText = await response.text();
@@ -59,6 +73,13 @@ export async function sendPayPeriodCsvToTrustedSheet({
     return {
       success: false,
       message: "Trusted Sheet web app URL is required.",
+    };
+  }
+
+  if (!isValidTrustedSheetWebAppUrl(trimmedWebAppUrl)) {
+    return {
+      success: false,
+      message: "Trusted Sheet web app URL must be a deployed Google Apps Script /exec URL.",
     };
   }
 

@@ -13,6 +13,7 @@ export default function PayPeriodSummaryPanel() {
   const taxEstimate = calculateTaxEstimate(summary, {
     selfEmploymentTaxRate: settings.selfEmploymentTaxRate,
     federalTaxRate: settings.federalTaxRate,
+    stateTaxRate: settings.stateTaxRate,
   });
 
   return (
