@@ -23,5 +23,3 @@ dist-ssr
 *.sln
 *.sw?
 
-# Local CSV test/import files
-local-csv-files/
