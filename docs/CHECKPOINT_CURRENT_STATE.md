@@ -20,7 +20,7 @@
 
 - Blocker follow-up fixed state tax summary behavior: the main Pay Period Summary now passes the saved editable `stateTaxRate` into the tax estimate calculation.
 
-- Blocker follow-up confirmed paired-system live validation evidence still requires manual evidence from the owner-managed Sheet/App Script environment; no live validation evidence was fabricated.
+- User 1 owner-managed Trusted Sheet paired-system validation completed: copied tester Sheet Web App was deployed, FIELDLEDGER_IMPORT_TOKEN was set in Apps Script Project Properties, correct token reached the web import receiver, wrong token was rejected, and the owner verified the copied Sheet output path. This evidence is manual/operator-reported, not an automated repo test.
 
 - Accidental repo-local CSV folder ignore was removed; trusted-user Sheet reference files are kept outside the repo under the laptop Documents folder.
 
