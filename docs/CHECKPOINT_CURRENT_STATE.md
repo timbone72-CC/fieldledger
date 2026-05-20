@@ -2,20 +2,26 @@
 
 ## Current Head
 
-46881f6 Remove local CSV folder ignore
+631cb92 Fix trusted sheet URL and state tax blockers
 
 ## Recent Commits
 
+- 631cb92 Fix trusted sheet URL and state tax blockers
+- 5be74e7 Update checkpoint after local reference cleanup
 - 46881f6 Remove local CSV folder ignore
 - d86c19a Ignore local CSV test files
 - 6a5646c Update checkpoint after Export Backup layout fix
 - 1b2574d Build live assets after Export Backup layout fix
 - b180629 Fix Export Backup mobile layout
 - ede473b Update checkpoint after Trusted Sheet troubleshooting docs
-- 3924a0a Document Trusted Sheet send troubleshooting
-- fad4e35 Update checkpoint after Trusted Sheet guidance polish
 
 ## Confirmed Working State
+- Blocker follow-up fixed Trusted Sheet URL safety: app-side send now rejects non-Google Apps Script URLs and URLs that do not end in `/exec` before posting the import token or CSV; focused tests confirm rejected URLs do not call fetch.
+
+- Blocker follow-up fixed state tax summary behavior: the main Pay Period Summary now passes the saved editable `stateTaxRate` into the tax estimate calculation.
+
+- Blocker follow-up confirmed paired-system live validation evidence still requires manual evidence from the owner-managed Sheet/App Script environment; no live validation evidence was fabricated.
+
 - Accidental repo-local CSV folder ignore was removed; trusted-user Sheet reference files are kept outside the repo under the laptop Documents folder.
 
 - Export / Backup mobile layout fixed, rebuilt, committed, and pushed: the mobile menu now stacks buttons one per row, and GitHub Pages live assets were rebuilt with stale bundles removed.
@@ -30,7 +36,7 @@
 
 - FieldLedger app-side Send to Trusted Sheet action completed, pushed, built into GitHub Pages assets, and browser-tested: the Export / Backup menu now includes Send to Trusted Sheet, the cancel path works safely, the button prompts for URL/token without storing secrets, and a successful send updated the trusted Sheet through the guarded web import path.
 
-- Apps Script CSV import refactor completed and pushed: processCsv now wraps processCsvCore, failCsvImport supports optional UI alerts, live trusted-user web receiver still accepts correct token and rejects wrong token, and no RawData web write has been added yet.
+- Apps Script CSV import refactor completed and pushed: processCsv now wraps processCsvCore and failCsvImport supports optional UI alerts. Later guarded web RawData import work added the RawData web write path after token and CSV validation.
 
 - Manual malformed-CSV failure drill verified: invalid CSV headers fail safely and existing RawData survives unchanged.
 
