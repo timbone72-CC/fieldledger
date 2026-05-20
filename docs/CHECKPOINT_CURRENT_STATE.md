@@ -2,20 +2,22 @@
 
 ## Current Head
 
-1b2574d Build live assets after Export Backup layout fix
+46881f6 Remove local CSV folder ignore
 
 ## Recent Commits
 
+- 46881f6 Remove local CSV folder ignore
+- d86c19a Ignore local CSV test files
+- 6a5646c Update checkpoint after Export Backup layout fix
 - 1b2574d Build live assets after Export Backup layout fix
 - b180629 Fix Export Backup mobile layout
 - ede473b Update checkpoint after Trusted Sheet troubleshooting docs
 - 3924a0a Document Trusted Sheet send troubleshooting
 - fad4e35 Update checkpoint after Trusted Sheet guidance polish
-- f02dc99 Add Trusted Sheet guidance build assets
-- 5204119 Clarify Trusted Sheet send guidance
-- 654323a Document live phone Trusted Sheet validation
 
 ## Confirmed Working State
+- Accidental repo-local CSV folder ignore was removed; trusted-user Sheet reference files are kept outside the repo under the laptop Documents folder.
+
 - Export / Backup mobile layout fixed, rebuilt, committed, and pushed: the mobile menu now stacks buttons one per row, and GitHub Pages live assets were rebuilt with stale bundles removed.
 
 - Trusted-user instructions now include a Trusted Sheet Send Test section covering `/exec` URL use, token-not-saved behavior, separate browser/device data, JSON backup restore before sending from an empty device, and tester Sheet versus owner/master Sheet checks.
