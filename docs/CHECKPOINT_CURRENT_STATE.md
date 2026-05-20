@@ -2,20 +2,22 @@
 
 ## Current Head
 
-ae87336 Record User 1 Trusted Sheet validation evidence
+18fda7c Document trusted user local reference files
 
 ## Recent Commits
 
+- 18fda7c Document trusted user local reference files
+- 15644d3 Update checkpoint after User 1 validation evidence
 - ae87336 Record User 1 Trusted Sheet validation evidence
 - b3d069e Update checkpoint after blocker fixes
 - 631cb92 Fix trusted sheet URL and state tax blockers
 - 5be74e7 Update checkpoint after local reference cleanup
 - 46881f6 Remove local CSV folder ignore
 - d86c19a Ignore local CSV test files
-- 6a5646c Update checkpoint after Export Backup layout fix
-- 1b2574d Build live assets after Export Backup layout fix
 
 ## Confirmed Working State
+- Trusted-user local reference document boundary is now documented in `docs/FIELDLEDGER_TRUSTED_USER_LOCAL_DOCS.md`; local tester setup files remain outside the repo and must not be recreated without first checking `/home/timbone/Documents/FieldLedger-Trusted-Sheets`.
+
 - Blocker follow-up fixed Trusted Sheet URL safety: app-side send now rejects non-Google Apps Script URLs and URLs that do not end in `/exec` before posting the import token or CSV; focused tests confirm rejected URLs do not call fetch.
 
 - Blocker follow-up fixed state tax summary behavior: the main Pay Period Summary now passes the saved editable `stateTaxRate` into the tax estimate calculation.
