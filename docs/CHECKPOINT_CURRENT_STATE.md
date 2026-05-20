@@ -2,18 +2,18 @@
 
 ## Current Head
 
-631cb92 Fix trusted sheet URL and state tax blockers
+ae87336 Record User 1 Trusted Sheet validation evidence
 
 ## Recent Commits
 
+- ae87336 Record User 1 Trusted Sheet validation evidence
+- b3d069e Update checkpoint after blocker fixes
 - 631cb92 Fix trusted sheet URL and state tax blockers
 - 5be74e7 Update checkpoint after local reference cleanup
 - 46881f6 Remove local CSV folder ignore
 - d86c19a Ignore local CSV test files
 - 6a5646c Update checkpoint after Export Backup layout fix
 - 1b2574d Build live assets after Export Backup layout fix
-- b180629 Fix Export Backup mobile layout
-- ede473b Update checkpoint after Trusted Sheet troubleshooting docs
 
 ## Confirmed Working State
 - Blocker follow-up fixed Trusted Sheet URL safety: app-side send now rejects non-Google Apps Script URLs and URLs that do not end in `/exec` before posting the import token or CSV; focused tests confirm rejected URLs do not call fetch.
