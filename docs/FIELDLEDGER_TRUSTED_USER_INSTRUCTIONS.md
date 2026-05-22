@@ -81,7 +81,7 @@ Confirm:
 - the Web App URL uses the deployed Apps Script `/exec` URL
 - the Web App URL may be saved on this device
 - the import token is entered only when sending
-- the import token is not saved
+- the import token is not saved by FieldLedger
 - phone, laptop, and desktop browser data are separate
 - if this device has no saved jobs, restore a JSON backup before sending
 
@@ -94,7 +94,7 @@ If the send fails, check:
 
 ## 8. Calendar Test
 
-Use the dedicated LEG Work Calendar only.
+Use the dedicated FieldLedger calendar assigned for testing. Use the exact calendar name provided in your share package.
 
 Do not sync generated FieldLedger work events to a personal/default calendar.
 
@@ -126,6 +126,8 @@ Do not expect:
 - cloud sync
 - automatic tax filing
 - paid backend services
+
+Tax estimates are for planning only and are not tax advice.
 
 ## 11. Reporting Problems
 
