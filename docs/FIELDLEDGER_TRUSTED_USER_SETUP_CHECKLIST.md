@@ -61,7 +61,19 @@ Before giving a tester access:
 - leave only approved input/config areas editable
 - confirm Timesheet output still works after import
 
-## 6. Calendar Safety
+## 6. Trusted Sheet Send Safety
+
+Before giving a tester access:
+
+- confirm the tester's Sheet has a deployed Apps Script Web App URL ending in `/exec`
+- confirm the tester receives the deployed `/exec` Web App URL, not the Apps Script editor URL
+- confirm FieldLedger may save the Web App URL locally on that tester's device
+- confirm the import token is entered only when sending
+- confirm the import token is not saved by FieldLedger
+- confirm the tester Sheet is a copied tester Sheet, not the owner/master Sheet
+- confirm phone, laptop, and desktop browser data are separate
+
+## 7. Calendar Safety
 
 Before syncing events:
 
@@ -72,7 +84,7 @@ Before syncing events:
 - confirm events can be deleted/regenerated safely
 - confirm renamed/regenerated events do not silently remove old Calendar events
 
-## 7. Paired-System Evidence
+## 8. Paired-System Evidence
 
 Before sharing a Sheet copy with a trusted user, record the validation evidence:
 
@@ -90,7 +102,7 @@ Before sharing a Sheet copy with a trusted user, record the validation evidence:
 
 Generic notes such as "Sheets worked" are not enough.
 
-## 8. User Instructions To Give Tester
+## 9. User Instructions To Give Tester
 
 Tell the tester:
 
@@ -102,7 +114,7 @@ Tell the tester:
 - deleting Calendar events does not delete FieldLedger app records
 - tax estimates are planning only, not tax advice
 
-## 9. Recovery Plan
+## 10. Recovery Plan
 
 If something breaks:
 
@@ -113,7 +125,7 @@ If something breaks:
 - regenerate CalendarEvents
 - sync again only after reviewing staged rows
 
-## 10. Definition Of Ready
+## 11. Definition Of Ready
 
 Trusted-user sharing is ready only when:
 
