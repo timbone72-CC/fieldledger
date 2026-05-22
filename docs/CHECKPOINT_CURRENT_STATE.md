@@ -2,18 +2,18 @@
 
 ## Current Head
 
-434a986 Update checkpoint after local docs note
+c0e7b1a Clarify Trusted Sheet tester setup safety
 
 ## Recent Commits
 
+- c0e7b1a Clarify Trusted Sheet tester setup safety
+- 4960980 Update checkpoint after Trusted Sheet live polish validation
 - 434a986 Update checkpoint after local docs note
 - 18fda7c Document trusted user local reference files
 - 15644d3 Update checkpoint after User 1 validation evidence
 - ae87336 Record User 1 Trusted Sheet validation evidence
 - b3d069e Update checkpoint after blocker fixes
 - 631cb92 Fix trusted sheet URL and state tax blockers
-- 5be74e7 Update checkpoint after local reference cleanup
-- 46881f6 Remove local CSV folder ignore
 
 ## Confirmed Working State
 - Trusted-user local reference document boundary is now documented in `docs/FIELDLEDGER_TRUSTED_USER_LOCAL_DOCS.md`; local tester setup files remain outside the repo and must not be recreated without first checking `/home/timbone/Documents/FieldLedger-Trusted-Sheets`.
