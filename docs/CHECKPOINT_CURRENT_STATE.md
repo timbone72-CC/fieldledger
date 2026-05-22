@@ -2,10 +2,11 @@
 
 ## Current Head
 
-18fda7c Document trusted user local reference files
+434a986 Update checkpoint after local docs note
 
 ## Recent Commits
 
+- 434a986 Update checkpoint after local docs note
 - 18fda7c Document trusted user local reference files
 - 15644d3 Update checkpoint after User 1 validation evidence
 - ae87336 Record User 1 Trusted Sheet validation evidence
@@ -13,7 +14,6 @@
 - 631cb92 Fix trusted sheet URL and state tax blockers
 - 5be74e7 Update checkpoint after local reference cleanup
 - 46881f6 Remove local CSV folder ignore
-- d86c19a Ignore local CSV test files
 
 ## Confirmed Working State
 - Trusted-user local reference document boundary is now documented in `docs/FIELDLEDGER_TRUSTED_USER_LOCAL_DOCS.md`; local tester setup files remain outside the repo and must not be recreated without first checking `/home/timbone/Documents/FieldLedger-Trusted-Sheets`.
@@ -31,6 +31,8 @@
 - Trusted-user instructions now include a Trusted Sheet Send Test section covering `/exec` URL use, token-not-saved behavior, separate browser/device data, JSON backup restore before sending from an empty device, and tester Sheet versus owner/master Sheet checks.
 
 - Trusted Sheet send guidance now clarifies that users must use the deployed `/exec` Web App URL, that the import token is never saved, and that phone/laptop/desktop browser data are separate.
+
+- Live GitHub Pages Trusted Sheet send polish validation completed: saved Web App URL appears in the send prompt, the import token is still not saved, confirmation appears before sending, and the trusted Sheet RawData/Timesheet path updates successfully from the live app.
 
 - Live phone Trusted Sheet send validated after correcting the `/exec` Web App URL and using the matching import token.
 
