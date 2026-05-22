@@ -25,6 +25,8 @@ Before testing, you should receive:
 
 - the FieldLedger app link
 - your copied Google Sheet link
+- the deployed Apps Script Web App `/exec` URL for your copied Sheet
+- the import token for your copied Sheet
 - the name of your dedicated FieldLedger calendar
 - these trusted-user instructions
 - a reminder to download a JSON backup before testing destructive flows
