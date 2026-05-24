@@ -25,7 +25,7 @@ Each trusted user should receive only the items needed for testing:
 - their copied Google Sheet link
 - deployed Apps Script Web App `/exec` URL for their copied Sheet
 - import token for their copied Sheet, shared separately from the Sheet link when possible
-- name of their dedicated FieldLedger calendar
+- name of the dedicated FieldLedger calendar they should use for testing
 - trusted-user instructions doc
 - reminder to download a JSON backup before testing destructive flows
 
@@ -79,8 +79,9 @@ Before giving a tester access:
 
 Before syncing events:
 
-- create or select a dedicated FieldLedger calendar
-- do not sync to the tester's primary calendar first
+- confirm the tester has the dedicated FieldLedger calendar name from their share package
+- sync only to that named dedicated FieldLedger calendar
+- do not sync to the tester's personal/default calendar
 - run a small test sync before bulk sync
 - confirm duplicate prevention by syncing the same small set twice
 - confirm events can be deleted/regenerated safely
@@ -131,12 +132,4 @@ If something breaks:
 
 Use `docs/FIELDLEDGER_TRUSTED_USER_RELEASE_READINESS.md` as the trusted-user release boundary before sharing.
 
-Trusted-user sharing is ready only when:
-
-- setup can be repeated from a fresh Sheet copy
-- a small CSV import succeeds
-- a small Calendar sync succeeds
-- duplicate prevention is verified
-- cleanup/regeneration is verified
-- old renamed Calendar events are intentionally removed before final trusted-user sharing
-- tester instructions are written clearly
+Do not maintain a second readiness gate in this setup checklist. Record setup evidence here, then use the release-readiness doc for the final share/no-share decision.

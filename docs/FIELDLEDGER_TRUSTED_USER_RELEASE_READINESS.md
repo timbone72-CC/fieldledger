@@ -6,6 +6,16 @@ This document defines when FieldLedger is ready to share with a limited trusted 
 
 This is not a public launch checklist.
 
+This is the single trusted-user release gate. The setup checklist, tester instructions, trusted-user contract, local-doc boundary, and Sheets integration contract support this gate; they do not replace it.
+
+Supporting docs:
+
+- `docs/FIELDLEDGER_TRUSTED_USER_SETUP_CHECKLIST.md`
+- `docs/FIELDLEDGER_TRUSTED_USER_INSTRUCTIONS.md`
+- `docs/FIELDLEDGER_TRUSTED_USER_CONTRACT.md`
+- `docs/FIELDLEDGER_TRUSTED_USER_LOCAL_DOCS.md`
+- `docs/FIELDLEDGER_SHEETS_INTEGRATION_CONTRACT.md`
+
 ## 2. Current Release Boundary
 
 Trusted-user release means the app may be shared with a known tester who understands:
@@ -42,9 +52,9 @@ Each trusted user should receive:
 - FieldLedger app link
 - copied tester Google Sheet link
 - deployed Apps Script Web App `/exec` URL for the copied Sheet
-- import token for the copied Sheet
-- dedicated FieldLedger calendar name
-- trusted-user setup instructions
+- import token for the copied Sheet, shared separately from the Sheet link when possible
+- dedicated FieldLedger calendar name provided for that tester
+- trusted-user instructions
 - backup warning
 
 Do not share the owner's master Sheet, personal/default calendar, GitHub tokens, private repo credentials, or source-code access.
@@ -78,6 +88,8 @@ Trusted-user sharing is ready only when:
 - checklist docs match the live app workflow
 - tester Sheet setup can be repeated from a fresh copied Sheet
 - small send-to-Sheet test succeeds
+- small sync to the tester's dedicated FieldLedger calendar succeeds
+- calendar duplicate prevention and cleanup/regeneration are verified
 - JSON backup/import recovery is tested
 - trusted-user instructions are clear
 - checkpoint is updated from real git log
