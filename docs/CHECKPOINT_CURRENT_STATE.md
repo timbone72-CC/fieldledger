@@ -2,21 +2,35 @@
 
 ## Current Head
 
-45544aa Clarify trusted user safety wording
+04706ae Add future company handoff planning contracts
 
 ## Recent Commits
 
+- 04706ae Add future company handoff planning contracts
 - 45544aa Clarify trusted user safety wording
 - 2206867 Update checkpoint after Trusted Sheet handoff items
 - cc84155 Clarify Trusted Sheet tester handoff items
 - 9b0d562 Update checkpoint after Trusted Sheet setup safety
 - c0e7b1a Clarify Trusted Sheet tester setup safety
-- 4960980 Update checkpoint after Trusted Sheet live polish validation
-- 434a986 Update checkpoint after local docs note
-- 18fda7c Document trusted user local reference files
+
+## Repo State
+
+- Repo path: `~/projects/fieldledger`
+- Branch: `main`
+- Current safe HEAD: `04706ae Add future company handoff planning contracts`
+- Pushed to `origin/main`
+- Working tree was clean before this checkpoint edit.
+- Blockers: none
 
 ## Confirmed Working State
-- Future-planning contracts were added for company handoff, trusted-user testing, submission states, and proof handling. These docs are planning boundaries only and do not change the current MVP scope.
+- Doc-only future company handoff planning slice completed.
+- Added `docs/FIELDLEDGER_COMPANY_HANDOFF_CONTRACT.md`.
+- Added `docs/FIELDLEDGER_TRUSTED_USER_CONTRACT.md`.
+- Added `docs/FIELDLEDGER_SUBMISSION_CONTRACT.md`.
+- Added `docs/FIELDLEDGER_PROOF_CONTRACT.md`.
+- Updated `docs/CHECKPOINT_CURRENT_STATE.md`.
+- No app code, backend, auth, package, or build output changed.
+- Current MVP scope is unchanged. The new docs are future-planning only.
 
 - Trusted-user local reference document boundary is now documented in `docs/FIELDLEDGER_TRUSTED_USER_LOCAL_DOCS.md`; local tester setup files remain outside the repo and must not be recreated without first checking `/home/timbone/Documents/FieldLedger-Trusted-Sheets`.
 
