@@ -2,27 +2,28 @@
 
 ## Current Head
 
-49c2de2 Add trusted user release readiness checklist
+4b8259d Link trusted user readiness checklist
 
 ## Recent Commits
 
+- 4b8259d Link trusted user readiness checklist
+- cf48c6c Update checkpoint after release readiness checklist
 - 49c2de2 Add trusted user release readiness checklist
 - 4e2b1d3 Update checkpoint after trusted user share package
 - 92f5553 Clarify trusted user share package
 - 1825fab Update checkpoint after trusted user backup warning
-- f415e4a Clarify trusted user backup warning
-- cb0223f Update checkpoint after future handoff planning docs
 
 ## Repo State
 
 - Repo path: `~/projects/fieldledger`
 - Branch: `main`
-- Current safe HEAD: `49c2de2 Add trusted user release readiness checklist`
+- Current safe HEAD: `4b8259d Link trusted user readiness checklist`
 - Pushed to `origin/main`
 - Working tree was clean before this checkpoint edit.
 - Blockers: none
 
 ## Confirmed Working State
+- Trusted-user setup checklist now links to `docs/FIELDLEDGER_TRUSTED_USER_RELEASE_READINESS.md` as the release boundary before sharing.
 - Added `docs/FIELDLEDGER_TRUSTED_USER_RELEASE_READINESS.md` to define limited trusted-user release readiness and public-release boundaries.
 - Trusted-user setup checklist share package now includes the copied Sheet `/exec` Web App URL and copied-Sheet import token.
 - Trusted-user instructions now more clearly warn testers to download a JSON backup before importing replacement data or using clear/reset actions.
