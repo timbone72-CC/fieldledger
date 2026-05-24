@@ -123,6 +123,12 @@
   margin-top: 14px;
 }
 
+.saved-jobs-list {
+  max-height: 420px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
 .helper {
   color: #66667a;
 }

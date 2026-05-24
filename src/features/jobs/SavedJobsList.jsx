@@ -80,7 +80,7 @@ export default function SavedJobsList({ onJobDeleted }) {
       {jobs.length === 0 ? (
         <p className="helper">No jobs saved yet.</p>
       ) : (
-        <div className="list">
+        <div className="list saved-jobs-list">
           {jobs.map((job) => (
             <div className="result-card" key={job.id}>
               <span>{formatJobLabel(job)}</span>
