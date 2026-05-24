@@ -2,27 +2,28 @@
 
 ## Current Head
 
-4b8259d Link trusted user readiness checklist
+2751532 Consolidate trusted user readiness docs
 
 ## Recent Commits
 
+- 2751532 Consolidate trusted user readiness docs
+- 5eb3f3d Update checkpoint after readiness checklist link
 - 4b8259d Link trusted user readiness checklist
 - cf48c6c Update checkpoint after release readiness checklist
 - 49c2de2 Add trusted user release readiness checklist
 - 4e2b1d3 Update checkpoint after trusted user share package
-- 92f5553 Clarify trusted user share package
-- 1825fab Update checkpoint after trusted user backup warning
 
 ## Repo State
 
 - Repo path: `~/projects/fieldledger`
 - Branch: `main`
-- Current safe HEAD: `4b8259d Link trusted user readiness checklist`
+- Current safe HEAD: `2751532 Consolidate trusted user readiness docs`
 - Pushed to `origin/main`
 - Working tree was clean before this checkpoint edit.
 - Blockers: none
 
 ## Confirmed Working State
+- Docs-only cleanup completed: `docs/FIELDLEDGER_TRUSTED_USER_RELEASE_READINESS.md` is now the single trusted-user release gate, and `docs/FIELDLEDGER_TRUSTED_USER_SETUP_CHECKLIST.md` references that gate instead of duplicating readiness wording.
 - Trusted-user setup checklist now links to `docs/FIELDLEDGER_TRUSTED_USER_RELEASE_READINESS.md` as the release boundary before sharing.
 - Added `docs/FIELDLEDGER_TRUSTED_USER_RELEASE_READINESS.md` to define limited trusted-user release readiness and public-release boundaries.
 - Trusted-user setup checklist share package now includes the copied Sheet `/exec` Web App URL and copied-Sheet import token.
