@@ -23,6 +23,8 @@ Each trusted user should receive only the items needed for testing:
 
 - FieldLedger app link
 - their copied Google Sheet link
+- deployed Apps Script Web App `/exec` URL for their copied Sheet
+- import token for their copied Sheet, shared separately from the Sheet link when possible
 - name of their dedicated FieldLedger calendar
 - trusted-user instructions doc
 - reminder to download a JSON backup before testing destructive flows
