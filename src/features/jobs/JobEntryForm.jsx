@@ -514,6 +514,7 @@ export default function JobEntryForm({ onJobSaved }) {
           accept="image/*"
           onChange={(event) => {
             setTicketPhotoFile(event.target.files?.[0] || null);
+            setSaveMessage("");
           }}
         />
       </label>

@@ -86,7 +86,7 @@ export default function SavedJobsList({ onJobDeleted }) {
               <span>{formatJobLabel(job)}</span>
               <strong>${Number(job.totalPay || 0).toFixed(2)}</strong>
 
-              {(job.ticketPhotoName || previewUrls[job.id]) && (
+              {(job.ticketPhotoId || job.ticketPhotoName || previewUrls[job.id]) && (
                 <div
                   className="helper"
                   style={{
@@ -96,7 +96,7 @@ export default function SavedJobsList({ onJobDeleted }) {
                     marginTop: "0.5rem",
                   }}
                 >
-                  {previewUrls[job.id] && (
+                  {previewUrls[job.id] ? (
                     <img
                       src={previewUrls[job.id]}
                       alt="Ticket preview"
@@ -108,10 +108,13 @@ export default function SavedJobsList({ onJobDeleted }) {
                         border: "1px solid #d8d4ef",
                       }}
                     />
+                  ) : (
+                    <span aria-hidden="true">📎</span>
                   )}
                   <span>
                     Attached Photo
                     {job.ticketPhotoName ? `: ${job.ticketPhotoName}` : ""}
+                    {job.ticketPhotoId && !previewUrls[job.id] ? " — preview unavailable here" : ""}
                   </span>
                 </div>
               )}
