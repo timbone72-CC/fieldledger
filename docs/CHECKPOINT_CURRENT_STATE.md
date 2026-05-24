@@ -2,27 +2,28 @@
 
 ## Current Head
 
-04706ae Add future company handoff planning contracts
+f415e4a Clarify trusted user backup warning
 
 ## Recent Commits
 
+- f415e4a Clarify trusted user backup warning
+- cb0223f Update checkpoint after future handoff planning docs
 - 04706ae Add future company handoff planning contracts
 - 45544aa Clarify trusted user safety wording
 - 2206867 Update checkpoint after Trusted Sheet handoff items
 - cc84155 Clarify Trusted Sheet tester handoff items
-- 9b0d562 Update checkpoint after Trusted Sheet setup safety
-- c0e7b1a Clarify Trusted Sheet tester setup safety
 
 ## Repo State
 
 - Repo path: `~/projects/fieldledger`
 - Branch: `main`
-- Current safe HEAD: `04706ae Add future company handoff planning contracts`
+- Current safe HEAD: `f415e4a Clarify trusted user backup warning`
 - Pushed to `origin/main`
 - Working tree was clean before this checkpoint edit.
 - Blockers: none
 
 ## Confirmed Working State
+- Trusted-user instructions now more clearly warn testers to download a JSON backup before importing replacement data or using clear/reset actions.
 - Doc-only future company handoff planning slice completed.
 - Added `docs/FIELDLEDGER_COMPANY_HANDOFF_CONTRACT.md`.
 - Added `docs/FIELDLEDGER_TRUSTED_USER_CONTRACT.md`.
