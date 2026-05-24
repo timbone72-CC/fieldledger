@@ -2,20 +2,22 @@
 
 ## Current Head
 
-cc84155 Clarify Trusted Sheet tester handoff items
+45544aa Clarify trusted user safety wording
 
 ## Recent Commits
 
+- 45544aa Clarify trusted user safety wording
+- 2206867 Update checkpoint after Trusted Sheet handoff items
 - cc84155 Clarify Trusted Sheet tester handoff items
 - 9b0d562 Update checkpoint after Trusted Sheet setup safety
 - c0e7b1a Clarify Trusted Sheet tester setup safety
 - 4960980 Update checkpoint after Trusted Sheet live polish validation
 - 434a986 Update checkpoint after local docs note
 - 18fda7c Document trusted user local reference files
-- 15644d3 Update checkpoint after User 1 validation evidence
-- ae87336 Record User 1 Trusted Sheet validation evidence
 
 ## Confirmed Working State
+- Future-planning contracts were added for company handoff, trusted-user testing, submission states, and proof handling. These docs are planning boundaries only and do not change the current MVP scope.
+
 - Trusted-user local reference document boundary is now documented in `docs/FIELDLEDGER_TRUSTED_USER_LOCAL_DOCS.md`; local tester setup files remain outside the repo and must not be recreated without first checking `/home/timbone/Documents/FieldLedger-Trusted-Sheets`.
 
 - Blocker follow-up fixed Trusted Sheet URL safety: app-side send now rejects non-Google Apps Script URLs and URLs that do not end in `/exec` before posting the import token or CSV; focused tests confirm rejected URLs do not call fetch.
