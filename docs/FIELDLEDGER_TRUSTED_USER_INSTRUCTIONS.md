@@ -39,7 +39,9 @@ FieldLedger stores app data in the browser used on that device.
 
 Phone data and computer data are separate unless moved with JSON backup/import.
 
-Before clearing browser data, changing phones, or reinstalling the app, download a JSON backup.
+Before clearing browser data, changing phones, reinstalling the app, importing replacement data, or using clear/reset actions, download a JSON backup.
+
+A JSON backup is the trusted user's safety copy during testing.
 
 ## 5. What To Test First
 
