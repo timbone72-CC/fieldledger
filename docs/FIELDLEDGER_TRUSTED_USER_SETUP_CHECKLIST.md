@@ -129,6 +129,8 @@ If something breaks:
 
 ## 11. Definition Of Ready
 
+Use `docs/FIELDLEDGER_TRUSTED_USER_RELEASE_READINESS.md` as the trusted-user release boundary before sharing.
+
 Trusted-user sharing is ready only when:
 
 - setup can be repeated from a fresh Sheet copy
