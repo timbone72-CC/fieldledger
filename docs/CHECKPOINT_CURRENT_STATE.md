@@ -2,27 +2,28 @@
 
 ## Current Head
 
-2751532 Consolidate trusted user readiness docs
+011ea15 Show attached ticket photos when preview unavailable
 
 ## Recent Commits
 
+- 011ea15 Show attached ticket photos when preview unavailable
+- 82b1491 Update checkpoint after readiness doc consolidation
 - 2751532 Consolidate trusted user readiness docs
 - 5eb3f3d Update checkpoint after readiness checklist link
 - 4b8259d Link trusted user readiness checklist
 - cf48c6c Update checkpoint after release readiness checklist
-- 49c2de2 Add trusted user release readiness checklist
-- 4e2b1d3 Update checkpoint after trusted user share package
 
 ## Repo State
 
 - Repo path: `~/projects/fieldledger`
 - Branch: `main`
-- Current safe HEAD: `2751532 Consolidate trusted user readiness docs`
+- Current safe HEAD: `011ea15 Show attached ticket photos when preview unavailable`
 - Pushed to `origin/main`
 - Working tree was clean before this checkpoint edit.
 - Blockers: none
 
 ## Confirmed Working State
+- Job ticket photo cards now show attached-photo status even when a saved image file cannot be previewed by the browser, such as some HEIC/text-message photos.
 - Docs-only cleanup completed: `docs/FIELDLEDGER_TRUSTED_USER_RELEASE_READINESS.md` is now the single trusted-user release gate, and `docs/FIELDLEDGER_TRUSTED_USER_SETUP_CHECKLIST.md` references that gate instead of duplicating readiness wording.
 - Trusted-user setup checklist now links to `docs/FIELDLEDGER_TRUSTED_USER_RELEASE_READINESS.md` as the release boundary before sharing.
 - Added `docs/FIELDLEDGER_TRUSTED_USER_RELEASE_READINESS.md` to define limited trusted-user release readiness and public-release boundaries.
