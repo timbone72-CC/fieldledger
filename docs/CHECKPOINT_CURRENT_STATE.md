@@ -2,27 +2,28 @@
 
 ## Current Head
 
-feca545 Expand storage contract safety rules
+e7a13e1 Add tax estimate breakdown
 
 ## Recent Commits
 
+- e7a13e1 Add tax estimate breakdown
+- 0d1a0f6 Update checkpoint after storage contract expansion
 - feca545 Expand storage contract safety rules
 - 651c80a Document live offline reload confirmation
 - 99815ff Update checkpoint after offline shell fix
 - 6672447 Fix offline app shell caching
-- 10ec3ba Update checkpoint after color theme polish
-- 4e6a21a Polish app color theme
 
 ## Repo State
 
 - Repo path: `~/projects/fieldledger`
 - Branch: `main`
-- Current safe HEAD: `feca545 Expand storage contract safety rules`
+- Current safe HEAD: `e7a13e1 Add tax estimate breakdown`
 - Pushed to `origin/main`
 - Working tree was clean before this checkpoint edit.
 - Blockers: none
 
 ## Confirmed Working State
+- Tax estimate clarity polished: Pay Period Summary now includes an expandable Tax Estimate Details section showing taxable income used, self-employment estimate, federal estimate, and state estimate without changing tax formulas or making tax-advice claims.
 - Storage contract expanded: `docs/FIELDLEDGER_STORAGE_CONTRACT.md` now documents device separation, persistent-storage limits, backup health, restore-contract verification, photo-reference restore risk, Trusted Sheet source-of-truth boundary, and checkpoint evidence requirements.
 - Live offline reload drill confirmed: after opening the live app online once, FieldLedger loads successfully while offline.
 - Offline app-shell caching fixed: the service worker now pre-caches the current built JS/CSS assets, only falls back to cached HTML for navigation requests, and Settings blocks Update App while offline to avoid deleting the cached app shell without internet.
