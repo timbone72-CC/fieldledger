@@ -23,6 +23,7 @@
 - Blockers: none
 
 ## Confirmed Working State
+- Trusted-user go/no-go decision: GO for one controlled trusted tester. FieldLedger is not approved for public release or broad tester rollout yet.
 - Clean fresh-device simulation passed: private/incognito browser started with no saved Trusted Sheet setup, JSON backup restored successfully, copied tester Sheet Web App URL had to be re-entered, import token was entered manually, Send to Trusted Sheet succeeded, RawData updated with 1 imported job row, and Timesheet updated to the matching $168.00 total.
 - Trusted-user instructions now clarify that calendar testing is optional/advanced for the first trusted-user app test unless the tester is specifically assigned to test calendar reminders.
 - Trusted-user release-readiness gate now requires confirming the Trusted Sheet Web App URL setup and import token entry on the exact browser/device being tested.
