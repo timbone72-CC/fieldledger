@@ -2,27 +2,28 @@
 
 ## Current Head
 
-76df54c Clarify release readiness device setup
+1a5c934 Clarify optional trusted user calendar testing
 
 ## Recent Commits
 
+- 1a5c934 Clarify optional trusted user calendar testing
+- 8533639 Update checkpoint after trusted user RC drill
 - 76df54c Clarify release readiness device setup
 - 184f016 Update checkpoint after Trusted Sheet device setup
 - 4920964 Clarify Trusted Sheet device setup
 - 6ba684c Update checkpoint after tax estimate breakdown
-- e7a13e1 Add tax estimate breakdown
-- 0d1a0f6 Update checkpoint after storage contract expansion
 
 ## Repo State
 
 - Repo path: `~/projects/fieldledger`
 - Branch: `main`
-- Current safe HEAD: `76df54c Clarify release readiness device setup`
+- Current safe HEAD: `1a5c934 Clarify optional trusted user calendar testing`
 - Pushed to `origin/main`
 - Working tree was clean before this checkpoint edit.
 - Blockers: none
 
 ## Confirmed Working State
+- Trusted-user instructions now clarify that calendar testing is optional/advanced for the first trusted-user app test unless the tester is specifically assigned to test calendar reminders.
 - Trusted-user release-readiness gate now requires confirming the Trusted Sheet Web App URL setup and import token entry on the exact browser/device being tested.
 - Trusted User Release Candidate live workflow drill confirmed Bucking, Torque Turn, expense summary, tax breakdown, JSON backup, CSV export, full report print preview, timesheet print preview, Trusted Sheet send, paired Sheet Timesheet update, and laptop/mobile visual usability.
 - Dashboard width issue was observed once during laptop visual review, but could not be reproduced in local or live after retest; no CSS fix was applied and this remains a watch item.
