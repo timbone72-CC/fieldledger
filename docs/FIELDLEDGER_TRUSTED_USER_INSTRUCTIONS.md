@@ -81,9 +81,11 @@ Use the Export / Backup menu to send the current pay-period CSV to your copied T
 Confirm:
 
 - the Web App URL uses the deployed Apps Script `/exec` URL
-- the Web App URL may be saved on this device
+- the Web App URL is saved only in this browser/device after it is entered
+- every new phone, laptop, browser, or Linux setup must enter the Web App URL before its first send
 - the import token is entered only when sending
 - the import token is not saved by FieldLedger
+- every new phone, laptop, browser, or Linux setup must enter the import token when sending
 - phone, laptop, and desktop browser data are separate
 - if this device has no saved jobs, restore a JSON backup before sending
 
