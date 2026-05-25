@@ -2,27 +2,28 @@
 
 ## Current Head
 
-6672447 Fix offline app shell caching
+feca545 Expand storage contract safety rules
 
 ## Recent Commits
 
+- feca545 Expand storage contract safety rules
+- 651c80a Document live offline reload confirmation
+- 99815ff Update checkpoint after offline shell fix
 - 6672447 Fix offline app shell caching
 - 10ec3ba Update checkpoint after color theme polish
 - 4e6a21a Polish app color theme
-- 8c90ec1 Update checkpoint after danger zone polish
-- 0724c66 Polish clear pay period danger zone
-- 637588a Update checkpoint after export backup layout polish
 
 ## Repo State
 
 - Repo path: `~/projects/fieldledger`
 - Branch: `main`
-- Current safe HEAD: `6672447 Fix offline app shell caching`
+- Current safe HEAD: `feca545 Expand storage contract safety rules`
 - Pushed to `origin/main`
 - Working tree was clean before this checkpoint edit.
 - Blockers: none
 
 ## Confirmed Working State
+- Storage contract expanded: `docs/FIELDLEDGER_STORAGE_CONTRACT.md` now documents device separation, persistent-storage limits, backup health, restore-contract verification, photo-reference restore risk, Trusted Sheet source-of-truth boundary, and checkpoint evidence requirements.
 - Live offline reload drill confirmed: after opening the live app online once, FieldLedger loads successfully while offline.
 - Offline app-shell caching fixed: the service worker now pre-caches the current built JS/CSS assets, only falls back to cached HTML for navigation requests, and Settings blocks Update App while offline to avoid deleting the cached app shell without internet.
 - App color theme polished: the UI now uses a cleaner blue/slate work-app palette with soft gray background, white cards, readable dark text, and updated rebuilt GitHub Pages assets.
