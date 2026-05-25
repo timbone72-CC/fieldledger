@@ -2,27 +2,30 @@
 
 ## Current Head
 
-4920964 Clarify Trusted Sheet device setup
+76df54c Clarify release readiness device setup
 
 ## Recent Commits
 
+- 76df54c Clarify release readiness device setup
+- 184f016 Update checkpoint after Trusted Sheet device setup
 - 4920964 Clarify Trusted Sheet device setup
 - 6ba684c Update checkpoint after tax estimate breakdown
 - e7a13e1 Add tax estimate breakdown
 - 0d1a0f6 Update checkpoint after storage contract expansion
-- feca545 Expand storage contract safety rules
-- 651c80a Document live offline reload confirmation
 
 ## Repo State
 
 - Repo path: `~/projects/fieldledger`
 - Branch: `main`
-- Current safe HEAD: `4920964 Clarify Trusted Sheet device setup`
+- Current safe HEAD: `76df54c Clarify release readiness device setup`
 - Pushed to `origin/main`
 - Working tree was clean before this checkpoint edit.
 - Blockers: none
 
 ## Confirmed Working State
+- Trusted-user release-readiness gate now requires confirming the Trusted Sheet Web App URL setup and import token entry on the exact browser/device being tested.
+- Trusted User Release Candidate live workflow drill confirmed Bucking, Torque Turn, expense summary, tax breakdown, JSON backup, CSV export, full report print preview, timesheet print preview, Trusted Sheet send, paired Sheet Timesheet update, and laptop/mobile visual usability.
+- Dashboard width issue was observed once during laptop visual review, but could not be reproduced in local or live after retest; no CSS fix was applied and this remains a watch item.
 - Trusted Sheet trusted-user instructions now clarify that the Web App URL is saved only per browser/device, the import token is never saved, and every new phone, laptop, browser, or Linux setup must enter setup info before sending.
 - Tax estimate clarity polished: Pay Period Summary now includes an expandable Tax Estimate Details section showing taxable income used, self-employment estimate, federal estimate, and state estimate without changing tax formulas or making tax-advice claims.
 - Storage contract expanded: `docs/FIELDLEDGER_STORAGE_CONTRACT.md` now documents device separation, persistent-storage limits, backup health, restore-contract verification, photo-reference restore risk, Trusted Sheet source-of-truth boundary, and checkpoint evidence requirements.
