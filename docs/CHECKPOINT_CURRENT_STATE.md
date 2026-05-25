@@ -2,27 +2,28 @@
 
 ## Current Head
 
-c8c4c55 Polish export backup layout
+0724c66 Polish clear pay period danger zone
 
 ## Recent Commits
 
+- 0724c66 Polish clear pay period danger zone
+- 637588a Update checkpoint after export backup layout polish
 - c8c4c55 Polish export backup layout
 - 660a127 Update checkpoint after saved jobs layout
 - c6aff85 Limit saved jobs list height
 - 81c4b4e Update checkpoint after ticket photo fallback
-- 011ea15 Show attached ticket photos when preview unavailable
-- 82b1491 Update checkpoint after readiness doc consolidation
 
 ## Repo State
 
 - Repo path: `~/projects/fieldledger`
 - Branch: `main`
-- Current safe HEAD: `c8c4c55 Polish export backup layout`
+- Current safe HEAD: `0724c66 Polish clear pay period danger zone`
 - Pushed to `origin/main`
 - Working tree was clean before this checkpoint edit.
 - Blockers: none
 
 ## Confirmed Working State
+- Clear Pay Period danger zone polished: the destructive clear action is now inside an expandable warning section, so the backup/clear warning appears only when opened and opening the section does not clear data.
 - Export / Backup laptop layout polished: the dropdown panel is constrained, buttons no longer stretch unevenly beside the Trusted Sheet helper area, and Trusted Sheet notes now appear only when that section is opened.
 - Saved Jobs list height is now limited so multiple saved jobs scroll inside the panel instead of making the Jobs page endlessly long.
 - Job ticket photo cards now show attached-photo status even when a saved image file cannot be previewed by the browser, such as some HEIC/text-message photos.
