@@ -57,6 +57,30 @@ export default function PayPeriodSummaryPanel() {
         <strong>${taxEstimate.estimatedTotalTax.toFixed(2)}</strong>
       </div>
 
+      <details className="tax-estimate-details">
+        <summary>Tax Estimate Details</summary>
+
+        <div className="result-card">
+          <span>Taxable Income Used</span>
+          <strong>${taxEstimate.estimatedTaxableIncome.toFixed(2)}</strong>
+        </div>
+
+        <div className="result-card">
+          <span>Self-Employment Estimate</span>
+          <strong>${taxEstimate.estimatedSelfEmploymentTax.toFixed(2)}</strong>
+        </div>
+
+        <div className="result-card">
+          <span>Federal Estimate</span>
+          <strong>${taxEstimate.estimatedFederalTax.toFixed(2)}</strong>
+        </div>
+
+        <div className="result-card">
+          <span>State Estimate</span>
+          <strong>${taxEstimate.estimatedStateTax.toFixed(2)}</strong>
+        </div>
+      </details>
+
       <div className="result-card">
         <span>Estimated Take-Home</span>
         <strong>${taxEstimate.estimatedTakeHomeAfterTax.toFixed(2)}</strong>

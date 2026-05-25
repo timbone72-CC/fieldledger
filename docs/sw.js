@@ -6,8 +6,8 @@ const APP_SHELL = [
   "/fieldledger/favicon.svg",
   "/fieldledger/icon-192.png",
   "/fieldledger/icon-512.png",
-  "/fieldledger/assets/index-_Fd6eXdT.js",
-  "/fieldledger/assets/index-BF1Y2inu.css"
+  "/fieldledger/assets/index-BvJ7mAsr.js",
+  "/fieldledger/assets/index-BmXoxkAs.css"
 ];
 
 self.addEventListener("install", (event) => {
