@@ -2,27 +2,28 @@
 
 ## Current Head
 
-4e6a21a Polish app color theme
+6672447 Fix offline app shell caching
 
 ## Recent Commits
 
+- 6672447 Fix offline app shell caching
+- 10ec3ba Update checkpoint after color theme polish
 - 4e6a21a Polish app color theme
 - 8c90ec1 Update checkpoint after danger zone polish
 - 0724c66 Polish clear pay period danger zone
 - 637588a Update checkpoint after export backup layout polish
-- c8c4c55 Polish export backup layout
-- 660a127 Update checkpoint after saved jobs layout
 
 ## Repo State
 
 - Repo path: `~/projects/fieldledger`
 - Branch: `main`
-- Current safe HEAD: `4e6a21a Polish app color theme`
+- Current safe HEAD: `6672447 Fix offline app shell caching`
 - Pushed to `origin/main`
 - Working tree was clean before this checkpoint edit.
 - Blockers: none
 
 ## Confirmed Working State
+- Offline app-shell caching fixed: the service worker now pre-caches the current built JS/CSS assets, only falls back to cached HTML for navigation requests, and Settings blocks Update App while offline to avoid deleting the cached app shell without internet.
 - App color theme polished: the UI now uses a cleaner blue/slate work-app palette with soft gray background, white cards, readable dark text, and updated rebuilt GitHub Pages assets.
 - Clear Pay Period danger zone polished: the destructive clear action is now inside an expandable warning section, so the backup/clear warning appears only when opened and opening the section does not clear data.
 - Export / Backup laptop layout polished: the dropdown panel is constrained, buttons no longer stretch unevenly beside the Trusted Sheet helper area, and Trusted Sheet notes now appear only when that section is opened.
