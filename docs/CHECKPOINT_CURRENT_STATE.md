@@ -2,27 +2,28 @@
 
 ## Current Head
 
-1a5c934 Clarify optional trusted user calendar testing
+87136c8 Update checkpoint after trusted user docs clarification
 
 ## Recent Commits
 
+- 87136c8 Update checkpoint after trusted user docs clarification
 - 1a5c934 Clarify optional trusted user calendar testing
 - 8533639 Update checkpoint after trusted user RC drill
 - 76df54c Clarify release readiness device setup
 - 184f016 Update checkpoint after Trusted Sheet device setup
 - 4920964 Clarify Trusted Sheet device setup
-- 6ba684c Update checkpoint after tax estimate breakdown
 
 ## Repo State
 
 - Repo path: `~/projects/fieldledger`
 - Branch: `main`
-- Current safe HEAD: `1a5c934 Clarify optional trusted user calendar testing`
+- Current safe HEAD: `87136c8 Update checkpoint after trusted user docs clarification`
 - Pushed to `origin/main`
 - Working tree was clean before this checkpoint edit.
 - Blockers: none
 
 ## Confirmed Working State
+- Clean fresh-device simulation passed: private/incognito browser started with no saved Trusted Sheet setup, JSON backup restored successfully, copied tester Sheet Web App URL had to be re-entered, import token was entered manually, Send to Trusted Sheet succeeded, RawData updated with 1 imported job row, and Timesheet updated to the matching $168.00 total.
 - Trusted-user instructions now clarify that calendar testing is optional/advanced for the first trusted-user app test unless the tester is specifically assigned to test calendar reminders.
 - Trusted-user release-readiness gate now requires confirming the Trusted Sheet Web App URL setup and import token entry on the exact browser/device being tested.
 - Trusted User Release Candidate live workflow drill confirmed Bucking, Torque Turn, expense summary, tax breakdown, JSON backup, CSV export, full report print preview, timesheet print preview, Trusted Sheet send, paired Sheet Timesheet update, and laptop/mobile visual usability.
