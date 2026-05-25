@@ -43,7 +43,9 @@ Before sharing with a trusted user, confirm:
 - Print Timesheet opens
 - Print Full Report opens
 - Send to Trusted Sheet uses a deployed `/exec` Web App URL
+- Trusted Sheet Web App URL setup is confirmed on the exact browser/device being tested
 - Send to Trusted Sheet does not save the import token
+- import token entry is confirmed on the exact browser/device being tested
 
 ## 4. Trusted User Share Package
 
