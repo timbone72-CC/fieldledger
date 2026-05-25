@@ -96,13 +96,15 @@ If the send fails, check:
 - the current browser has saved FieldLedger jobs
 - the copied Trusted Sheet is the tester Sheet, not the owner/master Sheet
 
-## 8. Calendar Test
+## 8. Optional Advanced Calendar Test
+
+Calendar testing is optional for the first trusted-user app test unless the tester is specifically assigned to test calendar reminders.
 
 Use the dedicated FieldLedger calendar assigned for testing. Use the exact calendar name provided in your share package.
 
 Do not sync generated FieldLedger work events to a personal/default calendar.
 
-Confirm:
+If calendar testing is assigned, confirm:
 
 - CalendarEvents rows generate
 - Sync Calendar Events creates events
@@ -110,7 +112,7 @@ Confirm:
 - syncing the same rows again does not create duplicates
 - clearing CalendarEvents staging rows does not delete existing LEG Work Calendar events
 
-## 9. Calendar Rollover Test
+## 9. Optional Calendar Rollover Test
 
 Before relying on generated reminders, confirm ScheduleConfig handles:
 
