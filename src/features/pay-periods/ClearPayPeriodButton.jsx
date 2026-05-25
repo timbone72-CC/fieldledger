@@ -27,9 +27,18 @@ export default function ClearPayPeriodButton({ onPayPeriodCleared }) {
   }
 
   return (
-    <button type="button" onClick={handleClear}>
-      Clear Pay Period
-    </button>
+    <details className="export-action-group danger-zone-action">
+      <summary>Clear Pay Period</summary>
+
+      <p className="helper">
+        This clears the current pay period from this browser only. FieldLedger
+        downloads a JSON backup first, then asks for confirmation before clearing.
+      </p>
+
+      <button type="button" onClick={handleClear}>
+        Download Backup and Clear
+      </button>
+    </details>
   );
 }
 
