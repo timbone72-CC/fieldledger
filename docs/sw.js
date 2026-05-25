@@ -1,11 +1,13 @@
-const CACHE_NAME = "fieldledger-v3-camera";
+const CACHE_NAME = "fieldledger-v4-offline-shell";
 
 const APP_SHELL = [
   "/fieldledger/",
   "/fieldledger/manifest.webmanifest",
   "/fieldledger/favicon.svg",
   "/fieldledger/icon-192.png",
-  "/fieldledger/icon-512.png"
+  "/fieldledger/icon-512.png",
+  "/fieldledger/assets/index-_Fd6eXdT.js",
+  "/fieldledger/assets/index-BF1Y2inu.css"
 ];
 
 self.addEventListener("install", (event) => {
@@ -41,21 +43,41 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  event.respondWith(
-    fetch(event.request)
-      .then((networkResponse) => {
-        const responseClone = networkResponse.clone();
+  if (event.request.mode === "navigate") {
+    event.respondWith(
+      fetch(event.request)
+        .then((networkResponse) => {
+          const responseClone = networkResponse.clone();
 
-        caches.open(CACHE_NAME).then((cache) => {
-          cache.put(event.request, responseClone);
-        });
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put("/fieldledger/", responseClone);
+          });
+
+          return networkResponse;
+        })
+        .catch(() => caches.match("/fieldledger/"))
+    );
+
+    return;
+  }
+
+  event.respondWith(
+    caches.match(event.request).then((cachedResponse) => {
+      if (cachedResponse) {
+        return cachedResponse;
+      }
+
+      return fetch(event.request).then((networkResponse) => {
+        if (networkResponse && networkResponse.ok) {
+          const responseClone = networkResponse.clone();
+
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, responseClone);
+          });
+        }
 
         return networkResponse;
-      })
-      .catch(() => {
-        return caches.match(event.request).then((cachedResponse) => {
-          return cachedResponse || caches.match("/fieldledger/");
-        });
-      })
+      });
+    })
   );
 });

@@ -30,6 +30,13 @@ export default function SettingsPanel() {
   }
 
   async function updateApp() {
+    if (!navigator.onLine) {
+      window.alert(
+        "You appear to be offline. Do not update FieldLedger while offline. Reconnect to the internet, open the app once, then use Update App."
+      );
+      return;
+    }
+
     try {
       if ("serviceWorker" in navigator) {
         const registrations = await navigator.serviceWorker.getRegistrations();
@@ -131,7 +138,7 @@ export default function SettingsPanel() {
       <div className="helper">
         <strong>Update App:</strong>
         <br />
-        Reload FieldLedger and refresh the app cache. Your saved records stay on this device.
+        Reload FieldLedger and refresh the app cache. Use this only while online. Your saved records stay on this device.
       </div>
 
       <button type="button" onClick={updateApp}>
