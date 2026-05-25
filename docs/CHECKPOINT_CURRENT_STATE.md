@@ -2,27 +2,28 @@
 
 ## Current Head
 
-0724c66 Polish clear pay period danger zone
+4e6a21a Polish app color theme
 
 ## Recent Commits
 
+- 4e6a21a Polish app color theme
+- 8c90ec1 Update checkpoint after danger zone polish
 - 0724c66 Polish clear pay period danger zone
 - 637588a Update checkpoint after export backup layout polish
 - c8c4c55 Polish export backup layout
 - 660a127 Update checkpoint after saved jobs layout
-- c6aff85 Limit saved jobs list height
-- 81c4b4e Update checkpoint after ticket photo fallback
 
 ## Repo State
 
 - Repo path: `~/projects/fieldledger`
 - Branch: `main`
-- Current safe HEAD: `0724c66 Polish clear pay period danger zone`
+- Current safe HEAD: `4e6a21a Polish app color theme`
 - Pushed to `origin/main`
 - Working tree was clean before this checkpoint edit.
 - Blockers: none
 
 ## Confirmed Working State
+- App color theme polished: the UI now uses a cleaner blue/slate work-app palette with soft gray background, white cards, readable dark text, and updated rebuilt GitHub Pages assets.
 - Clear Pay Period danger zone polished: the destructive clear action is now inside an expandable warning section, so the backup/clear warning appears only when opened and opening the section does not clear data.
 - Export / Backup laptop layout polished: the dropdown panel is constrained, buttons no longer stretch unevenly beside the Trusted Sheet helper area, and Trusted Sheet notes now appear only when that section is opened.
 - Saved Jobs list height is now limited so multiple saved jobs scroll inside the panel instead of making the Jobs page endlessly long.
