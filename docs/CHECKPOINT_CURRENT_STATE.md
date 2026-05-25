@@ -23,6 +23,7 @@
 - Blockers: none
 
 ## Confirmed Working State
+- Live offline reload drill confirmed: after opening the live app online once, FieldLedger loads successfully while offline.
 - Offline app-shell caching fixed: the service worker now pre-caches the current built JS/CSS assets, only falls back to cached HTML for navigation requests, and Settings blocks Update App while offline to avoid deleting the cached app shell without internet.
 - App color theme polished: the UI now uses a cleaner blue/slate work-app palette with soft gray background, white cards, readable dark text, and updated rebuilt GitHub Pages assets.
 - Clear Pay Period danger zone polished: the destructive clear action is now inside an expandable warning section, so the backup/clear warning appears only when opened and opening the section does not clear data.
