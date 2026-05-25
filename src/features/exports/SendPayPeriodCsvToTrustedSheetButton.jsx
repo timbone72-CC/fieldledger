@@ -97,9 +97,11 @@ export default function SendPayPeriodCsvToTrustedSheetButton() {
   }
 
   return (
-    <div className="export-action-group">
+    <details className="export-action-group trusted-sheet-action">
+      <summary>Send to Trusted Sheet</summary>
+
       <button type="button" onClick={sendCsvToTrustedSheet}>
-        Send to Trusted Sheet
+        Send Current CSV
       </button>
 
       <p className="helper">
@@ -114,6 +116,6 @@ export default function SendPayPeriodCsvToTrustedSheetButton() {
       </p>
 
       {sendStatus ? <p className="helper">{sendStatus}</p> : null}
-    </div>
+    </details>
   );
 }
