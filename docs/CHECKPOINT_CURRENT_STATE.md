@@ -2,27 +2,28 @@
 
 ## Current Head
 
-c6aff85 Limit saved jobs list height
+c8c4c55 Polish export backup layout
 
 ## Recent Commits
 
+- c8c4c55 Polish export backup layout
+- 660a127 Update checkpoint after saved jobs layout
 - c6aff85 Limit saved jobs list height
 - 81c4b4e Update checkpoint after ticket photo fallback
 - 011ea15 Show attached ticket photos when preview unavailable
 - 82b1491 Update checkpoint after readiness doc consolidation
-- 2751532 Consolidate trusted user readiness docs
-- 5eb3f3d Update checkpoint after readiness checklist link
 
 ## Repo State
 
 - Repo path: `~/projects/fieldledger`
 - Branch: `main`
-- Current safe HEAD: `c6aff85 Limit saved jobs list height`
+- Current safe HEAD: `c8c4c55 Polish export backup layout`
 - Pushed to `origin/main`
 - Working tree was clean before this checkpoint edit.
 - Blockers: none
 
 ## Confirmed Working State
+- Export / Backup laptop layout polished: the dropdown panel is constrained, buttons no longer stretch unevenly beside the Trusted Sheet helper area, and Trusted Sheet notes now appear only when that section is opened.
 - Saved Jobs list height is now limited so multiple saved jobs scroll inside the panel instead of making the Jobs page endlessly long.
 - Job ticket photo cards now show attached-photo status even when a saved image file cannot be previewed by the browser, such as some HEIC/text-message photos.
 - Docs-only cleanup completed: `docs/FIELDLEDGER_TRUSTED_USER_RELEASE_READINESS.md` is now the single trusted-user release gate, and `docs/FIELDLEDGER_TRUSTED_USER_SETUP_CHECKLIST.md` references that gate instead of duplicating readiness wording.
