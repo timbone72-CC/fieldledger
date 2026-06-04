@@ -2,10 +2,11 @@
 
 ## Current Head
 
-82f7bf7 Document calendar schedule recovery baseline
+23a243f Update checkpoint after calendar recovery baseline
 
 ## Recent Commits
 
+- 23a243f Update checkpoint after calendar recovery baseline
 - 82f7bf7 Document calendar schedule recovery baseline
 - a63dd32 Record trusted user go decision
 - e98ce22 Update checkpoint after clean fresh-device simulation
@@ -17,7 +18,7 @@
 
 - Repo path: `~/projects/fieldledger`
 - Branch: `main`
-- Current safe HEAD: `82f7bf7 Document calendar schedule recovery baseline`
+- Current safe HEAD: `23a243f Update checkpoint after calendar recovery baseline`
 - Pushed to `origin/main`
 - Working tree was clean before this checkpoint edit.
 - Blockers: none
