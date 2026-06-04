@@ -92,6 +92,23 @@ Purpose:
 
 Verify schedule generation is repeatable and does not append duplicate pending calendar rows.
 
+Current governed schedule baseline:
+
+- PayPeriodStart: 2026-06-01
+- PayPeriodDay: 14
+- PaydayOffsetD: 5
+- PeriodsToCreate: 12
+- First corrected payday: 2026-06-05
+- Expected output: 12 pay periods and 48 CalendarEvents rows.
+
+Known recovery notes:
+
+- Do not paste a header row into CalendarEvents row 2.
+- CalendarEvents row data must align as eventId, eventType, title, startDate, endDate, notes, syncStatus.
+- Blank eventId rows are not created by Sync Calendar Events alone.
+- If event IDs are missing or events were deleted, run Restore Missing Calendar Events before syncing again.
+- Safe recovery flow is Generate Schedule Events, Sync Calendar Events, Restore Missing Calendar Events if needed, then Sync Calendar Events again.
+
 Manual test steps:
 
 1. Use a test Sheet copy.
