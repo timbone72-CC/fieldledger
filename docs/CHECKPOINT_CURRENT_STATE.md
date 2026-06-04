@@ -2,22 +2,22 @@
 
 ## Current Head
 
-87136c8 Update checkpoint after trusted user docs clarification
+82f7bf7 Document calendar schedule recovery baseline
 
 ## Recent Commits
 
+- 82f7bf7 Document calendar schedule recovery baseline
+- a63dd32 Record trusted user go decision
+- e98ce22 Update checkpoint after clean fresh-device simulation
 - 87136c8 Update checkpoint after trusted user docs clarification
 - 1a5c934 Clarify optional trusted user calendar testing
 - 8533639 Update checkpoint after trusted user RC drill
-- 76df54c Clarify release readiness device setup
-- 184f016 Update checkpoint after Trusted Sheet device setup
-- 4920964 Clarify Trusted Sheet device setup
 
 ## Repo State
 
 - Repo path: `~/projects/fieldledger`
 - Branch: `main`
-- Current safe HEAD: `87136c8 Update checkpoint after trusted user docs clarification`
+- Current safe HEAD: `82f7bf7 Document calendar schedule recovery baseline`
 - Pushed to `origin/main`
 - Working tree was clean before this checkpoint edit.
 - Blockers: none
@@ -285,6 +285,7 @@ Result:
 - Google Calendar downstream sync was manually validated through CalendarEvents and Apps Script integration.
 - CalendarEvents now supports generated Workweek and Payday scheduling rows.
 - ScheduleConfig now controls generated two-week work rotations and payday offsets.
+- Calendar schedule recovery baseline is documented in `docs/FIELDLEDGER_SHEETS_SCRIPT_HANDOFF.md`: PayPeriodStart 2026-06-01, PayPeriodDay 14, PaydayOffsetD 5, PeriodsToCreate 12, first corrected payday 2026-06-05, and expected output of 12 pay periods / 48 CalendarEvents rows.
 - Live ScheduleConfig generation was confirmed across month/year rollover for work periods, payday, Sunday reminder, and Tuesday due events.
 - Duplicate calendar event prevention is operational through stored eventId metadata.
 - Repeated Sync Calendar Events runs were confirmed not to create duplicate events when eventId metadata already exists.
