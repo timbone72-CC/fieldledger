@@ -93,8 +93,9 @@
 }
 
 .field input,
-.field select {
-  width: min(360px, 100%);
+.field select,
+.field textarea {
+  width: 100%;
   box-sizing: border-box;
   border: 1px solid #c7d2e1;
   border-radius: 10px;
