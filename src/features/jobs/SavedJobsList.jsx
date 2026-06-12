@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { loadActivePayPeriod, saveActivePayPeriod } from "../pay-periods/activePayPeriodStorage.js";
 import { loadPhotoBlob } from "../../shared/storage/photoBlobStorage.js";
+import { buildRecordPackageExport } from "../exports/recordPackageExport.js";
 
 export default function SavedJobsList({ onJobDeleted }) {
   const payPeriod = loadActivePayPeriod();
   const jobs = Array.isArray(payPeriod.jobs) ? payPeriod.jobs : [];
   const jobsPreviewKey = jobs.map((job) => `${job.id}:${job.ticketPhotoId || ""}`).join("|");
   const [previewUrls, setPreviewUrls] = useState({});
+  const [packageStatusByJobId, setPackageStatusByJobId] = useState({});
 
   useEffect(() => {
     let active = true;
@@ -73,6 +75,35 @@ export default function SavedJobsList({ onJobDeleted }) {
     }
   }
 
+  async function downloadTicketPackage(job) {
+    setPackageStatus(job.id, "");
+
+    try {
+      const recordPackage = await buildRecordPackageExport({
+        job,
+        loadPhotoBlob,
+      });
+
+      recordPackage.files.forEach(downloadPackageFile);
+
+      if (recordPackage.manifest.photoStatus === "missing") {
+        setPackageStatus(job.id, "Ticket package downloads started. Ticket photo was missing.");
+        return;
+      }
+
+      setPackageStatus(job.id, "Ticket package downloads started.");
+    } catch {
+      setPackageStatus(job.id, "Ticket package could not be created.");
+    }
+  }
+
+  function setPackageStatus(jobId, message) {
+    setPackageStatusByJobId((currentStatuses) => ({
+      ...currentStatuses,
+      [jobId]: message,
+    }));
+  }
+
   return (
     <section className="panel">
       <h2>Saved Jobs</h2>
@@ -120,6 +151,9 @@ export default function SavedJobsList({ onJobDeleted }) {
               )}
 
               <div className="card-actions">
+                <button type="button" onClick={() => downloadTicketPackage(job)}>
+                  Download Ticket Package
+                </button>
                 <button type="button" onClick={() => editJob(job)}>
                   Edit
                 </button>
@@ -127,12 +161,33 @@ export default function SavedJobsList({ onJobDeleted }) {
                   Delete
                 </button>
               </div>
+
+              {packageStatusByJobId[job.id] && (
+                <p className="helper">{packageStatusByJobId[job.id]}</p>
+              )}
             </div>
           ))}
         </div>
       )}
     </section>
   );
+}
+
+function downloadPackageFile(file) {
+  const fileContent = file.blob || file.text || "";
+  const blob = file.blob || new Blob([fileContent], { type: file.mimeType });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+
+  link.href = url;
+  link.download = file.fileName;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+
+  setTimeout(() => {
+    URL.revokeObjectURL(url);
+  }, 0);
 }
 
 function formatJobLabel(job) {
