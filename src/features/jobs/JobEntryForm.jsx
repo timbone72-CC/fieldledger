@@ -6,6 +6,7 @@ import { deletePhotoBlob, loadPhotoBlob, savePhotoBlob } from "../../shared/stor
 import { loadSettings } from "../settings/settingsStorage.js";
 import { loadJobSuggestions, rememberJobSuggestions } from "../../shared/storage/jobSuggestionStorage.js";
 import CameraCapture from "../../shared/components/CameraCapture.jsx";
+import { buildRecordFileName } from "../../shared/utils/recordFileNames.js";
 
 const BUCKING_STATES = {
   TEXAS: "Texas",
@@ -113,6 +114,19 @@ export default function JobEntryForm({ onJobSaved }) {
       hourlyRateSnapshot,
     });
   }, [baseJobPay, hourlyRateSnapshot, hoursWorked, jobType, additionalHours]);
+
+  const ticketPhotoDefaultFilename =
+    date && fieldTicketNumber && company
+      ? buildRecordFileName(
+          {
+            date,
+            fieldTicketNumber,
+            company,
+          },
+          "photo-01",
+          "jpg",
+        )
+      : "";
 
   useEffect(() => {
     let previewUrl = "";
@@ -488,6 +502,7 @@ export default function JobEntryForm({ onJobSaved }) {
 
       <CameraCapture
         label="Take Ticket Photo"
+        defaultFilename={ticketPhotoDefaultFilename}
         onPhotoCaptured={(photoFile) => {
           setTicketPhotoFile(photoFile);
           if (ticketPhotoInputRef.current) {

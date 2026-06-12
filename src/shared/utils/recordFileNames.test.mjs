@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import {
+  buildPayPeriodFileName,
   buildRecordFileName,
   buildRecordFolderName,
   buildRecordKey,
@@ -100,5 +101,27 @@ assert.equal(
 );
 
 assert.equal(sanitizeFilePart("  Field Ticket #3921 -- LEG  "), "Field-Ticket-3921-LEG");
+
+assert.equal(
+  buildPayPeriodFileName({ label: "June 1-15, 2026" }, "csv"),
+  "fieldledger__pay-period__june-1-15-2026.csv",
+);
+
+assert.equal(
+  buildPayPeriodFileName({ label: "June 1-15, 2026" }, ".json"),
+  "fieldledger__pay-period__june-1-15-2026.json",
+);
+
+assert.equal(
+  buildPayPeriodFileName({ label: "June 1-15, 2026" }, "json", {
+    fileType: "backup-before-clear",
+  }),
+  "fieldledger__pay-period__june-1-15-2026__backup-before-clear.json",
+);
+
+assert.equal(
+  buildPayPeriodFileName({ label: "" }, "csv"),
+  "fieldledger__pay-period__current-pay-period.csv",
+);
 
 console.log("recordFileNames tests passed");

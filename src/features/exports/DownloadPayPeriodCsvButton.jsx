@@ -1,11 +1,12 @@
 import { loadActivePayPeriod } from "../pay-periods/activePayPeriodStorage.js";
 import { buildPayPeriodCsv } from "./payPeriodCsv.js";
+import { buildPayPeriodFileName } from "../../shared/utils/recordFileNames.js";
 
 export default function DownloadPayPeriodCsvButton() {
   function downloadCsv() {
     const payPeriod = loadActivePayPeriod();
     const csvContent = buildPayPeriodCsv(payPeriod);
-    const fileName = buildFileName(payPeriod);
+    const fileName = buildPayPeriodFileName(payPeriod, "csv");
     const blob = new Blob([csvContent], { type: "text/csv" });
     const url = URL.createObjectURL(blob);
 
@@ -25,15 +26,4 @@ export default function DownloadPayPeriodCsvButton() {
       Download Spreadsheet CSV
     </button>
   );
-}
-
-
-function buildFileName(payPeriod) {
-  const label = payPeriod?.label || "current-pay-period";
-  const safeLabel = label
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "");
-
-  return `fieldledger-${safeLabel || "pay-period"}.csv`;
 }

@@ -83,6 +83,21 @@ export function buildRecordFileName(record, fileType, extension, options = {}) {
   return extensionPart ? `${baseName}.${extensionPart}` : baseName;
 }
 
+export function buildPayPeriodFileName(payPeriod, extension, options = {}) {
+  const labelPart = sanitizeFilePart(payPeriod?.label, {
+    fallback: "current-pay-period",
+  });
+  const typePart = sanitizeFilePart(options.fileType, {
+    fallback: "",
+    maxLength: options.fileTypeMaxLength || DEFAULT_FILE_TYPE_MAX_LENGTH,
+  });
+  const extensionPart = sanitizeExtension(extension);
+  const baseParts = ["fieldledger", "pay-period", labelPart, typePart].filter(Boolean);
+  const baseName = baseParts.join("__").toLowerCase();
+
+  return extensionPart ? `${baseName}.${extensionPart}` : baseName;
+}
+
 function sanitizeExtension(extension) {
   const rawExtension = String(extension ?? "")
     .trim()

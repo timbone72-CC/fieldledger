@@ -1,9 +1,10 @@
 import { loadActivePayPeriod } from "../pay-periods/activePayPeriodStorage.js";
+import { buildPayPeriodFileName } from "../../shared/utils/recordFileNames.js";
 
 export default function DownloadPayPeriodJsonButton() {
   function downloadJson() {
     const payPeriod = loadActivePayPeriod();
-    const fileName = buildFileName(payPeriod);
+    const fileName = buildPayPeriodFileName(payPeriod, "json");
     const fileContent = JSON.stringify(payPeriod, null, 2);
     const blob = new Blob([fileContent], { type: "application/json" });
     const url = URL.createObjectURL(blob);
@@ -21,14 +22,4 @@ export default function DownloadPayPeriodJsonButton() {
       Download JSON Backup
     </button>
   );
-}
-
-function buildFileName(payPeriod) {
-  const label = payPeriod?.label || "current-pay-period";
-  const safeLabel = label
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "");
-
-  return `fieldledger-${safeLabel || "pay-period"}.json`;
 }

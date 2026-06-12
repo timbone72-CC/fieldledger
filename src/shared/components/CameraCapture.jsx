@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
+import { sanitizeFilePart } from "../utils/recordFileNames.js";
 
-export default function CameraCapture({ label = "Take Photo", onPhotoCaptured }) {
+export default function CameraCapture({ label = "Take Photo", defaultFilename = "", onPhotoCaptured }) {
   const videoRef = useRef(null);
   const streamRef = useRef(null);
   const [cameraOpen, setCameraOpen] = useState(false);
@@ -69,7 +70,7 @@ export default function CameraCapture({ label = "Take Photo", onPhotoCaptured })
         return;
       }
 
-      const photoFile = new File([blob], `fieldledger-photo-${Date.now()}.jpg`, {
+      const photoFile = new File([blob], buildPhotoFileName(defaultFilename), {
         type: "image/jpeg",
       });
 
@@ -123,4 +124,40 @@ export default function CameraCapture({ label = "Take Photo", onPhotoCaptured })
       {message && <p className="helper">{message}</p>}
     </div>
   );
+}
+
+function buildPhotoFileName(defaultFilename) {
+  const fallbackFileName = buildFallbackPhotoFileName();
+  const rawFileName = String(defaultFilename || "").trim();
+
+  if (!rawFileName) {
+    return fallbackFileName;
+  }
+
+  const dotIndex = rawFileName.lastIndexOf(".");
+  const rawBaseName = dotIndex > 0 ? rawFileName.slice(0, dotIndex) : rawFileName;
+  const rawExtension = dotIndex > 0 ? rawFileName.slice(dotIndex + 1) : "jpg";
+  const baseName = rawBaseName
+    .split("__")
+    .map((part) => sanitizeFilePart(part))
+    .filter(Boolean)
+    .join("__");
+  const extension = sanitizeFilePart(rawExtension, {
+    fallback: "jpg",
+    maxLength: 12,
+  });
+
+  return baseName ? `${baseName}.${extension}` : fallbackFileName;
+}
+
+function buildFallbackPhotoFileName() {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+  const hour = String(now.getHours()).padStart(2, "0");
+  const minute = String(now.getMinutes()).padStart(2, "0");
+  const second = String(now.getSeconds()).padStart(2, "0");
+
+  return `fieldledger__photo__${year}${month}${day}-${hour}${minute}${second}.jpg`;
 }

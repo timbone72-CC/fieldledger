@@ -1,4 +1,5 @@
 import { clearActivePayPeriod, loadActivePayPeriod } from "./activePayPeriodStorage.js";
+import { buildPayPeriodFileName } from "../../shared/utils/recordFileNames.js";
 
 export default function ClearPayPeriodButton({ onPayPeriodCleared }) {
   function handleClear() {
@@ -43,7 +44,9 @@ export default function ClearPayPeriodButton({ onPayPeriodCleared }) {
 }
 
 function downloadJsonBackup(payPeriod) {
-  const fileName = buildFileName(payPeriod);
+  const fileName = buildPayPeriodFileName(payPeriod, "json", {
+    fileType: "backup-before-clear",
+  });
   const fileContent = JSON.stringify(payPeriod, null, 2);
   const blob = new Blob([fileContent], { type: "application/json" });
   const url = URL.createObjectURL(blob);
@@ -54,14 +57,4 @@ function downloadJsonBackup(payPeriod) {
   link.click();
 
   URL.revokeObjectURL(url);
-}
-
-function buildFileName(payPeriod) {
-  const label = payPeriod?.label || "current-pay-period";
-  const safeLabel = label
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "");
-
-  return `fieldledger-${safeLabel || "pay-period"}-backup-before-clear.json`;
 }
