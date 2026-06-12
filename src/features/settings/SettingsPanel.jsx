@@ -123,6 +123,19 @@ export default function SettingsPanel() {
         </div>
 
         <div className="helper form-span-full">
+          <strong>Storage & Backup Safety:</strong>
+          <br />
+          FieldLedger saves your active records on this device so you can keep working locally.
+          Local-only records are convenient, but they are not the safest long-term backup.
+          If this browser storage is cleared, this device is lost or broken, or app/site data is removed,
+          local-only records may be lost.
+          <br />
+          <br />
+          For safer record keeping, use Download Backup now. Google Drive archive is planned as the
+          recommended long-term record folder option once available.
+        </div>
+
+        <div className="helper form-span-full">
           <strong>App Version:</strong> {APP_NAME} — {APP_VERSION_LABEL}
           <br />
           Current update: {APP_VERSION_DATE} — {APP_VERSION_NOTE}
