@@ -103,6 +103,27 @@
   font: inherit;
 }
 
+.job-form-grid,
+.responsive-form-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.job-form-grid .field,
+.responsive-form-grid .field {
+  margin-bottom: 0;
+}
+
+.form-span-full {
+  grid-column: 1 / -1;
+}
+
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
 .result-card {
   display: grid;
   gap: 8px;
@@ -156,6 +177,14 @@
 @media (min-width: 700px) {
   .result-card {
     grid-template-columns: auto 1fr auto;
+  }
+}
+
+@media (min-width: 900px) {
+  .job-form-grid,
+  .responsive-form-grid {
+    grid-template-columns: repeat(2, minmax(260px, 1fr));
+    align-items: start;
   }
 }
 

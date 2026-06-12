@@ -142,57 +142,61 @@ export default function MileageEntryForm({ onMileageSaved }) {
     <section className="panel">
       <h2>{editingMileageId ? "Edit Mileage" : "Add Mileage"}</h2>
 
-      <label className="field">
-        Date
-        <input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
-      </label>
+      <div className="responsive-form-grid">
+        <label className="field">
+          Date
+          <input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
+        </label>
 
-      <label className="field">
-        Vehicle
-        <input value={vehicle} onChange={(e) => setVehicle(e.target.value)} />
-      </label>
+        <label className="field">
+          Vehicle
+          <input value={vehicle} onChange={(e) => setVehicle(e.target.value)} />
+        </label>
 
-      <label className="field">
-        Start Location
-        <input value={startLocation} onChange={(e) => setStartLocation(e.target.value)} />
-      </label>
+        <label className="field">
+          Start Location
+          <input value={startLocation} onChange={(e) => setStartLocation(e.target.value)} />
+        </label>
 
-      <label className="field">
-        End Location
-        <input value={endLocation} onChange={(e) => setEndLocation(e.target.value)} />
-      </label>
+        <label className="field">
+          End Location
+          <input value={endLocation} onChange={(e) => setEndLocation(e.target.value)} />
+        </label>
 
-      <label className="field">
-        Business Purpose
-        <input value={businessPurpose} onChange={(e) => setBusinessPurpose(e.target.value)} />
-      </label>
+        <label className="field">
+          Business Purpose
+          <input value={businessPurpose} onChange={(e) => setBusinessPurpose(e.target.value)} />
+        </label>
 
-      <label className="field">
-        Miles
-        <input type="number" min="0" step="0.1" value={miles} onChange={(e) => setMiles(e.target.value)} />
-      </label>
+        <label className="field">
+          Miles
+          <input type="number" min="0" step="0.1" value={miles} onChange={(e) => setMiles(e.target.value)} />
+        </label>
 
-      <label className="field">
-        Mileage Rate
-        <input type="number" min="0" step="0.01" value={mileageRateSnapshot} onChange={(e) => setMileageRateSnapshot(e.target.value)} />
-      </label>
+        <label className="field">
+          Mileage Rate
+          <input type="number" min="0" step="0.01" value={mileageRateSnapshot} onChange={(e) => setMileageRateSnapshot(e.target.value)} />
+        </label>
 
-      <label className="field">
-        Notes
-        <textarea value={notes} onChange={(e) => setNotes(e.target.value)} />
-      </label>
+        <label className="field form-span-full">
+          Notes
+          <textarea value={notes} onChange={(e) => setNotes(e.target.value)} />
+        </label>
 
-      <button type="button" onClick={saveMileageEntry}>
-        {editingMileageId ? "Save Mileage Changes" : "Save Mileage"}
-      </button>
+        <div className="form-actions form-span-full">
+          <button type="button" onClick={saveMileageEntry}>
+            {editingMileageId ? "Save Mileage Changes" : "Save Mileage"}
+          </button>
 
-      {editingMileageId && (
-        <button type="button" onClick={cancelEdit}>
-          Cancel Edit
-        </button>
-      )}
+          {editingMileageId && (
+            <button type="button" onClick={cancelEdit}>
+              Cancel Edit
+            </button>
+          )}
+        </div>
 
-      {saveMessage && <p className="helper">{saveMessage}</p>}
+        {saveMessage && <p className="helper form-span-full">{saveMessage}</p>}
+      </div>
     </section>
   );
 }

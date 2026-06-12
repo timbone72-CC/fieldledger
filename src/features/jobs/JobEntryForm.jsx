@@ -332,259 +332,265 @@ export default function JobEntryForm({ onJobSaved }) {
     <section className="panel">
       <h2>{editingJobId ? "Edit Job Ticket" : "Add Job Ticket"}</h2>
 
-      <label className="field">
-        Job Type
-        <select
-          value={jobType}
-          onChange={(event) => {
-            const nextJobType = event.target.value;
+      <div className="job-form-grid">
+        <label className="field">
+          Job Type
+          <select
+            value={jobType}
+            onChange={(event) => {
+              const nextJobType = event.target.value;
 
-            setJobType(nextJobType);
+              setJobType(nextJobType);
 
-            if (nextJobType === JOB_TYPES.BUCKING) {
-              setBuckingState(BUCKING_STATES.TEXAS);
-              setJobsCompleted("1");
-              setHoursWorked(String(BUCKING_HOURS_BY_STATE[BUCKING_STATES.TEXAS]));
-            }
-          }}
-        >
-          <option value={JOB_TYPES.BUCKING}>Bucking</option>
-          <option value={JOB_TYPES.TORQUE_TURN}>Torque Turn</option>
-        </select>
-      </label>
+              if (nextJobType === JOB_TYPES.BUCKING) {
+                setBuckingState(BUCKING_STATES.TEXAS);
+                setJobsCompleted("1");
+                setHoursWorked(String(BUCKING_HOURS_BY_STATE[BUCKING_STATES.TEXAS]));
+              }
+            }}
+          >
+            <option value={JOB_TYPES.BUCKING}>Bucking</option>
+            <option value={JOB_TYPES.TORQUE_TURN}>Torque Turn</option>
+          </select>
+        </label>
 
-      <label className="field">
-        Date
-        <input
-          type="date"
-          value={date}
-          onChange={(event) => setDate(event.target.value)}
-        />
-      </label>
+        <label className="field">
+          Date
+          <input
+            type="date"
+            value={date}
+            onChange={(event) => setDate(event.target.value)}
+          />
+        </label>
 
-      <label className="field">
-        Company
-        <input
-          type="text"
-          list="timesheet-company-options"
-          value={company}
-          onChange={(event) => setCompany(event.target.value)}
-          placeholder="Select or type company"
-        />
-        <datalist id="timesheet-company-options">
-          {companyOptions.map((companyOption) => (
-            <option key={companyOption} value={companyOption} />
-          ))}
-        </datalist>
-      </label>
+        <label className="field">
+          Company
+          <input
+            type="text"
+            list="timesheet-company-options"
+            value={company}
+            onChange={(event) => setCompany(event.target.value)}
+            placeholder="Select or type company"
+          />
+          <datalist id="timesheet-company-options">
+            {companyOptions.map((companyOption) => (
+              <option key={companyOption} value={companyOption} />
+            ))}
+          </datalist>
+        </label>
 
-      <label className="field">
-        Rig Name/Number
-        <input
-          type="text"
-          list="rig-name-options"
-          value={rigNameOrNumber}
-          onChange={(event) => setRigNameOrNumber(event.target.value)}
-          placeholder="Select or type rig"
-        />
-        <datalist id="rig-name-options">
-          {rigOptions.map((rigOption) => (
-            <option key={rigOption} value={rigOption} />
-          ))}
-        </datalist>
-      </label>
+        <label className="field">
+          Rig Name/Number
+          <input
+            type="text"
+            list="rig-name-options"
+            value={rigNameOrNumber}
+            onChange={(event) => setRigNameOrNumber(event.target.value)}
+            placeholder="Select or type rig"
+          />
+          <datalist id="rig-name-options">
+            {rigOptions.map((rigOption) => (
+              <option key={rigOption} value={rigOption} />
+            ))}
+          </datalist>
+        </label>
 
-      <label className="field">
-        Field Ticket Number
-        <input
-          type="text"
-          value={fieldTicketNumber}
-          onChange={(event) => setFieldTicketNumber(event.target.value)}
-          placeholder="Example: 12345"
-        />
-      </label>
+        <label className="field">
+          Field Ticket Number
+          <input
+            type="text"
+            value={fieldTicketNumber}
+            onChange={(event) => setFieldTicketNumber(event.target.value)}
+            placeholder="Example: 12345"
+          />
+        </label>
 
-      <label className="field">
-        Transportation
-        <input
-          type="number"
-          min="0"
-          step="0.01"
-          value={transportation}
-          onChange={(event) => setTransportation(event.target.value)}
-          placeholder="Example: 150"
-        />
-      </label>
+        <label className="field">
+          Transportation
+          <input
+            type="number"
+            min="0"
+            step="0.01"
+            value={transportation}
+            onChange={(event) => setTransportation(event.target.value)}
+            placeholder="Example: 150"
+          />
+        </label>
 
-      <label className="field">
-        Hourly Rate
-        <input
-          type="number"
-          min="0"
-          step="0.01"
-          value={hourlyRateSnapshot}
-          onChange={(event) => setHourlyRateSnapshot(event.target.value)}
-        />
-      </label>
+        <label className="field">
+          Hourly Rate
+          <input
+            type="number"
+            min="0"
+            step="0.01"
+            value={hourlyRateSnapshot}
+            onChange={(event) => setHourlyRateSnapshot(event.target.value)}
+          />
+        </label>
 
-      {jobType === JOB_TYPES.BUCKING && (
-        <>
-          <label className="field">
-            Bucking State
-            <select
-              value={buckingState}
-              onChange={(event) => {
-                const nextState = event.target.value;
+        {jobType === JOB_TYPES.BUCKING && (
+          <>
+            <label className="field">
+              Bucking State
+              <select
+                value={buckingState}
+                onChange={(event) => {
+                  const nextState = event.target.value;
 
-                setBuckingState(nextState);
-                setHoursWorked(String(calculateDefaultBuckingHours(jobsCompleted, nextState)));
-              }}
-            >
-              <option value={BUCKING_STATES.TEXAS}>Texas</option>
-              <option value={BUCKING_STATES.NEW_MEXICO}>New Mexico</option>
-            </select>
-          </label>
+                  setBuckingState(nextState);
+                  setHoursWorked(String(calculateDefaultBuckingHours(jobsCompleted, nextState)));
+                }}
+              >
+                <option value={BUCKING_STATES.TEXAS}>Texas</option>
+                <option value={BUCKING_STATES.NEW_MEXICO}>New Mexico</option>
+              </select>
+            </label>
 
-          <label className="field">
-            Jobs Completed
-            <input
-              type="number"
-              min="0"
-              step="1"
-              value={jobsCompleted}
-              onChange={(event) => {
-                const nextJobsCompleted = event.target.value;
+            <label className="field">
+              Jobs Completed
+              <input
+                type="number"
+                min="0"
+                step="1"
+                value={jobsCompleted}
+                onChange={(event) => {
+                  const nextJobsCompleted = event.target.value;
 
-                setJobsCompleted(nextJobsCompleted);
-                setHoursWorked(String(calculateDefaultBuckingHours(nextJobsCompleted, buckingState)));
-              }}
-            />
-          </label>
+                  setJobsCompleted(nextJobsCompleted);
+                  setHoursWorked(String(calculateDefaultBuckingHours(nextJobsCompleted, buckingState)));
+                }}
+              />
+            </label>
 
-          <label className="field">
-            Hours Worked
-            <input
-              type="number"
-              min="0"
-              step="0.25"
-              value={hoursWorked}
-              onChange={(event) => setHoursWorked(event.target.value)}
-            />
-          </label>
-        </>
-      )}
+            <label className="field">
+              Hours Worked
+              <input
+                type="number"
+                min="0"
+                step="0.25"
+                value={hoursWorked}
+                onChange={(event) => setHoursWorked(event.target.value)}
+              />
+            </label>
+          </>
+        )}
 
-      {jobType === JOB_TYPES.TORQUE_TURN && (
-        <>
-          <label className="field">
-            Base Job Pay
-            <input
-              type="number"
-              min="0"
-              step="0.01"
-              value={baseJobPay}
-              onChange={(event) => setBaseJobPay(event.target.value)}
-            />
-          </label>
+        {jobType === JOB_TYPES.TORQUE_TURN && (
+          <>
+            <label className="field">
+              Base Job Pay
+              <input
+                type="number"
+                min="0"
+                step="0.01"
+                value={baseJobPay}
+                onChange={(event) => setBaseJobPay(event.target.value)}
+              />
+            </label>
 
-          <label className="field">
-            Additional Hours After 24
-            <input
-              type="number"
-              min="0"
-              step="0.25"
-              value={additionalHours}
-              onChange={(event) => setAdditionalHours(event.target.value)}
-            />
-          </label>
-        </>
-      )}
+            <label className="field">
+              Additional Hours After 24
+              <input
+                type="number"
+                min="0"
+                step="0.25"
+                value={additionalHours}
+                onChange={(event) => setAdditionalHours(event.target.value)}
+              />
+            </label>
+          </>
+        )}
 
-      <CameraCapture
-        label="Take Ticket Photo"
-        defaultFilename={ticketPhotoDefaultFilename}
-        onPhotoCaptured={(photoFile) => {
-          setTicketPhotoFile(photoFile);
-          if (ticketPhotoInputRef.current) {
-            ticketPhotoInputRef.current.value = "";
-          }
-        }}
-      />
-
-      <label className="field">
-        Ticket Photo Name
-        <input
-          type="text"
-          value={ticketPhotoName}
-          onChange={(event) => setTicketPhotoName(event.target.value)}
-          placeholder="Example: Scan Vision Ticket 12345"
-        />
-      </label>
-
-      <label className="field">
-        Upload Ticket Photo
-        <input
-          ref={ticketPhotoInputRef}
-          type="file"
-          accept="image/*"
-          onChange={(event) => {
-            setTicketPhotoFile(event.target.files?.[0] || null);
-            setSaveMessage("");
-          }}
-        />
-      </label>
-
-      {(ticketPhotoId || ticketPhotoFile || ticketPhotoPreviewUrl) && (
-        <div className="attached-photo-preview">
-          <h3>Attached Photo</h3>
-
-          {ticketPhotoFile && (
-            <p className="helper">Photo captured. Review it before saving.</p>
-          )}
-
-          {ticketPhotoId && !ticketPhotoFile && (
-            <p className="helper">Saved ticket photo.</p>
-          )}
-
-          {ticketPhotoPreviewUrl && (
-            <img
-              src={ticketPhotoPreviewUrl}
-              alt="Attached ticket preview"
-              style={{
-                display: "block",
-                maxWidth: "240px",
-                maxHeight: "240px",
-                margin: "0.75rem auto 0",
-                borderRadius: "0.75rem",
-                border: "1px solid #d8d4ef",
-              }}
-            />
-          )}
-
-          <p className="helper">{ticketPhotoName || ticketPhotoFile?.name || "Unnamed ticket photo"}</p>
-
-          <button type="button" onClick={removeTicketPhoto}>
-            Remove Photo
-          </button>
+        <div className="form-span-full">
+          <CameraCapture
+            label="Take Ticket Photo"
+            defaultFilename={ticketPhotoDefaultFilename}
+            onPhotoCaptured={(photoFile) => {
+              setTicketPhotoFile(photoFile);
+              if (ticketPhotoInputRef.current) {
+                ticketPhotoInputRef.current.value = "";
+              }
+            }}
+          />
         </div>
-      )}
 
-      <div className="result-card">
-        <span>Calculated Pay</span>
-        <strong>${calculatedPay.toFixed(2)}</strong>
+        <label className="field">
+          Ticket Photo Name
+          <input
+            type="text"
+            value={ticketPhotoName}
+            onChange={(event) => setTicketPhotoName(event.target.value)}
+            placeholder="Example: Scan Vision Ticket 12345"
+          />
+        </label>
+
+        <label className="field">
+          Upload Ticket Photo
+          <input
+            ref={ticketPhotoInputRef}
+            type="file"
+            accept="image/*"
+            onChange={(event) => {
+              setTicketPhotoFile(event.target.files?.[0] || null);
+              setSaveMessage("");
+            }}
+          />
+        </label>
+
+        {(ticketPhotoId || ticketPhotoFile || ticketPhotoPreviewUrl) && (
+          <div className="attached-photo-preview form-span-full">
+            <h3>Attached Photo</h3>
+
+            {ticketPhotoFile && (
+              <p className="helper">Photo captured. Review it before saving.</p>
+            )}
+
+            {ticketPhotoId && !ticketPhotoFile && (
+              <p className="helper">Saved ticket photo.</p>
+            )}
+
+            {ticketPhotoPreviewUrl && (
+              <img
+                src={ticketPhotoPreviewUrl}
+                alt="Attached ticket preview"
+                style={{
+                  display: "block",
+                  maxWidth: "240px",
+                  maxHeight: "240px",
+                  margin: "0.75rem auto 0",
+                  borderRadius: "0.75rem",
+                  border: "1px solid #d8d4ef",
+                }}
+              />
+            )}
+
+            <p className="helper">{ticketPhotoName || ticketPhotoFile?.name || "Unnamed ticket photo"}</p>
+
+            <button type="button" onClick={removeTicketPhoto}>
+              Remove Photo
+            </button>
+          </div>
+        )}
+
+        <div className="result-card form-span-full">
+          <span>Calculated Pay</span>
+          <strong>${calculatedPay.toFixed(2)}</strong>
+        </div>
+
+        <div className="form-actions form-span-full">
+          <button type="button" onClick={saveJob}>
+            {editingJobId ? "Save Job Changes" : "Save Job"}
+          </button>
+
+          {editingJobId && (
+            <button type="button" onClick={cancelEdit}>
+              Cancel Edit
+            </button>
+          )}
+        </div>
+
+        {saveMessage && <p className="helper form-span-full">{saveMessage}</p>}
       </div>
-
-      <button type="button" onClick={saveJob}>
-        {editingJobId ? "Save Job Changes" : "Save Job"}
-      </button>
-
-      {editingJobId && (
-        <button type="button" onClick={cancelEdit}>
-          Cancel Edit
-        </button>
-      )}
-
-      {saveMessage && <p className="helper">{saveMessage}</p>}
     </section>
   );
 }

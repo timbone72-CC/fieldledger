@@ -32,39 +32,43 @@ export default function PayPeriodInfoForm() {
     <section className="panel">
       <h2>Pay Period Info</h2>
 
-      <label className="field">
-        Label
-        <input
-          type="text"
-          value={label}
-          onChange={(event) => setLabel(event.target.value)}
-          placeholder="Example: April 1–15"
-        />
-      </label>
+      <div className="responsive-form-grid">
+        <label className="field form-span-full">
+          Label
+          <input
+            type="text"
+            value={label}
+            onChange={(event) => setLabel(event.target.value)}
+            placeholder="Example: April 1–15"
+          />
+        </label>
 
-      <label className="field">
-        Start Date
-        <input
-          type="date"
-          value={startDate}
-          onChange={(event) => setStartDate(event.target.value)}
-        />
-      </label>
+        <label className="field">
+          Start Date
+          <input
+            type="date"
+            value={startDate}
+            onChange={(event) => setStartDate(event.target.value)}
+          />
+        </label>
 
-      <label className="field">
-        End Date
-        <input
-          type="date"
-          value={endDate}
-          onChange={(event) => setEndDate(event.target.value)}
-        />
-      </label>
+        <label className="field">
+          End Date
+          <input
+            type="date"
+            value={endDate}
+            onChange={(event) => setEndDate(event.target.value)}
+          />
+        </label>
 
-      <button type="button" onClick={savePayPeriodInfo}>
-        Save Pay Period Info
-      </button>
+        <div className="form-actions form-span-full">
+          <button type="button" onClick={savePayPeriodInfo}>
+            Save Pay Period Info
+          </button>
+        </div>
 
-      {saveMessage && <p className="helper">{saveMessage}</p>}
+        {saveMessage && <p className="helper form-span-full">{saveMessage}</p>}
+      </div>
     </section>
   );
 }

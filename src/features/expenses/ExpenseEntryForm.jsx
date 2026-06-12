@@ -260,144 +260,150 @@ export default function ExpenseEntryForm({ onExpenseSaved }) {
     <section className="panel">
       <h2>{editingExpenseId ? "Edit Receipt / Expense" : "Add Receipt / Expense"}</h2>
 
-      <label className="field">
-        Date
-        <input
-          type="date"
-          value={date}
-          onChange={(event) => setDate(event.target.value)}
-        />
-      </label>
+      <div className="responsive-form-grid">
+        <label className="field">
+          Date
+          <input
+            type="date"
+            value={date}
+            onChange={(event) => setDate(event.target.value)}
+          />
+        </label>
 
-      <label className="field">
-        Vendor
-        <input
-          type="text"
-          value={vendor}
-          onChange={(event) => setVendor(event.target.value)}
-          placeholder="Example: Loves, Walmart, AutoZone"
-        />
-      </label>
+        <label className="field">
+          Vendor
+          <input
+            type="text"
+            value={vendor}
+            onChange={(event) => setVendor(event.target.value)}
+            placeholder="Example: Loves, Walmart, AutoZone"
+          />
+        </label>
 
-      <label className="field">
-        Category
-        <select
-          value={category}
-          onChange={(event) => setCategory(event.target.value)}
-        >
-          {EXPENSE_CATEGORIES.map((expenseCategory) => (
-            <option key={expenseCategory} value={expenseCategory}>
-              {expenseCategory}
-            </option>
-          ))}
-        </select>
-      </label>
+        <label className="field">
+          Category
+          <select
+            value={category}
+            onChange={(event) => setCategory(event.target.value)}
+          >
+            {EXPENSE_CATEGORIES.map((expenseCategory) => (
+              <option key={expenseCategory} value={expenseCategory}>
+                {expenseCategory}
+              </option>
+            ))}
+          </select>
+        </label>
 
-      <label className="field">
-        Amount
-        <input
-          type="number"
-          min="0"
-          step="0.01"
-          value={amount}
-          onChange={(event) => setAmount(event.target.value)}
-          placeholder="0.00"
-        />
-      </label>
+        <label className="field">
+          Amount
+          <input
+            type="number"
+            min="0"
+            step="0.01"
+            value={amount}
+            onChange={(event) => setAmount(event.target.value)}
+            placeholder="0.00"
+          />
+        </label>
 
-      <CameraCapture
-        label="Take Receipt Photo"
-        onPhotoCaptured={(photoFile) => {
-          addReceiptPhotoFiles([photoFile]);
+        <div className="form-span-full">
+          <CameraCapture
+            label="Take Receipt Photo"
+            onPhotoCaptured={(photoFile) => {
+              addReceiptPhotoFiles([photoFile]);
 
-          if (receiptPhotoInputRef.current) {
-            receiptPhotoInputRef.current.value = "";
-          }
-        }}
-      />
-
-      <label className="field">
-        Upload Receipt Photos
-        <input
-          ref={receiptPhotoInputRef}
-          type="file"
-          accept="image/*"
-          multiple
-          onChange={(event) => {
-            addReceiptPhotoFiles(event.target.files);
-
-            if (receiptPhotoInputRef.current) {
-              receiptPhotoInputRef.current.value = "";
-            }
-          }}
-        />
-      </label>
-
-      {receiptPhotos.length > 0 && (
-        <div className="attached-photo-preview">
-          <h3>Attached Photos</h3>
-          <p className="helper">Review and name each receipt photo before saving.</p>
-
-          {receiptPhotos.map((receiptPhoto) => {
-            const photoKey = getReceiptPhotoKey(receiptPhoto);
-
-            return (
-              <div className="result-card" key={photoKey}>
-                {receiptPhoto.previewUrl && (
-                  <img
-                    src={receiptPhoto.previewUrl}
-                    alt="Attached receipt preview"
-                    style={{
-                      display: "block",
-                      maxWidth: "240px",
-                      maxHeight: "240px",
-                      margin: "0.75rem auto 0",
-                      borderRadius: "0.75rem",
-                      border: "1px solid #d8d4ef",
-                    }}
-                  />
-                )}
-
-                <label className="field">
-                  Receipt Photo Name
-                  <input
-                    type="text"
-                    value={receiptPhoto.name}
-                    onChange={(event) => updateReceiptPhotoName(photoKey, event.target.value)}
-                    placeholder="Example: Fuel receipt, Hotel receipt, Tool receipt"
-                  />
-                </label>
-
-                <button type="button" onClick={() => removeReceiptPhoto(photoKey)}>
-                  Remove Photo
-                </button>
-              </div>
-            );
-          })}
+              if (receiptPhotoInputRef.current) {
+                receiptPhotoInputRef.current.value = "";
+              }
+            }}
+          />
         </div>
-      )}
 
-      <label className="field">
-        Notes
-        <textarea
-          value={notes}
-          onChange={(event) => setNotes(event.target.value)}
-          placeholder="Optional notes"
-          rows="3"
-        />
-      </label>
+        <label className="field form-span-full">
+          Upload Receipt Photos
+          <input
+            ref={receiptPhotoInputRef}
+            type="file"
+            accept="image/*"
+            multiple
+            onChange={(event) => {
+              addReceiptPhotoFiles(event.target.files);
 
-      <button type="button" onClick={saveExpense}>
-        {editingExpenseId ? "Save Expense Changes" : "Save Expense"}
-      </button>
+              if (receiptPhotoInputRef.current) {
+                receiptPhotoInputRef.current.value = "";
+              }
+            }}
+          />
+        </label>
 
-      {editingExpenseId && (
-        <button type="button" onClick={cancelEdit}>
-          Cancel Edit
-        </button>
-      )}
+        {receiptPhotos.length > 0 && (
+          <div className="attached-photo-preview form-span-full">
+            <h3>Attached Photos</h3>
+            <p className="helper">Review and name each receipt photo before saving.</p>
 
-      {saveMessage && <p className="helper">{saveMessage}</p>}
+            {receiptPhotos.map((receiptPhoto) => {
+              const photoKey = getReceiptPhotoKey(receiptPhoto);
+
+              return (
+                <div className="result-card" key={photoKey}>
+                  {receiptPhoto.previewUrl && (
+                    <img
+                      src={receiptPhoto.previewUrl}
+                      alt="Attached receipt preview"
+                      style={{
+                        display: "block",
+                        maxWidth: "240px",
+                        maxHeight: "240px",
+                        margin: "0.75rem auto 0",
+                        borderRadius: "0.75rem",
+                        border: "1px solid #d8d4ef",
+                      }}
+                    />
+                  )}
+
+                  <label className="field">
+                    Receipt Photo Name
+                    <input
+                      type="text"
+                      value={receiptPhoto.name}
+                      onChange={(event) => updateReceiptPhotoName(photoKey, event.target.value)}
+                      placeholder="Example: Fuel receipt, Hotel receipt, Tool receipt"
+                    />
+                  </label>
+
+                  <button type="button" onClick={() => removeReceiptPhoto(photoKey)}>
+                    Remove Photo
+                  </button>
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+        <label className="field form-span-full">
+          Notes
+          <textarea
+            value={notes}
+            onChange={(event) => setNotes(event.target.value)}
+            placeholder="Optional notes"
+            rows="3"
+          />
+        </label>
+
+        <div className="form-actions form-span-full">
+          <button type="button" onClick={saveExpense}>
+            {editingExpenseId ? "Save Expense Changes" : "Save Expense"}
+          </button>
+
+          {editingExpenseId && (
+            <button type="button" onClick={cancelEdit}>
+              Cancel Edit
+            </button>
+          )}
+        </div>
+
+        {saveMessage && <p className="helper form-span-full">{saveMessage}</p>}
+      </div>
     </section>
   );
 }
