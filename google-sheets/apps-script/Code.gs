@@ -148,6 +148,159 @@ function parseFieldLedgerWebImportBody(bodyText) {
 
 /**
  * =========================================================
+ * 03.03a FieldLedger archive validation-only receiver
+ * =========================================================
+ */
+function handleArchivePayPeriodValidationOnly(body) {
+  const expectedArchiveToken = PropertiesService
+    .getScriptProperties()
+    .getProperty("FIELDLEDGER_ARCHIVE_TOKEN");
+
+  if (!expectedArchiveToken) {
+    return createJsonResponse({
+      success: false,
+      message: "FieldLedger archive token is not configured."
+    });
+  }
+
+  if (body.token !== expectedArchiveToken) {
+    return createJsonResponse({
+      success: false,
+      message: "Unauthorized FieldLedger archive request."
+    });
+  }
+
+  const archivePayloadResult = parseArchivePayloadFromBody(body);
+
+  if (!archivePayloadResult.success) {
+    return createJsonResponse(archivePayloadResult);
+  }
+
+  const validation = validateArchivePayloadShape(archivePayloadResult.archivePayload);
+
+  if (!validation.success) {
+    return createJsonResponse(validation);
+  }
+
+  return createJsonResponse({
+    success: true,
+    message: "FieldLedger archive payload validated. Drive writing is not enabled yet.",
+    fileCount: archivePayloadResult.archivePayload.summary.fileCount,
+    photoCount: archivePayloadResult.archivePayload.summary.photoCount,
+    missingPhotoCount: archivePayloadResult.archivePayload.summary.missingPhotoCount
+  });
+}
+
+function parseArchivePayloadFromBody(body) {
+  if (!body.archivePayload) {
+    return {
+      success: false,
+      message: "No FieldLedger archive payload received."
+    };
+  }
+
+  if (typeof body.archivePayload === "object") {
+    return {
+      success: true,
+      archivePayload: body.archivePayload
+    };
+  }
+
+  try {
+    return {
+      success: true,
+      archivePayload: JSON.parse(body.archivePayload)
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: "FieldLedger archive payload is not valid JSON."
+    };
+  }
+}
+
+function validateArchivePayloadShape(archivePayload) {
+  if (!archivePayload || typeof archivePayload !== "object") {
+    return {
+      success: false,
+      message: "FieldLedger archive payload is missing or invalid."
+    };
+  }
+
+  if (archivePayload.action !== "archivePayPeriod") {
+    return {
+      success: false,
+      message: "FieldLedger archive payload action is invalid."
+    };
+  }
+
+  if (archivePayload.archiveType !== "fieldledger-pay-period-archive") {
+    return {
+      success: false,
+      message: "FieldLedger archive payload type is invalid."
+    };
+  }
+
+  if (!archivePayload.archiveSchemaVersion) {
+    return {
+      success: false,
+      message: "FieldLedger archive schema version is missing."
+    };
+  }
+
+  if (!archivePayload.manifest || typeof archivePayload.manifest !== "object") {
+    return {
+      success: false,
+      message: "FieldLedger archive manifest is missing."
+    };
+  }
+
+  if (!Array.isArray(archivePayload.files)) {
+    return {
+      success: false,
+      message: "FieldLedger archive files list is missing."
+    };
+  }
+
+  if (!Array.isArray(archivePayload.photos)) {
+    return {
+      success: false,
+      message: "FieldLedger archive photos list is missing."
+    };
+  }
+
+  if (!Array.isArray(archivePayload.missingPhotos)) {
+    return {
+      success: false,
+      message: "FieldLedger archive missing photos list is missing."
+    };
+  }
+
+  if (!archivePayload.summary || typeof archivePayload.summary !== "object") {
+    return {
+      success: false,
+      message: "FieldLedger archive summary is missing."
+    };
+  }
+
+  if (
+    !archivePayload.manifest.restore ||
+    archivePayload.manifest.restore.sourceOfTruthFile !== "fieldledger-pay-period-backup.json"
+  ) {
+    return {
+      success: false,
+      message: "FieldLedger archive restore source is invalid."
+    };
+  }
+
+  return {
+    success: true,
+    message: "FieldLedger archive payload shape is valid."
+  };
+}
+
+/**
+ * =========================================================
  * 03.03 FieldLedger web import receiver
  * =========================================================
  *
@@ -161,17 +314,6 @@ function parseFieldLedgerWebImportBody(bodyText) {
  */
 function doPost(event) {
   try {
-    const expectedToken = PropertiesService
-      .getScriptProperties()
-      .getProperty("FIELDLEDGER_IMPORT_TOKEN");
-
-    if (!expectedToken) {
-      return createJsonResponse({
-        success: false,
-        message: "FieldLedger import token is not configured."
-      });
-    }
-
     const bodyText = event && event.postData && event.postData.contents
       ? event.postData.contents
       : "";
@@ -184,6 +326,21 @@ function doPost(event) {
     }
 
     const body = parseFieldLedgerWebImportBody(bodyText);
+
+    if (body.action === "archivePayPeriod") {
+      return handleArchivePayPeriodValidationOnly(body);
+    }
+
+    const expectedToken = PropertiesService
+      .getScriptProperties()
+      .getProperty("FIELDLEDGER_IMPORT_TOKEN");
+
+    if (!expectedToken) {
+      return createJsonResponse({
+        success: false,
+        message: "FieldLedger import token is not configured."
+      });
+    }
 
     if (body.token !== expectedToken) {
       return createJsonResponse({
