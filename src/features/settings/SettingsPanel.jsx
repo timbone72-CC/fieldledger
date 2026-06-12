@@ -1,6 +1,35 @@
 import { useState } from "react";
 import { APP_NAME, APP_VERSION_DATE, APP_VERSION_LABEL, APP_VERSION_NOTE } from "../../shared/constants/appInfo.js";
+import { STORAGE_KEYS } from "../../shared/constants/storageKeys.js";
+import { loadPhotoBlob } from "../../shared/storage/photoBlobStorage.js";
+import { buildPayPeriodArchivePayload } from "../exports/payPeriodArchivePayload.js";
+import { sendPayPeriodArchiveToDrive } from "../exports/sendPayPeriodArchiveToDrive.js";
+import { loadActivePayPeriod } from "../pay-periods/activePayPeriodStorage.js";
 import { loadSettings, saveSettings } from "./settingsStorage.js";
+
+function loadSavedTrustedSheetWebAppUrl() {
+  try {
+    return window.localStorage.getItem(STORAGE_KEYS.TRUSTED_SHEET_WEB_APP_URL) || "";
+  } catch {
+    return "";
+  }
+}
+
+async function encodeBlobAsBase64(blob) {
+  const arrayBuffer = await blob.arrayBuffer();
+  const bytes = new Uint8Array(arrayBuffer);
+  const chunkSize = 0x8000;
+  let binary = "";
+
+  for (let index = 0; index < bytes.length; index += chunkSize) {
+    binary += String.fromCharCode(...bytes.subarray(index, index + chunkSize));
+  }
+
+  return {
+    base64: window.btoa(binary),
+    mimeType: blob.type || "application/octet-stream",
+  };
+}
 
 export default function SettingsPanel() {
   const savedSettings = loadSettings();
@@ -12,6 +41,7 @@ export default function SettingsPanel() {
   const [federalTaxRate, setFederalTaxRate] = useState((savedSettings.federalTaxRate * 100).toFixed(2));
   const [stateTaxRate, setStateTaxRate] = useState((savedSettings.stateTaxRate * 100).toFixed(2));
   const [saveMessage, setSaveMessage] = useState("");
+  const [archiveValidationStatus, setArchiveValidationStatus] = useState("");
 
   function saveUserSettings() {
     const saved = saveSettings({
@@ -57,6 +87,81 @@ export default function SettingsPanel() {
       }
     } finally {
       window.location.reload();
+    }
+  }
+
+  async function validateArchiveEndpoint() {
+    setArchiveValidationStatus("");
+
+    const savedWebAppUrl = loadSavedTrustedSheetWebAppUrl();
+    const webAppUrl = window.prompt(
+      "Paste the Apps Script web app URL for archive validation. Use the deployed /exec URL. Validation only. No Google Drive files are written yet.",
+      savedWebAppUrl,
+    );
+
+    if (!webAppUrl || !webAppUrl.trim()) {
+      setArchiveValidationStatus("Archive validation canceled. No web app URL was provided.");
+      return;
+    }
+
+    const archiveToken = window.prompt(
+      "Paste the FieldLedger archive validation token. For safety, this token is not saved.",
+    );
+
+    if (!archiveToken || !archiveToken.trim()) {
+      setArchiveValidationStatus("Archive validation canceled. No archive token was provided.");
+      return;
+    }
+
+    const confirmed = window.confirm(
+      "Build the current FieldLedger pay-period archive payload and send it for validation only? No Google Drive files are written yet.",
+    );
+
+    if (!confirmed) {
+      setArchiveValidationStatus("Archive validation canceled. No Google Drive files were written.");
+      return;
+    }
+
+    try {
+      setArchiveValidationStatus("Building archive validation payload...");
+
+      const payPeriod = loadActivePayPeriod();
+      const currentSettings = loadSettings();
+      const archivePayload = await buildPayPeriodArchivePayload({
+        payPeriod,
+        settings: currentSettings,
+        appInfo: {
+          name: APP_NAME,
+          versionLabel: APP_VERSION_LABEL,
+          versionDate: APP_VERSION_DATE,
+          versionNote: APP_VERSION_NOTE,
+        },
+        createdAt: new Date().toISOString(),
+        loadPhotoBlob,
+        encodeBlobAsBase64,
+      });
+
+      setArchiveValidationStatus("Sending archive payload for validation only...");
+
+      const result = await sendPayPeriodArchiveToDrive({
+        webAppUrl: webAppUrl.trim(),
+        archiveToken,
+        archivePayload,
+      });
+
+      const countSummary = [
+        Number.isFinite(result.fileCount) ? `${result.fileCount} file(s)` : "",
+        Number.isFinite(result.photoCount) ? `${result.photoCount} photo(s)` : "",
+        Number.isFinite(result.missingPhotoCount) ? `${result.missingPhotoCount} missing photo(s)` : "",
+      ].filter(Boolean).join(", ");
+
+      setArchiveValidationStatus(
+        `${result.message}${countSummary ? ` ${countSummary}.` : ""} Validation only. No Google Drive files are written yet.`,
+      );
+    } catch (error) {
+      setArchiveValidationStatus(
+        `Archive validation failed: ${error.message}. Validation only. No Google Drive files were written.`,
+      );
     }
   }
 
@@ -162,6 +267,23 @@ export default function SettingsPanel() {
             Update App
           </button>
         </div>
+
+        <details className="form-span-full">
+          <summary>Developer Archive Validation</summary>
+
+          <p className="helper">
+            Validation only. No Google Drive files are written yet. This manually builds the current
+            pay-period archive payload and sends it to the Apps Script archive validation endpoint.
+          </p>
+
+          <div className="form-actions">
+            <button type="button" onClick={validateArchiveEndpoint}>
+              Validate Archive Endpoint
+            </button>
+          </div>
+
+          {archiveValidationStatus ? <p className="helper">{archiveValidationStatus}</p> : null}
+        </details>
 
         {saveMessage && <p className="helper form-span-full">{saveMessage}</p>}
       </div>
