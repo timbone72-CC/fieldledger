@@ -15,6 +15,14 @@ function loadSavedTrustedSheetWebAppUrl() {
   }
 }
 
+function saveTrustedSheetWebAppUrl(webAppUrl) {
+  try {
+    window.localStorage.setItem(STORAGE_KEYS.TRUSTED_SHEET_WEB_APP_URL, webAppUrl);
+  } catch {
+    // Archive sending can continue even if saving the URL fails.
+  }
+}
+
 async function encodeBlobAsBase64(blob) {
   const arrayBuffer = await blob.arrayBuffer();
   const bytes = new Uint8Array(arrayBuffer);
@@ -95,7 +103,7 @@ export default function SettingsPanel() {
 
     const savedWebAppUrl = loadSavedTrustedSheetWebAppUrl();
     const webAppUrl = window.prompt(
-      "Paste the Apps Script web app URL for archive validation. Use the deployed /exec URL. Validation only. No Google Drive files are written yet.",
+      "Paste the Apps Script web app URL for archive validation. Use the deployed /exec URL. This sends the current active pay period archive payload to Apps Script and may create Google Drive archive folders/files.",
       savedWebAppUrl,
     );
 
@@ -103,6 +111,9 @@ export default function SettingsPanel() {
       setArchiveValidationStatus("Archive validation canceled. No web app URL was provided.");
       return;
     }
+
+    const trimmedWebAppUrl = webAppUrl.trim();
+    saveTrustedSheetWebAppUrl(trimmedWebAppUrl);
 
     const archiveToken = window.prompt(
       "Paste the FieldLedger archive validation token. For safety, this token is not saved.",
@@ -114,11 +125,11 @@ export default function SettingsPanel() {
     }
 
     const confirmed = window.confirm(
-      "Build the current FieldLedger pay-period archive payload and send it for validation only? No Google Drive files are written yet.",
+      "Send the current active pay period archive payload to Apps Script now? This may create Google Drive archive folders/files.",
     );
 
     if (!confirmed) {
-      setArchiveValidationStatus("Archive validation canceled. No Google Drive files were written.");
+      setArchiveValidationStatus("Archive validation canceled before sending the archive payload.");
       return;
     }
 
@@ -141,10 +152,10 @@ export default function SettingsPanel() {
         encodeBlobAsBase64,
       });
 
-      setArchiveValidationStatus("Sending archive payload for validation only...");
+      setArchiveValidationStatus("Sending archive payload to Apps Script. Google Drive archive folders/files may be created...");
 
       const result = await sendPayPeriodArchiveToDrive({
-        webAppUrl: webAppUrl.trim(),
+        webAppUrl: trimmedWebAppUrl,
         archiveToken,
         archivePayload,
       });
@@ -156,11 +167,11 @@ export default function SettingsPanel() {
       ].filter(Boolean).join(", ");
 
       setArchiveValidationStatus(
-        `${result.message}${countSummary ? ` ${countSummary}.` : ""} Validation only. No Google Drive files are written yet.`,
+        `${result.message}${countSummary ? ` ${countSummary}.` : ""} Google Drive archive folders/files may have been created.`,
       );
     } catch (error) {
       setArchiveValidationStatus(
-        `Archive validation failed: ${error.message}. Validation only. No Google Drive files were written.`,
+        `Archive validation failed: ${error.message}. Google Drive archive folders/files may have been created before the failure.`,
       );
     }
   }
@@ -272,8 +283,8 @@ export default function SettingsPanel() {
           <summary>Developer Archive Validation</summary>
 
           <p className="helper">
-            Validation only. No Google Drive files are written yet. This manually builds the current
-            pay-period archive payload and sends it to the Apps Script archive validation endpoint.
+            This manually builds the current active pay period archive payload and sends it to Apps
+            Script. Confirm before sending because this may create Google Drive archive folders/files.
           </p>
 
           <div className="form-actions">

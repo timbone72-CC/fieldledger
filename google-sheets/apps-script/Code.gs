@@ -148,10 +148,22 @@ function parseFieldLedgerWebImportBody(bodyText) {
 
 /**
  * =========================================================
- * 03.03a FieldLedger archive validation-only receiver
+ * 03.03a FieldLedger archive Drive receiver
  * =========================================================
  */
-function handleArchivePayPeriodValidationOnly(body) {
+function authorizeFieldLedgerArchiveDriveAccess() {
+  const authorizationFolder = DriveApp.createFolder("_FieldLedger_Archive_Authorization_Test");
+
+  try {
+    authorizationFolder.setTrashed(true);
+  } catch (error) {
+    return `FieldLedger archive Drive authorization completed, but temporary folder cleanup failed: ${error.message}`;
+  }
+
+  return "FieldLedger archive Drive authorization completed.";
+}
+
+function handleArchivePayPeriodDriveWrite(body) {
   const expectedArchiveToken = PropertiesService
     .getScriptProperties()
     .getProperty("FIELDLEDGER_ARCHIVE_TOKEN");
@@ -182,13 +194,187 @@ function handleArchivePayPeriodValidationOnly(body) {
     return createJsonResponse(validation);
   }
 
+  const driveWriteResult = writeArchivePayloadToDrive(archivePayloadResult.archivePayload);
+
   return createJsonResponse({
     success: true,
-    message: "FieldLedger archive payload validated. Drive writing is not enabled yet.",
-    fileCount: archivePayloadResult.archivePayload.summary.fileCount,
-    photoCount: archivePayloadResult.archivePayload.summary.photoCount,
-    missingPhotoCount: archivePayloadResult.archivePayload.summary.missingPhotoCount
+    message: "FieldLedger archive written to Google Drive.",
+    archiveFolderName: driveWriteResult.archiveFolderName,
+    archiveFolderUrl: driveWriteResult.archiveFolderUrl,
+    fileCount: driveWriteResult.fileCount,
+    photoCount: driveWriteResult.photoCount,
+    missingPhotoCount: driveWriteResult.missingPhotoCount,
+    photoWriteFailureCount: driveWriteResult.photoWriteFailureCount,
+    photoWriteFailures: driveWriteResult.photoWriteFailures
   });
+}
+
+function writeArchivePayloadToDrive(archivePayload) {
+  const manifest = archivePayload.manifest || {};
+  const rootFolderName = sanitizeDriveName(
+    manifest.driveRootFolderName || "FieldLedger Records",
+    "FieldLedger Records"
+  );
+  const monthFolderName = sanitizeDriveName(
+    manifest.monthFolderName || "Unsorted",
+    "Unsorted"
+  );
+  const archiveFolderName = sanitizeDriveName(
+    manifest.archiveFolderName || "fieldledger-archive",
+    "fieldledger-archive"
+  );
+  const rootFolder = getOrCreateRootFolder(rootFolderName);
+  const monthFolder = getOrCreateChildFolder(rootFolder, monthFolderName);
+  const archiveFolder = createUniqueArchiveFolder(monthFolder, archiveFolderName);
+  let fileCount = 0;
+
+  archivePayload.files.forEach(function(file) {
+    const relativeDirectory = getRelativeDirectory(file.relativePath || file.fileName || "");
+    const targetFolder = createFolderPath(archiveFolder, relativeDirectory);
+
+    createTextArchiveFile(
+      targetFolder,
+      file.fileName,
+      file.contentText,
+      file.mimeType
+    );
+
+    fileCount += 1;
+  });
+
+  const photoWriteFailures = [];
+  let photoCount = 0;
+
+  archivePayload.photos.forEach(function(photo) {
+    try {
+      const relativeDirectory = getRelativeDirectory(photo.relativePath || photo.fileName || "");
+      const targetFolder = createFolderPath(archiveFolder, relativeDirectory);
+
+      createBase64ArchiveFile(
+        targetFolder,
+        photo.fileName,
+        photo.base64,
+        photo.mimeType
+      );
+
+      photoCount += 1;
+    } catch (error) {
+      photoWriteFailures.push({
+        photoId: photo.photoId || "",
+        fileName: photo.fileName || "",
+        message: error.message
+      });
+    }
+  });
+
+  return {
+    archiveFolderName: archiveFolder.getName(),
+    archiveFolderUrl: archiveFolder.getUrl(),
+    fileCount,
+    photoCount,
+    missingPhotoCount: archivePayload.missingPhotos.length,
+    photoWriteFailureCount: photoWriteFailures.length,
+    photoWriteFailures
+  };
+}
+
+function getOrCreateRootFolder(folderName) {
+  const folders = DriveApp.getFoldersByName(folderName);
+
+  if (folders.hasNext()) {
+    return folders.next();
+  }
+
+  return DriveApp.createFolder(folderName);
+}
+
+function getOrCreateChildFolder(parentFolder, folderName) {
+  const folders = parentFolder.getFoldersByName(folderName);
+
+  if (folders.hasNext()) {
+    return folders.next();
+  }
+
+  return parentFolder.createFolder(folderName);
+}
+
+function createUniqueArchiveFolder(parentFolder, archiveFolderName) {
+  let candidateName = archiveFolderName;
+  let suffix = 2;
+
+  while (parentFolder.getFoldersByName(candidateName).hasNext()) {
+    candidateName = `${archiveFolderName}-${suffix}`;
+    suffix += 1;
+  }
+
+  return parentFolder.createFolder(candidateName);
+}
+
+function createFolderPath(rootFolder, relativeDirectory) {
+  if (!relativeDirectory) {
+    return rootFolder;
+  }
+
+  return relativeDirectory
+    .split("/")
+    .map(function(part) {
+      return sanitizeDriveName(part, "");
+    })
+    .filter(function(part) {
+      return part;
+    })
+    .reduce(function(currentFolder, folderName) {
+      return getOrCreateChildFolder(currentFolder, folderName);
+    }, rootFolder);
+}
+
+function createTextArchiveFile(folder, fileName, contentText, mimeType) {
+  const safeFileName = sanitizeDriveName(fileName, "fieldledger-file.txt");
+  const blob = Utilities.newBlob(
+    String(contentText || ""),
+    mimeType || "text/plain",
+    safeFileName
+  );
+
+  return folder.createFile(blob);
+}
+
+function createBase64ArchiveFile(folder, fileName, base64, mimeType) {
+  const safeFileName = sanitizeDriveName(fileName, "fieldledger-photo");
+
+  if (!base64) {
+    throw new Error("Photo base64 content is missing.");
+  }
+
+  const bytes = Utilities.base64Decode(base64);
+  const blob = Utilities.newBlob(
+    bytes,
+    mimeType || "application/octet-stream",
+    safeFileName
+  );
+
+  return folder.createFile(blob);
+}
+
+function getRelativeDirectory(relativePath) {
+  const normalizedPath = String(relativePath || "").replace(/\\/g, "/");
+  const separatorIndex = normalizedPath.lastIndexOf("/");
+
+  if (separatorIndex === -1) {
+    return "";
+  }
+
+  return normalizedPath.slice(0, separatorIndex);
+}
+
+function sanitizeDriveName(value, fallback) {
+  const text = String(value || "")
+    .trim()
+    .replace(/[\\/\u0000-\u001f]/g, "-")
+    .replace(/\s+/g, " ")
+    .replace(/-+/g, "-");
+
+  return text || fallback;
 }
 
 function parseArchivePayloadFromBody(body) {
@@ -328,7 +514,7 @@ function doPost(event) {
     const body = parseFieldLedgerWebImportBody(bodyText);
 
     if (body.action === "archivePayPeriod") {
-      return handleArchivePayPeriodValidationOnly(body);
+      return handleArchivePayPeriodDriveWrite(body);
     }
 
     const expectedToken = PropertiesService

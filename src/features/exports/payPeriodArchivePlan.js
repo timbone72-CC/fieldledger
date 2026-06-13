@@ -95,24 +95,36 @@ function buildMonthFolderName(startDate, createdAt) {
 }
 
 function buildArchiveFolderName(payPeriod, createdAt) {
-  const dateRange = buildDateRangeLabel(payPeriod.startDate, payPeriod.endDate);
-  const label = sanitizeFilePart(payPeriod.label, {
-    fallback: "current-pay-period",
-  });
   const timestamp = formatArchiveTimestamp(createdAt);
+  const dateRange = buildDateRangeLabel(payPeriod.startDate, payPeriod.endDate, createdAt);
+  const label = sanitizeFilePart(payPeriod.label, {
+    fallback: buildFallbackPayPeriodLabel(payPeriod.id, timestamp),
+  });
 
   return `${dateRange}__${label}__archive-${timestamp}`;
 }
 
-function buildDateRangeLabel(startDate, endDate) {
+function buildDateRangeLabel(startDate, endDate, createdAt) {
   const safeStartDate = formatIsoDate(startDate);
   const safeEndDate = formatIsoDate(endDate);
 
   if (!safeStartDate || !safeEndDate) {
-    return "unknown-range";
+    return `archive-created-${formatIsoDate(createdAt)}`;
   }
 
   return `${safeStartDate}_to_${safeEndDate}`;
+}
+
+function buildFallbackPayPeriodLabel(payPeriodId, timestamp) {
+  const safePayPeriodId = sanitizeFilePart(payPeriodId, {
+    fallback: "",
+  });
+
+  if (safePayPeriodId) {
+    return `pay-period-${safePayPeriodId}`;
+  }
+
+  return `pay-period-archive-${timestamp}`;
 }
 
 function collectPhotoReferences(payPeriod, baseFolderPath) {

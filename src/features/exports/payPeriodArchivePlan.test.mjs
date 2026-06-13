@@ -179,7 +179,7 @@ const fallbackPlan = buildPayPeriodArchivePlan({
 });
 
 assert.equal(fallbackPlan.monthFolderName, "2026-07");
-assert.equal(fallbackPlan.archiveFolderName, "unknown-range__current-pay-period__archive-20260704-0809");
+assert.equal(fallbackPlan.archiveFolderName, "archive-created-2026-07-04__pay-period-active__archive-20260704-0809");
 assert.equal(fallbackPlan.manifest.payPeriod.label, "");
 assert.equal(fallbackPlan.manifest.restore.sourceOfTruthFile, "fieldledger-pay-period-backup.json");
 assert.equal(fallbackPlan.manifest.restore.csvIsReportOnly, true);

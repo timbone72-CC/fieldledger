@@ -104,17 +104,15 @@ export async function sendPayPeriodArchiveToDrive({
     };
   }
 
+  const formBody = new URLSearchParams();
+  formBody.set("action", "archivePayPeriod");
+  formBody.set("token", trimmedArchiveToken);
+  formBody.set("archivePayload", JSON.stringify(archivePayload));
+
   try {
     const response = await fetchImpl(trimmedWebAppUrl, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        action: "archivePayPeriod",
-        token: trimmedArchiveToken,
-        archivePayload,
-      }),
+      body: formBody,
     });
 
     const result = await readArchiveJson(response);
