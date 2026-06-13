@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import ExpenseEntryForm from "./features/expenses/ExpenseEntryForm.jsx";
 import SavedExpensesList from "./features/expenses/SavedExpensesList.jsx";
-import ExportActionsDropdown from "./features/exports/ExportActionsDropdown.jsx";
 import JobEntryForm from "./features/jobs/JobEntryForm.jsx";
 import SavedJobsList from "./features/jobs/SavedJobsList.jsx";
 import MileageEntryForm from "./features/mileage/MileageEntryForm.jsx";
@@ -144,11 +143,6 @@ export default function App() {
             </p>
           </section>
           <PayPeriodInfoForm key={`pay-period-info-${refreshCount}`} />
-          <ExportActionsDropdown
-            onShowTimesheet={() => setShowTimesheetPrintView(true)}
-            onDataChanged={refreshAppData}
-          />
-          {showTimesheetPrintView && <TimesheetPrintView />}
           <PayPeriodSummaryPanel key={`summary-${refreshCount}`} />
         </>
       )}
@@ -176,7 +170,14 @@ export default function App() {
 
       {activeTab === TABS.SETTINGS && <SettingsPanel />}
 
-      {activeTab === TABS.TOOLS && <ToolsPanel />}
+      {activeTab === TABS.TOOLS && (
+        <ToolsPanel
+          onShowTimesheet={() => setShowTimesheetPrintView(true)}
+          onDataChanged={refreshAppData}
+        />
+      )}
+
+      {showTimesheetPrintView && <TimesheetPrintView />}
 
       {activeTab === TABS.HELP && <HelpPanel />}
     </main>

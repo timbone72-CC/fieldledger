@@ -124,6 +124,56 @@
   gap: 10px;
 }
 
+.tools-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.tool-section {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+  padding: 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  background: #f8fafc;
+}
+
+.tool-section h3 {
+  margin: 0;
+  color: #111827;
+  font-size: 1.1rem;
+}
+
+.tool-section .helper {
+  margin: 0;
+}
+
+.tool-actions {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.tool-actions button,
+.tool-actions .import-json-button {
+  width: 100%;
+  min-height: 44px;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #c7d2e1;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #1f2937;
+  padding: 10px 12px;
+  font: inherit;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+}
+
 .result-card {
   display: grid;
   gap: 8px;
@@ -185,6 +235,11 @@
   .responsive-form-grid {
     grid-template-columns: repeat(2, minmax(260px, 1fr));
     align-items: start;
+  }
+
+  .tools-grid {
+    grid-template-columns: repeat(2, minmax(260px, 1fr));
+    align-items: stretch;
   }
 }
 

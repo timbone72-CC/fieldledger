@@ -2,8 +2,14 @@ import { useState } from "react";
 import { APP_NAME, APP_VERSION_DATE, APP_VERSION_LABEL, APP_VERSION_NOTE } from "../../shared/constants/appInfo.js";
 import { STORAGE_KEYS } from "../../shared/constants/storageKeys.js";
 import { loadPhotoBlob } from "../../shared/storage/photoBlobStorage.js";
+import DownloadPayPeriodCsvButton from "../exports/DownloadPayPeriodCsvButton.jsx";
+import DownloadPayPeriodJsonButton from "../exports/DownloadPayPeriodJsonButton.jsx";
+import ImportPayPeriodJsonButton from "../exports/ImportPayPeriodJsonButton.jsx";
 import { buildPayPeriodArchivePayload } from "../exports/payPeriodArchivePayload.js";
+import PrintPayPeriodReportButton from "../exports/PrintPayPeriodReportButton.jsx";
+import SendPayPeriodCsvToTrustedSheetButton from "../exports/SendPayPeriodCsvToTrustedSheetButton.jsx";
 import { sendPayPeriodArchiveToDrive } from "../exports/sendPayPeriodArchiveToDrive.js";
+import ClearPayPeriodButton from "../pay-periods/ClearPayPeriodButton.jsx";
 import { loadActivePayPeriod } from "../pay-periods/activePayPeriodStorage.js";
 import { loadSettings } from "../settings/settingsStorage.js";
 
@@ -39,8 +45,24 @@ async function encodeBlobAsBase64(blob) {
   };
 }
 
-export default function ToolsPanel() {
+export default function ToolsPanel({ onShowTimesheet, onDataChanged }) {
   const [archiveValidationStatus, setArchiveValidationStatus] = useState("");
+
+  function handlePrintTimesheet() {
+    if (typeof onShowTimesheet === "function") {
+      onShowTimesheet();
+    }
+
+    document.body.classList.add("print-timesheet");
+
+    setTimeout(() => {
+      window.print();
+
+      setTimeout(() => {
+        document.body.classList.remove("print-timesheet");
+      }, 200);
+    }, 300);
+  }
 
   async function validateArchiveEndpoint() {
     setArchiveValidationStatus("");
@@ -124,23 +146,69 @@ export default function ToolsPanel() {
     <section className="panel">
       <h2>Tools</h2>
 
-      <div className="responsive-form-grid">
-        <details className="form-span-full">
-          <summary>Developer Archive Validation</summary>
+      <div className="tools-grid">
+        <section className="tool-section">
+          <h3>Backup / Restore</h3>
 
           <p className="helper">
+            FieldLedger data is saved in this browser. Use Download JSON Backup before switching
+            devices, clearing browser data, or importing a replacement backup.
+          </p>
+
+          <div className="tool-actions">
+            <DownloadPayPeriodJsonButton />
+            <ImportPayPeriodJsonButton onImportComplete={onDataChanged} />
+          </div>
+        </section>
+
+        <section className="tool-section">
+          <h3>Timesheet / Reports</h3>
+
+          <p className="helper">
+            Export spreadsheet data, send the current CSV to your trusted Sheet, or print pay-period reports.
+          </p>
+
+          <div className="tool-actions">
+            <DownloadPayPeriodCsvButton />
+            <SendPayPeriodCsvToTrustedSheetButton displayMode="button" />
+            <PrintPayPeriodReportButton />
+
+            <button type="button" onClick={handlePrintTimesheet}>
+              Print Timesheet
+            </button>
+          </div>
+        </section>
+
+        <section className="tool-section">
+          <h3>Archive / Drive</h3>
+
+          <p className="helper">
+            <strong>Developer Archive Validation</strong>
+            <br />
             This manually builds the current active pay period archive payload and sends it to Apps
             Script. Confirm before sending because this may create Google Drive archive folders/files.
           </p>
 
-          <div className="form-actions">
+          <div className="tool-actions">
             <button type="button" onClick={validateArchiveEndpoint}>
               Validate Archive Endpoint
             </button>
           </div>
 
           {archiveValidationStatus ? <p className="helper">{archiveValidationStatus}</p> : null}
-        </details>
+        </section>
+
+        <section className="tool-section">
+          <h3>Danger Zone</h3>
+
+          <p className="helper">
+            Clear Pay Period downloads its own safety backup before clearing this browser.
+          </p>
+
+          <div className="tool-actions">
+            <ClearPayPeriodButton onPayPeriodCleared={onDataChanged} displayMode="button" />
+          </div>
+        </section>
       </div>
     </section>
   );

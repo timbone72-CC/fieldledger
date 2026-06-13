@@ -38,7 +38,7 @@ function saveTrustedSheetWebAppUrl(webAppUrl) {
   }
 }
 
-export default function SendPayPeriodCsvToTrustedSheetButton() {
+export default function SendPayPeriodCsvToTrustedSheetButton({ displayMode = "details" }) {
   const [sendStatus, setSendStatus] = useState("");
 
   async function sendCsvToTrustedSheet() {
@@ -94,6 +94,18 @@ export default function SendPayPeriodCsvToTrustedSheetButton() {
     });
 
     setSendStatus(result.message);
+  }
+
+  if (displayMode === "button") {
+    return (
+      <>
+        <button type="button" onClick={sendCsvToTrustedSheet}>
+          Send to Trusted Sheet
+        </button>
+
+        {sendStatus ? <p className="helper form-span-full">{sendStatus}</p> : null}
+      </>
+    );
   }
 
   return (

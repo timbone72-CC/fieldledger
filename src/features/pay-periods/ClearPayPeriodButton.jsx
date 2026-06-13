@@ -1,7 +1,7 @@
 import { clearActivePayPeriod, loadActivePayPeriod } from "./activePayPeriodStorage.js";
 import { buildPayPeriodFileName } from "../../shared/utils/recordFileNames.js";
 
-export default function ClearPayPeriodButton({ onPayPeriodCleared }) {
+export default function ClearPayPeriodButton({ onPayPeriodCleared, displayMode = "details" }) {
   function handleClear() {
     const payPeriod = loadActivePayPeriod();
 
@@ -25,6 +25,14 @@ export default function ClearPayPeriodButton({ onPayPeriodCleared }) {
     if (typeof onPayPeriodCleared === "function") {
       onPayPeriodCleared();
     }
+  }
+
+  if (displayMode === "button") {
+    return (
+      <button type="button" onClick={handleClear}>
+        Clear Pay Period
+      </button>
+    );
   }
 
   return (
