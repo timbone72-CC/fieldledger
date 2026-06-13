@@ -7,6 +7,7 @@ import { loadSettings } from "../settings/settingsStorage.js";
 import { loadJobSuggestions, rememberJobSuggestions } from "../../shared/storage/jobSuggestionStorage.js";
 import CameraCapture from "../../shared/components/CameraCapture.jsx";
 import { buildRecordFileName } from "../../shared/utils/recordFileNames.js";
+import { compressImageFile } from "../../shared/utils/photoCompression.js";
 
 const BUCKING_STATES = {
   TEXAS: "Texas",
@@ -328,6 +329,22 @@ export default function JobEntryForm({ onJobSaved }) {
     resetForm("");
   }
 
+  async function handleTicketPhotoUpload(file) {
+    if (!file) {
+      setTicketPhotoFile(null);
+      setSaveMessage("");
+      return;
+    }
+
+    try {
+      setTicketPhotoFile(await compressImageFile(file));
+      setSaveMessage("");
+    } catch {
+      setTicketPhotoFile(null);
+      setSaveMessage("Ticket photo could not be compressed.");
+    }
+  }
+
   return (
     <section className="panel">
       <h2>{editingJobId ? "Edit Job Ticket" : "Add Job Ticket"}</h2>
@@ -506,7 +523,7 @@ export default function JobEntryForm({ onJobSaved }) {
             label="Take Ticket Photo"
             defaultFilename={ticketPhotoDefaultFilename}
             onPhotoCaptured={(photoFile) => {
-              setTicketPhotoFile(photoFile);
+              handleTicketPhotoUpload(photoFile);
               if (ticketPhotoInputRef.current) {
                 ticketPhotoInputRef.current.value = "";
               }
@@ -531,8 +548,7 @@ export default function JobEntryForm({ onJobSaved }) {
             type="file"
             accept="image/*"
             onChange={(event) => {
-              setTicketPhotoFile(event.target.files?.[0] || null);
-              setSaveMessage("");
+              handleTicketPhotoUpload(event.target.files?.[0] || null);
             }}
           />
         </label>

@@ -3,6 +3,7 @@ import { loadActivePayPeriod, saveActivePayPeriod } from "../pay-periods/activeP
 import { EXPENSE_CATEGORIES } from "../../shared/constants/fieldLedgerDefaults.js";
 import { deletePhotoBlob, loadPhotoBlob, savePhotoBlob } from "../../shared/storage/photoBlobStorage.js";
 import CameraCapture from "../../shared/components/CameraCapture.jsx";
+import { compressImageFile } from "../../shared/utils/photoCompression.js";
 
 export default function ExpenseEntryForm({ onExpenseSaved }) {
   const receiptPhotoInputRef = useRef(null);
@@ -108,21 +109,31 @@ export default function ExpenseEntryForm({ onExpenseSaved }) {
     setSaveMessage(message);
   }
 
-  function addReceiptPhotoFiles(files) {
-    const nextPhotos = Array.from(files || []).map((file) => ({
-      localId: crypto.randomUUID(),
-      id: "",
-      name: file.name || "Receipt photo",
-      file,
-      previewUrl: URL.createObjectURL(file),
-    }));
+  async function addReceiptPhotoFiles(files) {
+    try {
+      const nextPhotos = await Promise.all(
+        Array.from(files || []).map(async (file) => {
+          const compressedFile = await compressImageFile(file);
 
-    if (nextPhotos.length === 0) {
-      return;
+          return {
+            localId: crypto.randomUUID(),
+            id: "",
+            name: compressedFile.name || file.name || "Receipt photo",
+            file: compressedFile,
+            previewUrl: URL.createObjectURL(compressedFile),
+          };
+        }),
+      );
+
+      if (nextPhotos.length === 0) {
+        return;
+      }
+
+      setReceiptPhotos((currentPhotos) => [...currentPhotos, ...nextPhotos]);
+      setSaveMessage("Receipt photo added. Review and name it before saving.");
+    } catch {
+      setSaveMessage("One or more receipt photos could not be compressed.");
     }
-
-    setReceiptPhotos((currentPhotos) => [...currentPhotos, ...nextPhotos]);
-    setSaveMessage("Receipt photo added. Review and name it before saving.");
   }
 
   function updateReceiptPhotoName(photoKey, name) {
@@ -183,7 +194,7 @@ export default function ExpenseEntryForm({ onExpenseSaved }) {
       return;
     }
 
-    let nextReceiptPhotos = [];
+    let nextReceiptPhotos;
 
     try {
       nextReceiptPhotos = await Promise.all(
