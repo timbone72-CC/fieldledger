@@ -98,15 +98,12 @@ const successResult = await sendPayPeriodArchiveToDrive({
   fetchImpl: async (url, options) => {
     assert.equal(url, "https://script.google.com/macros/s/test-deployment-id/exec");
     assert.equal(options.method, "POST");
-    assert.deepEqual(options.headers, {
-      "Content-Type": "application/json",
-    });
+    assert.equal(options.headers, undefined);
+    assert.equal(options.body instanceof URLSearchParams, true);
 
-    const requestBody = JSON.parse(options.body);
-
-    assert.equal(requestBody.action, "archivePayPeriod");
-    assert.equal(requestBody.token, "test-token");
-    assert.deepEqual(requestBody.archivePayload, archivePayload);
+    assert.equal(options.body.get("action"), "archivePayPeriod");
+    assert.equal(options.body.get("token"), "test-token");
+    assert.deepEqual(JSON.parse(options.body.get("archivePayload")), archivePayload);
 
     return {
       async text() {

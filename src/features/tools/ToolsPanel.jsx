@@ -9,6 +9,7 @@ import ImportCompleteBackupButton from "../exports/ImportCompleteBackupButton.js
 import ImportPayPeriodJsonButton from "../exports/ImportPayPeriodJsonButton.jsx";
 import { buildPayPeriodArchivePayload } from "../exports/payPeriodArchivePayload.js";
 import PrintPayPeriodReportButton from "../exports/PrintPayPeriodReportButton.jsx";
+import SaveCompleteBackupToDriveButton from "../exports/SaveCompleteBackupToDriveButton.jsx";
 import SendPayPeriodCsvToTrustedSheetButton from "../exports/SendPayPeriodCsvToTrustedSheetButton.jsx";
 import { sendPayPeriodArchiveToDrive } from "../exports/sendPayPeriodArchiveToDrive.js";
 import ClearPayPeriodButton from "../pay-periods/ClearPayPeriodButton.jsx";
@@ -160,6 +161,7 @@ export default function ToolsPanel({ onShowTimesheet, onDataChanged }) {
           <div className="tool-actions">
             <DownloadCompleteBackupButton />
             <ImportCompleteBackupButton onImportComplete={onDataChanged} />
+            <SaveCompleteBackupToDriveButton />
           </div>
         </section>
 

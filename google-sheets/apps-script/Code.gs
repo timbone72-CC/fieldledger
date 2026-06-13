@@ -487,6 +487,209 @@ function validateArchivePayloadShape(archivePayload) {
 
 /**
  * =========================================================
+ * 03.03b FieldLedger Complete Backup Drive receiver
+ * =========================================================
+ */
+function handleCompleteBackupDriveSave(body) {
+  const expectedCompleteBackupToken = PropertiesService
+    .getScriptProperties()
+    .getProperty("FIELDLEDGER_COMPLETE_BACKUP_TOKEN");
+
+  if (!expectedCompleteBackupToken) {
+    return createJsonResponse({
+      ok: false,
+      success: false,
+      message: "FieldLedger Complete Backup token is not configured."
+    });
+  }
+
+  if (body.token !== expectedCompleteBackupToken) {
+    return createJsonResponse({
+      ok: false,
+      success: false,
+      message: "Unauthorized FieldLedger Complete Backup request."
+    });
+  }
+
+  const packageResult = parseCompleteBackupPackageFromBody(body);
+
+  if (!packageResult.success) {
+    return createJsonResponse({
+      ok: false,
+      success: false,
+      message: packageResult.message
+    });
+  }
+
+  const validation = validateCompleteBackupPackageShape(packageResult.completeBackupPackage);
+
+  if (!validation.success) {
+    return createJsonResponse({
+      ok: false,
+      success: false,
+      message: validation.message
+    });
+  }
+
+  const writeResult = writeCompleteBackupPackageToDrive(packageResult.completeBackupPackage);
+
+  return createJsonResponse({
+    ok: true,
+    success: true,
+    message: "FieldLedger Complete Backup saved to Google Drive.",
+    fileName: writeResult.fileName,
+    folderName: writeResult.folderName,
+    driveRootFolderName: writeResult.driveRootFolderName,
+    folderPath: writeResult.folderPath,
+    fileUrl: writeResult.fileUrl,
+    createdAt: packageResult.completeBackupPackage.createdAt,
+    summary: packageResult.completeBackupPackage.summary
+  });
+}
+
+function parseCompleteBackupPackageFromBody(body) {
+  if (!body.completeBackupPackage) {
+    return {
+      success: false,
+      message: "No FieldLedger Complete Backup package received."
+    };
+  }
+
+  if (typeof body.completeBackupPackage === "object") {
+    return {
+      success: true,
+      completeBackupPackage: body.completeBackupPackage
+    };
+  }
+
+  try {
+    return {
+      success: true,
+      completeBackupPackage: JSON.parse(body.completeBackupPackage)
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: "FieldLedger Complete Backup package is not valid JSON."
+    };
+  }
+}
+
+function validateCompleteBackupPackageShape(completeBackupPackage) {
+  if (!completeBackupPackage || typeof completeBackupPackage !== "object") {
+    return {
+      success: false,
+      message: "FieldLedger Complete Backup package is missing or invalid."
+    };
+  }
+
+  if (completeBackupPackage.packageType !== "fieldledger.completeBackup") {
+    return {
+      success: false,
+      message: "FieldLedger Complete Backup package type is invalid."
+    };
+  }
+
+  if (completeBackupPackage.schemaVersion !== 1) {
+    return {
+      success: false,
+      message: "FieldLedger Complete Backup schema version is invalid."
+    };
+  }
+
+  if (!completeBackupPackage.createdAt) {
+    return {
+      success: false,
+      message: "FieldLedger Complete Backup createdAt is missing."
+    };
+  }
+
+  if (!completeBackupPackage.payPeriod || typeof completeBackupPackage.payPeriod !== "object") {
+    return {
+      success: false,
+      message: "FieldLedger Complete Backup pay period is missing."
+    };
+  }
+
+  if (!completeBackupPackage.summary || typeof completeBackupPackage.summary !== "object") {
+    return {
+      success: false,
+      message: "FieldLedger Complete Backup summary is missing."
+    };
+  }
+
+  if (!Array.isArray(completeBackupPackage.photos)) {
+    return {
+      success: false,
+      message: "FieldLedger Complete Backup photos list is missing."
+    };
+  }
+
+  if (!Array.isArray(completeBackupPackage.missingPhotos)) {
+    return {
+      success: false,
+      message: "FieldLedger Complete Backup missing photos list is missing."
+    };
+  }
+
+  return {
+    success: true,
+    message: "FieldLedger Complete Backup package shape is valid."
+  };
+}
+
+function writeCompleteBackupPackageToDrive(completeBackupPackage) {
+  const driveRootFolderName = "FieldLedger Records";
+  const folderName = "Complete Backups";
+  const rootFolder = getOrCreateRootFolder(driveRootFolderName);
+  const targetFolder = getOrCreateChildFolder(rootFolder, folderName);
+  const baseFileName = buildCompleteBackupDriveFileName(completeBackupPackage);
+  const fileName = createUniqueCompleteBackupFileName(targetFolder, baseFileName);
+  const blob = Utilities.newBlob(
+    `${JSON.stringify(completeBackupPackage, null, 2)}\n`,
+    "application/json",
+    fileName
+  );
+  const file = targetFolder.createFile(blob);
+
+  return {
+    fileName,
+    folderName,
+    driveRootFolderName,
+    folderPath: `${driveRootFolderName}/${folderName}`,
+    fileUrl: file.getUrl()
+  };
+}
+
+function buildCompleteBackupDriveFileName(completeBackupPackage) {
+  const parsedCreatedAt = new Date(completeBackupPackage.createdAt);
+  const createdDate = Number.isNaN(parsedCreatedAt.getTime()) ? new Date() : parsedCreatedAt;
+  const timestamp = Utilities.formatDate(createdDate, "Etc/UTC", "yyyyMMdd-HHmmss");
+
+  return `fieldledger-complete-backup-${timestamp}.json`;
+}
+
+function createUniqueCompleteBackupFileName(folder, baseFileName) {
+  if (!folder.getFilesByName(baseFileName).hasNext()) {
+    return baseFileName;
+  }
+
+  const extensionIndex = baseFileName.lastIndexOf(".");
+  const namePart = extensionIndex === -1 ? baseFileName : baseFileName.slice(0, extensionIndex);
+  const extensionPart = extensionIndex === -1 ? "" : baseFileName.slice(extensionIndex);
+  let suffix = 2;
+  let candidateName = `${namePart}-${suffix}${extensionPart}`;
+
+  while (folder.getFilesByName(candidateName).hasNext()) {
+    suffix += 1;
+    candidateName = `${namePart}-${suffix}${extensionPart}`;
+  }
+
+  return candidateName;
+}
+
+/**
+ * =========================================================
  * 03.03 FieldLedger web import receiver
  * =========================================================
  *
@@ -515,6 +718,10 @@ function doPost(event) {
 
     if (body.action === "archivePayPeriod") {
       return handleArchivePayPeriodDriveWrite(body);
+    }
+
+    if (body.action === "saveCompleteBackupToDrive") {
+      return handleCompleteBackupDriveSave(body);
     }
 
     const expectedToken = PropertiesService
