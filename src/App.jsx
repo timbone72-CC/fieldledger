@@ -10,6 +10,7 @@ import SavedMileageList from "./features/mileage/SavedMileageList.jsx";
 import PayPeriodInfoForm from "./features/pay-periods/PayPeriodInfoForm.jsx";
 import PayPeriodSummaryPanel from "./features/pay-periods/PayPeriodSummaryPanel.jsx";
 import SettingsPanel from "./features/settings/SettingsPanel.jsx";
+import ToolsPanel from "./features/tools/ToolsPanel.jsx";
 import HelpPanel from "./features/help/HelpPanel.jsx";
 import TimesheetPrintView from "./features/exports/TimesheetPrintView.jsx";
 
@@ -19,6 +20,7 @@ const TABS = {
   EXPENSES: "expenses",
   MILEAGE: "mileage",
   SETTINGS: "settings",
+  TOOLS: "tools",
   HELP: "help",
 };
 
@@ -103,6 +105,13 @@ export default function App() {
         </button>
         <button
           type="button"
+          className={activeTab === TABS.TOOLS ? "active" : ""}
+          onClick={() => setActiveTab(TABS.TOOLS)}
+        >
+          Tools
+        </button>
+        <button
+          type="button"
           className={activeTab === TABS.HELP ? "active" : ""}
           onClick={() =>
             setActiveTab((currentTab) =>
@@ -166,6 +175,8 @@ export default function App() {
       )}
 
       {activeTab === TABS.SETTINGS && <SettingsPanel />}
+
+      {activeTab === TABS.TOOLS && <ToolsPanel />}
 
       {activeTab === TABS.HELP && <HelpPanel />}
     </main>
