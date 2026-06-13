@@ -13,7 +13,7 @@ export function sanitizeFilePart(value, options = {}) {
   const safeValue = rawValue
     .normalize("NFKD")
     .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[<>:"/\\|?*\u0000-\u001f]/g, " ")
+    .replace(/[<>:"/\\|?*]/g, " ")
     .replace(/\.+/g, "-")
     .replace(/[^A-Za-z0-9 _-]+/g, " ")
     .replace(/[\s_-]+/g, "-")

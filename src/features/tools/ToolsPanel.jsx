@@ -2,8 +2,10 @@ import { useState } from "react";
 import { APP_NAME, APP_VERSION_DATE, APP_VERSION_LABEL, APP_VERSION_NOTE } from "../../shared/constants/appInfo.js";
 import { STORAGE_KEYS } from "../../shared/constants/storageKeys.js";
 import { loadPhotoBlob } from "../../shared/storage/photoBlobStorage.js";
+import DownloadCompleteBackupButton from "../exports/DownloadCompleteBackupButton.jsx";
 import DownloadPayPeriodCsvButton from "../exports/DownloadPayPeriodCsvButton.jsx";
 import DownloadPayPeriodJsonButton from "../exports/DownloadPayPeriodJsonButton.jsx";
+import ImportCompleteBackupButton from "../exports/ImportCompleteBackupButton.jsx";
 import ImportPayPeriodJsonButton from "../exports/ImportPayPeriodJsonButton.jsx";
 import { buildPayPeriodArchivePayload } from "../exports/payPeriodArchivePayload.js";
 import PrintPayPeriodReportButton from "../exports/PrintPayPeriodReportButton.jsx";
@@ -147,6 +149,20 @@ export default function ToolsPanel({ onShowTimesheet, onDataChanged }) {
       <h2>Tools</h2>
 
       <div className="tools-grid">
+        <section className="tool-section">
+          <h3>Complete Backup with Photos</h3>
+
+          <p className="helper">
+            Use Complete Backup when you need to move FieldLedger between phone and PC. It includes
+            records and photos. Import replaces the current active pay period after confirmation.
+          </p>
+
+          <div className="tool-actions">
+            <DownloadCompleteBackupButton />
+            <ImportCompleteBackupButton onImportComplete={onDataChanged} />
+          </div>
+        </section>
+
         <section className="tool-section">
           <h3>Backup / Restore</h3>
 

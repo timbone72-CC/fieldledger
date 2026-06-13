@@ -30,17 +30,39 @@ function openPhotoDatabase() {
 }
 
 export async function savePhotoBlob(file) {
-  const database = await openPhotoDatabase();
   const id = crypto.randomUUID();
 
-  const photoRecord = {
+  return savePhotoRecord({
     id,
     name: file.name || "photo",
     type: file.type || "application/octet-stream",
     size: file.size || 0,
     blob: file,
     createdAt: new Date().toISOString(),
-  };
+  });
+}
+
+export async function savePhotoBlobWithId({ id, blob, name, type, size, createdAt }) {
+  if (!id || typeof id !== "string") {
+    throw new Error("Photo ID is required.");
+  }
+
+  if (!blob) {
+    throw new Error("Photo blob is required.");
+  }
+
+  return savePhotoRecord({
+    id,
+    name: name || "photo",
+    type: type || blob.type || "application/octet-stream",
+    size: Number.isFinite(size) ? size : blob.size || 0,
+    blob,
+    createdAt: createdAt || new Date().toISOString(),
+  });
+}
+
+async function savePhotoRecord(photoRecord) {
+  const database = await openPhotoDatabase();
 
   return new Promise((resolve, reject) => {
     const transaction = database.transaction(PHOTO_STORE_NAME, "readwrite");
@@ -48,7 +70,7 @@ export async function savePhotoBlob(file) {
     const request = store.put(photoRecord);
 
     request.onsuccess = () => {
-      resolve(id);
+      resolve(photoRecord.id);
     };
 
     request.onerror = () => {
